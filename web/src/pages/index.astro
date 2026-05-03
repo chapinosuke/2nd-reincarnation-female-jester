@@ -14,36 +14,40 @@ const coverSrc = '/画像/表紙イメージ.png';
       style={`background-image: url('${coverSrc}')`}
     >
     </div>
+    <!-- 下方向だけ和紙色にフェード（読み進めやすくする） -->
     <div
-      class="absolute inset-0 bg-gradient-to-b from-ink-900/40 via-ink-900/20 to-ink-900"
+      class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent to-ink-50"
     >
     </div>
 
-    <div class="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center fade-in">
-      <p class="mb-4 text-xs tracking-[0.6em] text-ink-200/70">
-        WEB NOVEL
-      </p>
-      <h1 class="font-display text-4xl leading-tight text-ink-50 md:text-6xl lg:text-7xl">
-        2度目の転生は<br class="md:hidden" />女遊び人でした
-      </h1>
-      <p class="mt-8 max-w-xl font-serif text-sm leading-loose text-ink-200/80 md:text-base">
-        戦えない。魔法も使えない。装備はバニーガール衣装のみ。<br />
-        ──そんな最底辺から、機転と人心掌握だけで「賢者」を目指す。
-      </p>
-      <a
-        href="#chapters"
-        class="mt-12 inline-flex items-center gap-2 border border-ink-200/30 bg-ink-900/40 px-8 py-3 text-sm tracking-widest text-ink-100 backdrop-blur transition hover:border-plum-400 hover:text-plum-400"
-      >
-        章一覧へ
-        <span class="inline-block">↓</span>
-      </a>
+    <!-- タイトルプレート（白地で抜く） -->
+    <div class="relative z-10 flex h-full flex-col items-center justify-end px-6 pb-24 text-center fade-in">
+      <div class="rounded-sm bg-ink-50/90 px-10 py-10 shadow-2xl shadow-ink-900/10 backdrop-blur-sm">
+        <p class="mb-3 text-[10px] tracking-[0.6em] text-vermilion-500">
+          WEB NOVEL
+        </p>
+        <h1 class="font-display text-3xl leading-tight text-ink-900 md:text-5xl">
+          2度目の転生は<br class="md:hidden" />女遊び人でした
+        </h1>
+        <p class="mt-6 max-w-md font-serif text-sm leading-loose text-ink-700 md:text-base">
+          戦えない。魔法も使えない。装備はバニーガール衣装のみ。<br />
+          そんな最底辺から、機転と人心掌握だけで「賢者」を目指す。
+        </p>
+        <a
+          href="#chapters"
+          class="mt-8 inline-flex items-center gap-2 border border-ink-400/60 px-8 py-3 text-xs tracking-[0.4em] text-ink-800 transition hover:border-vermilion-500 hover:text-vermilion-500"
+        >
+          章一覧へ
+          <span>↓</span>
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- CHAPTERS -->
   <section id="chapters" class="mx-auto max-w-3xl px-6 py-32">
     <div class="mb-16 text-center">
-      <p class="text-xs tracking-[0.5em] text-plum-400">CHAPTERS</p>
+      <p class="text-xs tracking-[0.5em] text-vermilion-500">CHAPTERS</p>
       <div class="chapter-rule mx-auto mt-6 w-32"></div>
     </div>
 
@@ -52,18 +56,18 @@ const coverSrc = '/画像/表紙イメージ.png';
         <li>
           <a
             href={`/chapter/${c.slug}`}
-            class="group block border border-ink-500/40 bg-ink-800/40 px-8 py-7 backdrop-blur transition hover:border-plum-400/70 hover:bg-ink-700/40"
+            class="group block border border-ink-200 bg-white/70 px-8 py-7 shadow-sm transition hover:-translate-y-0.5 hover:border-vermilion-400/70 hover:bg-white hover:shadow-md"
           >
             <div class="flex items-baseline justify-between gap-6">
               <div>
-                <p class="font-display text-xs tracking-[0.4em] text-plum-400 group-hover:text-plum-400">
+                <p class="font-display text-xs tracking-[0.4em] text-vermilion-500">
                   CHAPTER {String(c.number).padStart(2, '0')}
                 </p>
-                <h2 class="mt-3 font-display text-xl text-ink-50 md:text-2xl">
+                <h2 class="mt-3 font-display text-xl text-ink-900 md:text-2xl">
                   {c.titleLine}
                 </h2>
               </div>
-              <span class="font-display text-ink-400 transition group-hover:translate-x-1 group-hover:text-plum-400">
+              <span class="font-display text-ink-400 transition group-hover:translate-x-1 group-hover:text-vermilion-500">
                 →
               </span>
             </div>
@@ -73,11 +77,11 @@ const coverSrc = '/画像/表紙イメージ.png';
     </ul>
 
     {chapters.length === 0 && (
-      <p class="text-center text-ink-300">本編はまだ用意されていません。</p>
+      <p class="text-center text-ink-500">本編はまだ用意されていません。</p>
     )}
   </section>
 
-  <footer class="border-t border-ink-700/60 py-12 text-center text-xs tracking-widest text-ink-300">
+  <footer class="border-t border-ink-200 py-12 text-center text-xs tracking-widest text-ink-400">
     © {new Date().getFullYear()} ASOBI-NIN
   </footer>
 </Base>
