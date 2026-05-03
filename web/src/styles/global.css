@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    background-color: #0c0a07;
+    color: #e8e2d3;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    background:
+      radial-gradient(ellipse at top, rgba(122, 84, 112, 0.18), transparent 60%),
+      radial-gradient(ellipse at bottom, rgba(58, 51, 39, 0.25), transparent 60%),
+      #0c0a07;
+    min-height: 100vh;
+  }
+  ::selection {
+    background-color: rgba(160, 122, 150, 0.4);
+    color: #f5f3ee;
+  }
+}
+
+@layer components {
+  /* Reader image utilities — markdown 画像挿入時に class を付けて切替 */
+  .prose .img-full img,
+  .prose img.img-full {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .prose .img-bleed img,
+  .prose img.img-bleed {
+    width: calc(100% + 8rem);
+    max-width: none;
+    margin-left: -4rem;
+    margin-right: -4rem;
+  }
+  .prose .img-inline img,
+  .prose img.img-inline {
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+  .prose .img-small img,
+  .prose img.img-small {
+    max-width: 35%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+  /* 本文先頭の「第N話　タイトル」行は章扉で表示しているので非表示にする */
+  .chapter-body > p:first-child,
+  .chapter-body > h1:first-child,
+  .chapter-body > h2:first-child {
+    display: none;
+  }
+
+  /* 章タイトルの装飾 */
+  .chapter-rule {
+    position: relative;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(200, 191, 168, 0.4),
+      transparent
+    );
+  }
+  .chapter-rule::before {
+    content: '◆';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(200, 191, 168, 0.5);
+    background: #0c0a07;
+    padding: 0 1rem;
+    font-size: 0.75rem;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.8s ease-out both;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hero parallax-ish image */
+.hero-cover {
+  filter: brightness(0.55) contrast(1.05);
+  transform: scale(1.05);
+}

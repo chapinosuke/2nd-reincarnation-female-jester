@@ -1,0 +1,18 @@
+{
+  "name": "asobi-web",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev --host",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/tailwind": "^6.0.2",
+    "@tailwindcss/typography": "^0.5.19",
+    "astro": "^5.18.1",
+    "remark-breaks": "^4.0.0",
+    "tailwindcss": "^3.4.19"
+  }
+}

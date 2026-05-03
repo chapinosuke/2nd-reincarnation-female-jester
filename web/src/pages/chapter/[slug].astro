@@ -1,0 +1,103 @@
+---
+import Base from '../../layouts/Base.astro';
+import { render } from 'astro:content';
+import { getChapters, neighbors } from '../../lib/chapters';
+
+export async function getStaticPaths() {
+  const chapters = await getChapters();
+  return chapters.map((c) => ({
+    params: { slug: c.slug },
+    props: { current: c, chapters },
+  }));
+}
+
+const { current, chapters } = Astro.props;
+const { Content } = await render(current.entry);
+const { prev, next } = neighbors(chapters, current);
+---
+
+<Base title={`${current.titleLine} ｜ 2度目の転生は女遊び人でした`}>
+  <!-- 上部ナビ -->
+  <header
+    class="sticky top-0 z-30 border-b border-ink-700/40 bg-ink-900/70 backdrop-blur-md"
+  >
+    <div class="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
+      <a
+        href="/"
+        class="font-display text-xs tracking-[0.3em] text-ink-200 transition hover:text-plum-400"
+      >
+        ← 目次
+      </a>
+      <span class="font-display text-xs tracking-[0.4em] text-plum-400">
+        CHAPTER {String(current.number).padStart(2, '0')}
+      </span>
+      <span class="w-12"></span>
+    </div>
+  </header>
+
+  <!-- 章扉 -->
+  <section class="mx-auto max-w-3xl px-6 pt-24 pb-12 text-center fade-in">
+    <p class="font-display text-xs tracking-[0.5em] text-plum-400">
+      第{current.number}話
+    </p>
+    <div class="chapter-rule mx-auto mt-6 w-24"></div>
+    <h1 class="mt-10 font-display text-3xl leading-relaxed text-ink-50 md:text-4xl">
+      {current.titleLine.replace(/^第[\s〇一二三四五六七八九十0-9]+話\s*/, '')}
+    </h1>
+    {current.subtitleLine && (
+      <p class="mt-4 font-serif text-sm text-ink-300">{current.subtitleLine}</p>
+    )}
+  </section>
+
+  <!-- 本文 -->
+  <article
+    class="prose prose-invert prose-lg chapter-body mx-auto max-w-2xl px-6 pb-24 fade-in"
+  >
+    <Content />
+  </article>
+
+  <!-- 章ナビゲーション -->
+  <nav class="mx-auto max-w-3xl border-t border-ink-700/60 px-6 py-12">
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        {prev && (
+          <a
+            href={`/chapter/${prev.slug}`}
+            class="group block border border-ink-500/40 bg-ink-800/40 px-6 py-5 transition hover:border-plum-400/70"
+          >
+            <p class="font-display text-[10px] tracking-[0.4em] text-ink-300">
+              ← 前の話
+            </p>
+            <p class="mt-2 font-display text-sm text-ink-100 group-hover:text-plum-400">
+              第{prev.number}話
+            </p>
+          </a>
+        )}
+      </div>
+      <div>
+        {next && (
+          <a
+            href={`/chapter/${next.slug}`}
+            class="group block border border-ink-500/40 bg-ink-800/40 px-6 py-5 text-right transition hover:border-plum-400/70"
+          >
+            <p class="font-display text-[10px] tracking-[0.4em] text-ink-300">
+              次の話 →
+            </p>
+            <p class="mt-2 font-display text-sm text-ink-100 group-hover:text-plum-400">
+              第{next.number}話
+            </p>
+          </a>
+        )}
+      </div>
+    </div>
+
+    <div class="mt-12 text-center">
+      <a
+        href="/"
+        class="inline-block border border-ink-500/40 px-8 py-3 text-xs tracking-[0.4em] text-ink-200 transition hover:border-plum-400 hover:text-plum-400"
+      >
+        目次に戻る
+      </a>
+    </div>
+  </nav>
+</Base>
