@@ -47,6 +47,22 @@ export async function getChapters(): Promise<ChapterMeta[]> {
   return metas.sort((a, b) => a.number - b.number);
 }
 
+const KANJI_NUMERALS = ['', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
+
+/** 1〜99 を漢数字にする（判子表記用） */
+export function toKanji(n: number): string {
+  if (n <= 0 || n > 99) return String(n);
+  if (n <= 9) return KANJI_NUMERALS[n];
+  const tens = Math.floor(n / 10);
+  const ones = n % 10;
+  return (tens === 1 ? '' : KANJI_NUMERALS[tens]) + '十' + (ones ? KANJI_NUMERALS[ones] : '');
+}
+
+/** 「第◯話　タイトル」からタイトル部分だけを取り出す */
+export function stripChapterPrefix(titleLine: string): string {
+  return titleLine.replace(/^第[\s〇一二三四五六七八九十0-9]+話\s*/, '');
+}
+
 export function neighbors(chapters: ChapterMeta[], current: ChapterMeta) {
   const idx = chapters.findIndex((c) => c.slug === current.slug);
   return {

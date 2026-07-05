@@ -1,87 +1,107 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getChapters } from '../lib/chapters';
+import { getChapters, toKanji, stripChapterPrefix } from '../lib/chapters';
 
 const chapters = await getChapters();
-const coverSrc = '/画像/表紙イメージ.png';
+const first = chapters[0];
+const coverSrc = '/cover.png';
 ---
 
 <Base title="2度目の転生は女遊び人でした">
-  <!-- HERO -->
-  <section class="relative h-[100svh] w-full overflow-hidden">
+  <!-- HERO：夜の酒場に掛かった一枚絵と看板 -->
+  <section class="relative overflow-hidden">
     <div
-      class="hero-cover absolute inset-0 bg-center bg-cover"
-      style={`background-image: url('${coverSrc}')`}
+      class="mx-auto flex max-w-5xl flex-col items-center gap-12 px-6 pt-16 pb-20 md:flex-row md:gap-16 md:pt-28 md:pb-28"
     >
-    </div>
-    <!-- 下方向だけ和紙色にフェード（読み進めやすくする） -->
-    <div
-      class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent to-ink-50"
-    >
-    </div>
+      <div class="relative shrink-0 fade-in">
+        <div class="absolute -inset-10 rounded-full bg-candle-400/15 blur-3xl" aria-hidden="true"></div>
+        <img
+          src={coverSrc}
+          alt="表紙：酒場に立つバニーガール姿のミア"
+          width="600"
+          height="600"
+          class="relative w-64 rounded-sm shadow-2xl shadow-black/70 ring-1 ring-wood-500/70 md:w-80"
+        />
+      </div>
 
-    <!-- タイトルプレート（白地で抜く） -->
-    <div class="relative z-10 flex h-full flex-col items-center justify-end px-6 pb-24 text-center fade-in">
-      <div class="rounded-sm bg-ink-50/90 px-10 py-10 shadow-2xl shadow-ink-900/10 backdrop-blur-sm">
-        <p class="mb-3 text-[10px] tracking-[0.6em] text-vermilion-500">
-          WEB NOVEL
+      <div class="text-center md:text-left fade-in" style="animation-delay: 0.12s">
+        <p class="font-pixel text-xs tracking-[0.35em] text-candle-400">
+          異世界転生コメディ・連載中
         </p>
-        <h1 class="font-display text-3xl leading-tight text-ink-900 md:text-5xl">
-          2度目の転生は<br class="md:hidden" />女遊び人でした
+        <h1
+          class="mt-5 font-display text-4xl font-bold leading-snug text-parchment-100 md:text-5xl md:leading-snug"
+        >
+          2度目の転生は<br />女遊び人でした
         </h1>
-        <p class="mt-6 max-w-md font-serif text-sm leading-loose text-ink-700 md:text-base">
+        <p class="mt-6 max-w-md text-sm leading-loose text-parchment-300 md:text-base">
           戦えない。魔法も使えない。装備はバニーガール衣装のみ。<br />
           そんな最底辺から、機転と人心掌握だけで「賢者」を目指す。
         </p>
-        <a
-          href="#chapters"
-          class="mt-8 inline-flex items-center gap-2 border border-ink-400/60 px-8 py-3 text-xs tracking-[0.4em] text-ink-800 transition hover:border-vermilion-500 hover:text-vermilion-500"
-        >
-          章一覧へ
-          <span>↓</span>
-        </a>
+        <div class="mt-9 flex flex-wrap items-center justify-center gap-4 md:justify-start">
+          {first && (
+            <a
+              href={`/chapter/${first.slug}`}
+              class="rounded-sm bg-shu-500 px-8 py-3 text-sm tracking-[0.2em] text-parchment-50 shadow-lg shadow-black/40 transition hover:bg-shu-400"
+            >
+              第一話から読む
+            </a>
+          )}
+          <a
+            href="#chapters"
+            class="rounded-sm border border-wood-500 px-8 py-3 font-pixel text-xs tracking-[0.3em] text-parchment-200 transition hover:border-candle-400 hover:text-candle-300"
+          >
+            もくじへ
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- CHAPTERS -->
-  <section id="chapters" class="mx-auto max-w-3xl px-6 py-32">
-    <div class="mb-16 text-center">
-      <p class="text-xs tracking-[0.5em] text-vermilion-500">CHAPTERS</p>
-      <div class="chapter-rule mx-auto mt-6 w-32"></div>
+  <!-- CHAPTERS：話数の朱印が並ぶ目次 -->
+  <section id="chapters" class="mx-auto max-w-2xl px-6 pb-28 pt-4 md:pb-36">
+    <div class="flex items-center gap-5">
+      <div class="h-px flex-1 bg-gradient-to-r from-transparent to-wood-500/80" aria-hidden="true"></div>
+      <h2 class="font-pixel text-sm tracking-[0.5em] text-candle-400">もくじ</h2>
+      <div class="h-px flex-1 bg-gradient-to-l from-transparent to-wood-500/80" aria-hidden="true"></div>
     </div>
 
-    <ul class="space-y-3">
-      {chapters.map((c) => (
+    <ol class="mt-10 space-y-4">
+      {chapters.map((c, i) => (
         <li>
           <a
             href={`/chapter/${c.slug}`}
-            class="group block border border-ink-200 bg-white/70 px-8 py-7 shadow-sm transition hover:-translate-y-0.5 hover:border-vermilion-400/70 hover:bg-white hover:shadow-md"
+            class="sheet group flex items-center gap-5 px-6 py-5 transition duration-200 hover:-translate-y-0.5"
           >
-            <div class="flex items-baseline justify-between gap-6">
-              <div>
-                <p class="font-display text-xs tracking-[0.4em] text-vermilion-500">
-                  CHAPTER {String(c.number).padStart(2, '0')}
-                </p>
-                <h2 class="mt-3 font-display text-xl text-ink-900 md:text-2xl">
-                  {c.titleLine}
-                </h2>
-              </div>
-              <span class="font-display text-ink-400 transition group-hover:translate-x-1 group-hover:text-vermilion-500">
-                →
+            <span
+              class="hanko stamp-in shrink-0 text-xs md:text-sm"
+              style={`animation-delay: ${i * 70}ms`}
+              aria-hidden="true"
+            >
+              {`第${toKanji(c.number)}話`}
+            </span>
+            <span class="min-w-0 flex-1">
+              <span class="sr-only">{`第${c.number}話　`}</span>
+              <span class="flex items-center gap-2">
+                <span
+                  class="w-4 shrink-0 -translate-x-1 font-pixel text-sm text-shu-500 opacity-0 transition duration-200 group-hover:translate-x-0 group-hover:opacity-100"
+                  aria-hidden="true"
+                >
+                  ▶
+                </span>
+                <span class="block truncate font-display text-lg font-medium text-ink-900 md:text-xl">
+                  {stripChapterPrefix(c.titleLine)}
+                </span>
               </span>
-            </div>
+            </span>
           </a>
         </li>
       ))}
-    </ul>
+    </ol>
 
     {chapters.length === 0 && (
-      <p class="text-center text-ink-500">本編はまだ用意されていません。</p>
+      <p class="mt-10 text-center font-pixel text-sm tracking-widest text-parchment-300">
+        まだ話がありません。第一話の掲示をお待ちください。
+      </p>
     )}
   </section>
-
-  <footer class="border-t border-ink-200 py-12 text-center text-xs tracking-widest text-ink-400">
-    © {new Date().getFullYear()} ASOBI-NIN
-  </footer>
 </Base>

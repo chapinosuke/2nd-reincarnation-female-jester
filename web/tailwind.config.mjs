@@ -5,34 +5,49 @@ export default {
     extend: {
       fontFamily: {
         serif: ['"Noto Serif JP"', 'serif'],
-        sans: ['"Noto Sans JP"', 'sans-serif'],
-        display: ['"Shippori Mincho B1"', '"Noto Serif JP"', 'serif'],
+        display: ['"Kaisei Decol"', '"Noto Serif JP"', 'serif'],
+        pixel: ['"DotGothic16"', '"Noto Sans JP"', 'sans-serif'],
       },
       colors: {
-        // 和紙〜墨のスケール（50=最も白い、900=最も濃い墨）
+        // 夜の酒場：胡桃材の褐色（サイト全体の基調）
+        wood: {
+          950: '#1d130c',
+          900: '#241811',
+          800: '#2f2016',
+          700: '#3d2b1d',
+          600: '#4f3a26',
+          500: '#6b5138',
+          400: '#8a6c4b',
+          300: '#a8896a',
+        },
+        // ギルドの書類：羊皮紙（読みの紙面）
+        parchment: {
+          50: '#f9f1dd',
+          100: '#f3e8cc',
+          200: '#eadbb6',
+          300: '#dcc999',
+          400: '#c4ad79',
+        },
+        // 羊皮紙の上のインク
         ink: {
-          50: '#fcfaf3',
-          100: '#f5efe1',
-          200: '#e8dec5',
-          300: '#c9b994',
-          400: '#9d8a66',
-          500: '#6e5e44',
-          600: '#4d3f2c',
-          700: '#352a1c',
-          800: '#231a10',
-          900: '#15100a',
+          900: '#241808',
+          800: '#322512',
+          700: '#4a3a20',
+          600: '#63512f',
+          500: '#7d6a44',
         },
-        plum: {
-          300: '#b88aa8',
-          400: '#90647f',
-          500: '#6a4458',
-          600: '#4a2d3c',
+        // 蝋燭の灯り
+        candle: {
+          300: '#f2c073',
+          400: '#e6a54e',
+          500: '#d38a2f',
+          600: '#b06f1f',
         },
-        // 古代朱 ／ アクセントに使う
-        vermilion: {
-          400: '#c25b4f',
-          500: '#a8413a',
-          600: '#86322d',
+        // 朱肉（判子・アクセント）
+        shu: {
+          400: '#cf4a36',
+          500: '#b93a28',
+          600: '#98301f',
         },
       },
       typography: ({ theme }) => ({
@@ -40,7 +55,7 @@ export default {
           css: {
             color: theme('colors.ink.800'),
             maxWidth: 'none',
-            lineHeight: '2.0',
+            lineHeight: '2.05',
             fontFamily: theme('fontFamily.serif').join(','),
             'p, li': {
               letterSpacing: '0.04em',
@@ -50,15 +65,15 @@ export default {
             h2: { fontFamily: theme('fontFamily.display').join(','), color: theme('colors.ink.900') },
             h3: { fontFamily: theme('fontFamily.display').join(','), color: theme('colors.ink.900') },
             strong: { color: theme('colors.ink.900') },
-            a: { color: theme('colors.plum.500') },
+            a: { color: theme('colors.shu.600') },
             blockquote: {
-              borderLeftColor: theme('colors.ink.300'),
+              borderLeftColor: theme('colors.parchment.400'),
               color: theme('colors.ink.700'),
             },
-            hr: { borderColor: theme('colors.ink.200') },
-            'img': {
+            hr: { borderColor: theme('colors.parchment.300') },
+            img: {
               borderRadius: '0.25rem',
-              boxShadow: '0 25px 50px -20px rgba(53, 42, 28, 0.25)',
+              boxShadow: '0 25px 50px -20px rgba(36, 24, 8, 0.35)',
               marginTop: '2.5em',
               marginBottom: '2.5em',
             },

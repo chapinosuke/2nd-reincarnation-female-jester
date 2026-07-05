@@ -4,24 +4,72 @@
 
 @layer base {
   html {
-    background-color: #fcfaf3;
-    color: #231a10;
+    background-color: #1d130c;
     -webkit-font-smoothing: antialiased;
   }
+  /* 夜の酒場：上から蝋燭の灯り、下へ沈む闇 */
   body {
-    background:
-      radial-gradient(ellipse at top, rgba(168, 65, 58, 0.06), transparent 55%),
-      radial-gradient(ellipse at bottom, rgba(106, 68, 88, 0.05), transparent 60%),
-      #fcfaf3;
     min-height: 100vh;
+    color: #f3e8cc;
+    background:
+      radial-gradient(60rem 32rem at 50% -8rem, rgba(230, 165, 78, 0.12), transparent 65%),
+      linear-gradient(180deg, #2c1e13 0%, #241811 45%, #1d130c 100%);
+    background-attachment: fixed;
   }
   ::selection {
-    background-color: rgba(168, 65, 58, 0.18);
-    color: #15100a;
+    background-color: rgba(230, 165, 78, 0.35);
+    color: #241808;
+  }
+  :focus-visible {
+    outline: 2px solid #e6a54e;
+    outline-offset: 2px;
+    border-radius: 2px;
   }
 }
 
 @layer components {
+  /* ギルドの書類：羊皮紙の紙面 */
+  .sheet {
+    background:
+      radial-gradient(140% 90% at 50% 0%, rgba(255, 249, 230, 0.55), transparent 60%),
+      linear-gradient(180deg, #f6edd6 0%, #f1e5c6 55%, #ead9b4 100%);
+    border: 1px solid rgba(93, 63, 25, 0.3);
+    border-radius: 3px;
+    box-shadow:
+      inset 0 0 70px rgba(146, 102, 40, 0.13),
+      0 22px 44px -22px rgba(0, 0, 0, 0.65);
+  }
+
+  /* 話数の朱印（縦書きの判子） */
+  .hanko {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-family: 'Kaisei Decol', 'Noto Serif JP', serif;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    color: #b93a28;
+    border: 2px solid #b93a28;
+    border-radius: 4px;
+    padding: 0.55rem 0.3rem;
+    transform: rotate(-2.5deg);
+    /* 朱肉のかすれ */
+    -webkit-mask-image: radial-gradient(130% 130% at 32% 36%, #000 52%, rgba(0, 0, 0, 0.7) 78%, rgba(0, 0, 0, 0.92) 100%);
+    mask-image: radial-gradient(130% 130% at 32% 36%, #000 52%, rgba(0, 0, 0, 0.7) 78%, rgba(0, 0, 0, 0.92) 100%);
+  }
+
+  /* 捺印のモーション（目次で段差スタッガー） */
+  .stamp-in {
+    animation: stampIn 0.45s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.8s ease-out both;
+  }
+
   /* Reader image utilities */
   .prose .img-full img,
   .prose img.img-full {
@@ -57,32 +105,16 @@
   .chapter-body > h2:first-child {
     display: none;
   }
+}
 
-  /* 章タイトルの装飾（◇ で挟まれた細いライン） */
-  .chapter-rule {
-    position: relative;
-    height: 1px;
-    background: linear-gradient(
-      to right,
-      transparent,
-      rgba(53, 42, 28, 0.35),
-      transparent
-    );
+@keyframes stampIn {
+  from {
+    opacity: 0;
+    transform: rotate(-9deg) scale(1.55);
   }
-  .chapter-rule::before {
-    content: '◆';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: rgba(168, 65, 58, 0.7);
-    background: #fcfaf3;
-    padding: 0 1rem;
-    font-size: 0.75rem;
-  }
-
-  .fade-in {
-    animation: fadeIn 0.8s ease-out both;
+  to {
+    opacity: 1;
+    transform: rotate(-2.5deg) scale(1);
   }
 }
 
@@ -97,8 +129,12 @@
   }
 }
 
-/* ヒーロー：表紙画像はそのままの色で見せる */
-.hero-cover {
-  filter: brightness(1) contrast(1.02) saturate(1.05);
-  transform: scale(1.05);
+@media (prefers-reduced-motion: reduce) {
+  .stamp-in,
+  .fade-in {
+    animation: none;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+  }
 }
