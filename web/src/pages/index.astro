@@ -8,32 +8,34 @@ const coverSrc = '/cover.png';
 ---
 
 <Base title="2度目の転生は女遊び人でした">
-  <!-- HERO：夜の酒場に掛かった一枚絵と看板 -->
+  <!-- HERO：湖水色の見出しと一枚絵 -->
   <section class="relative overflow-hidden">
+    <div class="tide-rule absolute inset-x-0 top-0 h-[3px]" aria-hidden="true"></div>
     <div
       class="mx-auto flex max-w-5xl flex-col items-center gap-12 px-6 pt-16 pb-20 md:flex-row md:gap-16 md:pt-28 md:pb-28"
     >
       <div class="relative shrink-0 fade-in">
-        <div class="absolute -inset-10 rounded-full bg-candle-400/15 blur-3xl" aria-hidden="true"></div>
+        <div class="absolute -inset-10 rounded-full bg-tide-400/15 blur-3xl" aria-hidden="true"></div>
         <img
           src={coverSrc}
           alt="表紙：酒場に立つバニーガール姿のミア"
           width="600"
           height="600"
-          class="relative w-64 rounded-sm shadow-2xl shadow-black/70 ring-1 ring-wood-500/70 md:w-80"
+          class="relative w-64 rounded-sm shadow-2xl shadow-tide-900/40 ring-1 ring-gilt-400/50 md:w-80"
         />
       </div>
 
       <div class="text-center md:text-left fade-in" style="animation-delay: 0.12s">
-        <p class="font-pixel text-xs tracking-[0.35em] text-candle-400">
-          異世界転生コメディ・連載中
+        <p class="font-eyebrow text-xs tracking-[0.35em] text-tide-600">
+          TRANSMIGRATION COMEDY
         </p>
+        <p class="mt-1 text-xs tracking-[0.3em] text-ink-500">異世界転生コメディ・連載中</p>
         <h1
-          class="mt-5 font-display text-4xl font-bold leading-snug text-parchment-100 md:text-5xl md:leading-snug"
+          class="mt-5 font-display text-4xl font-bold leading-snug text-tide-900 md:text-5xl md:leading-snug"
         >
           2度目の転生は<br />女遊び人でした
         </h1>
-        <p class="mt-6 max-w-md text-sm leading-loose text-parchment-300 md:text-base">
+        <p class="mt-6 max-w-md text-sm leading-loose text-ink-700 md:text-base">
           戦えない。魔法も使えない。装備はバニーガール衣装のみ。<br />
           そんな最底辺から、機転と人心掌握だけで「賢者」を目指す。
         </p>
@@ -41,14 +43,14 @@ const coverSrc = '/cover.png';
           {first && (
             <a
               href={`/chapter/${first.slug}`}
-              class="rounded-sm bg-shu-500 px-8 py-3 text-sm tracking-[0.2em] text-parchment-50 shadow-lg shadow-black/40 transition hover:bg-shu-400"
+              class="rounded-sm bg-seal-500 px-8 py-3 text-sm tracking-[0.2em] text-paper-50 shadow-lg shadow-seal-600/30 transition hover:bg-seal-400"
             >
               第一話から読む
             </a>
           )}
           <a
             href="#chapters"
-            class="rounded-sm border border-wood-500 px-8 py-3 font-pixel text-xs tracking-[0.3em] text-parchment-200 transition hover:border-candle-400 hover:text-candle-300"
+            class="rounded-sm border border-tide-500/60 px-8 py-3 font-eyebrow text-xs tracking-[0.3em] text-tide-700 transition hover:border-gilt-400 hover:text-gilt-600"
           >
             もくじへ
           </a>
@@ -60,10 +62,11 @@ const coverSrc = '/cover.png';
   <!-- CHAPTERS：話数の朱印が並ぶ目次 -->
   <section id="chapters" class="mx-auto max-w-2xl px-6 pb-28 pt-4 md:pb-36">
     <div class="flex items-center gap-5">
-      <div class="h-px flex-1 bg-gradient-to-r from-transparent to-wood-500/80" aria-hidden="true"></div>
-      <h2 class="font-pixel text-sm tracking-[0.5em] text-candle-400">もくじ</h2>
-      <div class="h-px flex-1 bg-gradient-to-l from-transparent to-wood-500/80" aria-hidden="true"></div>
+      <div class="tide-rule h-px flex-1 opacity-40" aria-hidden="true"></div>
+      <h2 class="font-eyebrow text-sm tracking-[0.5em] text-gilt-500">CONTENTS</h2>
+      <div class="tide-rule h-px flex-1 opacity-40" aria-hidden="true"></div>
     </div>
+    <p class="mt-2 text-center text-xs tracking-[0.3em] text-ink-500">もくじ</p>
 
     <ol class="mt-10 space-y-4">
       {chapters.map((c, i) => (
@@ -83,12 +86,12 @@ const coverSrc = '/cover.png';
               <span class="sr-only">{`第${c.number}話　`}</span>
               <span class="flex items-center gap-2">
                 <span
-                  class="w-4 shrink-0 -translate-x-1 font-pixel text-sm text-shu-500 opacity-0 transition duration-200 group-hover:translate-x-0 group-hover:opacity-100"
+                  class="w-4 shrink-0 -translate-x-1 font-eyebrow text-sm text-tide-500 opacity-0 transition duration-200 group-hover:translate-x-0 group-hover:opacity-100"
                   aria-hidden="true"
                 >
                   ▶
                 </span>
-                <span class="block truncate font-display text-lg font-medium text-ink-900 md:text-xl">
+                <span class="block truncate font-display text-lg font-medium text-tide-900 md:text-xl">
                   {stripChapterPrefix(c.titleLine)}
                 </span>
               </span>
@@ -99,7 +102,7 @@ const coverSrc = '/cover.png';
     </ol>
 
     {chapters.length === 0 && (
-      <p class="mt-10 text-center font-pixel text-sm tracking-widest text-parchment-300">
+      <p class="mt-10 text-center font-eyebrow text-sm tracking-widest text-ink-500">
         まだ話がありません。第一話の掲示をお待ちください。
       </p>
     )}

@@ -4,61 +4,92 @@
 
 @layer base {
   html {
-    background-color: #1d130c;
+    background-color: #fbfaf4;
     -webkit-font-smoothing: antialiased;
   }
-  /* 夜の酒場：上から蝋燭の灯り、下へ沈む闇 */
+  /* 紙の質感：生成りの地に、細かな粒状のノイズを重ねる（フリーレン公式サイトの noice.jpg を踏襲） */
   body {
     min-height: 100vh;
-    color: #f3e8cc;
-    background:
-      radial-gradient(60rem 32rem at 50% -8rem, rgba(230, 165, 78, 0.12), transparent 65%),
-      linear-gradient(180deg, #2c1e13 0%, #241811 45%, #1d130c 100%);
-    background-attachment: fixed;
+    color: #20211d;
+    background-color: #fbfaf4;
+    background-image:
+      radial-gradient(48rem 26rem at 50% -6rem, rgba(15, 140, 141, 0.07), transparent 65%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    background-repeat: no-repeat, repeat;
+    background-attachment: scroll, fixed;
   }
   ::selection {
-    background-color: rgba(230, 165, 78, 0.35);
-    color: #241808;
+    background-color: rgba(15, 140, 141, 0.18);
+    color: #0d3335;
   }
   :focus-visible {
-    outline: 2px solid #e6a54e;
+    outline: 2px solid #0f8c8d;
     outline-offset: 2px;
     border-radius: 2px;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f5f1e6;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #0f8c8d 0%, #238c68 100%);
+    border-radius: 6px;
   }
 }
 
 @layer components {
-  /* ギルドの書類：羊皮紙の紙面 */
+  /* ギルドの書類：紙面のカード。湖水と金の細い縁取りで、白磁の地に軽く浮かせる */
   .sheet {
+    position: relative;
     background:
-      radial-gradient(140% 90% at 50% 0%, rgba(255, 249, 230, 0.55), transparent 60%),
-      linear-gradient(180deg, #f6edd6 0%, #f1e5c6 55%, #ead9b4 100%);
-    border: 1px solid rgba(93, 63, 25, 0.3);
-    border-radius: 3px;
+      radial-gradient(140% 90% at 50% 0%, rgba(255, 255, 255, 0.9), transparent 60%),
+      linear-gradient(180deg, #fdfcf7 0%, #f6f2e6 100%);
+    border: 1px solid rgba(171, 138, 62, 0.25);
+    border-radius: 4px;
     box-shadow:
-      inset 0 0 70px rgba(146, 102, 40, 0.13),
-      0 22px 44px -22px rgba(0, 0, 0, 0.65);
+      inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+      0 18px 36px -22px rgba(13, 51, 53, 0.35);
+  }
+  .sheet::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 4px;
+    padding: 1px;
+    background: linear-gradient(120deg, rgba(15, 140, 141, 0.45), rgba(203, 170, 92, 0.5));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.55;
+    pointer-events: none;
   }
 
-  /* 話数の朱印（縦書きの判子） */
+  /* 話数の朱印（縦書きの判子）。冷たい湖水×金の紙面の中で、唯一の暖色として効かせる */
   .hanko {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     writing-mode: vertical-rl;
     text-orientation: upright;
-    font-family: 'Kaisei Decol', 'Noto Serif JP', serif;
+    font-family: 'Zen Old Mincho', 'Noto Serif JP', serif;
     font-weight: 700;
     line-height: 1;
     letter-spacing: 0.14em;
-    color: #b93a28;
-    border: 2px solid #b93a28;
+    color: #a83c2b;
+    border: 2px solid #a83c2b;
     border-radius: 4px;
     padding: 0.55rem 0.3rem;
     transform: rotate(-2.5deg);
     /* 朱肉のかすれ */
     -webkit-mask-image: radial-gradient(130% 130% at 32% 36%, #000 52%, rgba(0, 0, 0, 0.7) 78%, rgba(0, 0, 0, 0.92) 100%);
     mask-image: radial-gradient(130% 130% at 32% 36%, #000 52%, rgba(0, 0, 0, 0.7) 78%, rgba(0, 0, 0, 0.92) 100%);
+  }
+
+  /* 湖水から森へ流れる細い一条（フリーレン公式サイトのヘッダー・グラデーションを踏襲） */
+  .tide-rule {
+    background: linear-gradient(90deg, #0f8c8d 0%, #238c68 100%);
   }
 
   /* 捺印のモーション（目次で段差スタッガー） */
