@@ -11,7 +11,7 @@ const party = [
     intro:
       '目が覚めたら「ミア」だった誰か。戦えない。魔法も使えない。装備はバニーガール衣装のみ。それでも、酒場で身体が覚えていた接客の眼と機転だけで、荒くれ者の視線も、場の空気も、まとめて動かしてしまう。心の声はなぜか「オレ」。声は、数えてみたら四種類あった。',
     quote: '一言：「後ろ、取られてますよ」',
-    image: '/gallery/mia-turnaround.webp',
+    image: '/characters/mia.webp',
     imageAlt: 'ミアの三面図（正面・側面・背面）',
   },
   {
@@ -21,8 +21,8 @@ const party = [
     intro:
       '気弱で慎重な青年。剣の柄は手垢で黒光りして、刀身は鏡のまま――つまり、抜いた回数が少ない。口癖は「誰か得意な人がやれば……」。それでも剣を捨てないことに、彼なりの意味がある。',
     quote: '一言：「あの……すみません。本当に、立ってるだけでいいので……」',
-    image: null,
-    imageAlt: '',
+    image: '/characters/alto.webp',
+    imageAlt: 'アルトの三面図（正面・側面・背面）',
   },
   {
     hanko: '僧侶',
@@ -31,8 +31,8 @@ const party = [
     intro:
       '三歳で算盤、五歳で帳簿、七歳で取り立て。回復魔法は「コストのかかる労働」と言い切り、赤字の依頼は受けない――はずなのに、彼女の選ぶ答えはいつも、誰も潰さない。彼女の口にする金額は、必ず計算が合う。',
     quote: '一言：「礼を言うな。費用対効果で言ってる」',
-    image: null,
-    imageAlt: '',
+    image: '/characters/sera.webp',
+    imageAlt: 'セラの三面図（正面・側面・背面）',
   },
   {
     hanko: '魔法使い',
@@ -41,8 +41,8 @@ const party = [
     intro:
       '元・武闘家。「魔法を唱えるより殴った方が早い」。魔王討伐の経験者らしいが、武勇伝は語るたびに細部が食い違う。酒が入ると手が出る。罰金は一件モンメリー2枚、帳簿に記されて妻へ送金される。',
     quote: '一言：「歳を取ると、手は意思を持つ。俺じゃない、手だ」',
-    image: null,
-    imageAlt: '',
+    image: '/characters/gold.webp',
+    imageAlt: 'ゴルドの三面図（正面・側面・背面）',
   },
 ];
 ---
@@ -71,46 +71,42 @@ const party = [
       {
         party.map((c) => (
           <article class="sheet fade-in px-6 py-8 md:px-9 md:py-9">
-            <div class="flex flex-col gap-7 md:flex-row md:items-start md:gap-8">
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center gap-4">
-                  <span class="hanko shrink-0 text-xs md:text-sm" aria-hidden="true">
-                    {c.hanko}
-                  </span>
-                  <div class="min-w-0">
-                    <h2 class="font-display text-2xl font-bold leading-tight text-tide-900 md:text-3xl">
-                      {c.name}
-                    </h2>
-                    <p class="mt-1 text-xs tracking-[0.15em] text-ink-500">
-                      {c.hanko}
-                      {c.qualifier}
-                    </p>
-                  </div>
-                </div>
-                <p class="mt-6 text-[0.95rem] leading-[2.05] tracking-[0.04em] text-ink-800">
-                  {c.intro}
+            <div class="flex items-center gap-4">
+              <span class="hanko shrink-0 text-xs md:text-sm" aria-hidden="true">
+                {c.hanko}
+              </span>
+              <div class="min-w-0">
+                <h2 class="font-display text-2xl font-bold leading-tight text-tide-900 md:text-3xl">
+                  {c.name}
+                </h2>
+                <p class="mt-1 text-xs tracking-[0.15em] text-ink-500">
+                  {c.hanko}
+                  {c.qualifier}
                 </p>
-                <blockquote class="mt-6 border-l-2 border-gilt-400 pl-4 text-sm italic text-ink-700">
-                  {c.quote}
-                </blockquote>
               </div>
-
-              {c.image && (
-                <figure class="mx-auto w-full max-w-[16rem] shrink-0 md:mx-0 md:w-56">
-                  <img
-                    src={c.image}
-                    alt={c.imageAlt}
-                    width="1600"
-                    height="1600"
-                    loading="lazy"
-                    class="w-full rounded-sm bg-paper-100 shadow-lg shadow-tide-900/20 ring-1 ring-gilt-400/50"
-                  />
-                  <figcaption class="mt-2 text-center font-eyebrow text-[10px] tracking-[0.25em] text-ink-500">
-                    TURNAROUND
-                  </figcaption>
-                </figure>
-              )}
             </div>
+            <p class="mt-6 text-[0.95rem] leading-[2.05] tracking-[0.04em] text-ink-800">
+              {c.intro}
+            </p>
+            <blockquote class="mt-6 border-l-2 border-gilt-400 pl-4 text-sm italic text-ink-700">
+              {c.quote}
+            </blockquote>
+
+            {c.image && (
+              <figure class="mt-8">
+                <img
+                  src={c.image}
+                  alt={c.imageAlt}
+                  width="1448"
+                  height="1086"
+                  loading="lazy"
+                  class="w-full rounded-sm bg-paper-100 shadow-lg shadow-tide-900/20 ring-1 ring-gilt-400/50"
+                />
+                <figcaption class="mt-2 text-center font-eyebrow text-[10px] tracking-[0.25em] text-ink-500">
+                  TURNAROUND
+                </figcaption>
+              </figure>
+            )}
           </article>
         ))
       }
