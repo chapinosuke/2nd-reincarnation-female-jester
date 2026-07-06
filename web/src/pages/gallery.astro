@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import PageNav from '../components/PageNav.astro';
+
+// キャプションは確定稿・改変禁止
+const works = [
+  { src: '/gallery/mia-mirror-shock.webp', caption: '目覚めたら、女だった' },
+  { src: '/gallery/mia-tavern-pouring.webp', caption: '職場は酒場『陽気な冒険者』' },
+  { src: '/gallery/mia-scolding-veteran.webp', caption: '勘定前に沈没する魔法使い' },
+  { src: '/gallery/party-cave-chase.webp', caption: '戦えないのに、前に出る' },
+];
+---
+
+<Base
+  title="画廊 ｜ 2度目の転生は女遊び人でした"
+  description="酒場の壁に飾られた四枚――『2度目の転生は女遊び人でした』の一枚絵。"
+>
+  <PageNav label="GALLERY" />
+
+  <main class="mx-auto max-w-4xl px-6 pb-24 pt-14 md:pt-20">
+    <!-- 見出し -->
+    <header class="fade-in text-center">
+      <p class="font-eyebrow text-sm tracking-[0.5em] text-gilt-500">GALLERY</p>
+      <h1 class="mt-3 font-display text-4xl font-bold text-tide-900 md:text-5xl">画廊</h1>
+      <p class="mt-4 text-sm text-ink-600">――酒場の壁に飾られた四枚</p>
+      <div class="mx-auto mt-7 flex max-w-xs items-center gap-4" aria-hidden="true">
+        <div class="h-px flex-1 bg-gradient-to-r from-transparent to-gilt-400/50"></div>
+        <span class="text-xs text-seal-500">◆</span>
+        <div class="h-px flex-1 bg-gradient-to-l from-transparent to-gilt-400/50"></div>
+      </div>
+    </header>
+
+    <!-- 2列グリッド（モバイル1列） -->
+    <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8">
+      {
+        works.map((w) => (
+          <figure class="sheet fade-in overflow-hidden p-3 md:p-4">
+            <img
+              src={w.src}
+              alt={w.caption}
+              width="1600"
+              height="1600"
+              loading="lazy"
+              class="w-full rounded-sm bg-paper-100 shadow-lg shadow-tide-900/20 ring-1 ring-gilt-400/50"
+            />
+            <figcaption class="flex items-center gap-2 px-1 pb-1 pt-4 font-display text-sm text-tide-900 md:text-base">
+              <span class="text-xs text-seal-500" aria-hidden="true">
+                ◆
+              </span>
+              「{w.caption}」
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+
+    <!-- 戻る導線 -->
+    <div class="mt-14 text-center">
+      <a
+        href="/"
+        class="inline-block rounded-sm border border-tide-500/60 px-8 py-3 font-eyebrow text-xs tracking-[0.3em] text-tide-700 transition hover:border-gilt-400 hover:text-gilt-600"
+      >
+        もくじにもどる
+      </a>
+    </div>
+  </main>
+</Base>

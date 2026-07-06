@@ -11,8 +11,15 @@ const coverSrc = '/cover.png';
   <!-- HERO：湖水色の見出しと一枚絵 -->
   <section class="relative overflow-hidden">
     <div class="tide-rule absolute inset-x-0 top-0 h-[3px]" aria-hidden="true"></div>
+    <!-- エールの泡紋様：右奥にごく薄く敷く装飾。表紙背後のグローとなじませる -->
+    <img
+      src="/pattern-ale.svg"
+      alt=""
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-y-0 right-0 z-0 h-full w-auto opacity-60"
+    />
     <div
-      class="mx-auto flex max-w-5xl flex-col items-center gap-12 px-6 pt-16 pb-20 md:flex-row md:gap-16 md:pt-28 md:pb-28"
+      class="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-12 px-6 pt-16 pb-20 md:flex-row md:gap-16 md:pt-28 md:pb-28"
     >
       <div class="relative shrink-0 fade-in">
         <div class="absolute -inset-10 rounded-full bg-tide-400/15 blur-3xl" aria-hidden="true"></div>
@@ -49,6 +56,14 @@ const coverSrc = '/cover.png';
             </a>
           )}
           <a
+            id="continue-reading"
+            href="/"
+            hidden
+            class="rounded-sm border border-tide-500/60 px-8 py-3 text-sm tracking-[0.2em] text-tide-700 transition hover:border-gilt-400 hover:text-gilt-600"
+          >
+            つづきから読む
+          </a>
+          <a
             href="#chapters"
             class="rounded-sm border border-tide-500/60 px-8 py-3 font-eyebrow text-xs tracking-[0.3em] text-tide-700 transition hover:border-gilt-400 hover:text-gilt-600"
           >
@@ -58,6 +73,30 @@ const coverSrc = '/cover.png';
       </div>
     </div>
   </section>
+
+  <!-- ページ入口：人物／世界観／帳簿／画廊 -->
+  <nav class="mx-auto max-w-2xl px-6 pb-4">
+    <ul class="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+      {[
+        { href: '/characters', en: 'CHARACTERS', ja: '人物' },
+        { href: '/world', en: 'WORLD', ja: '世界観' },
+        { href: '/ledger', en: 'LEDGER', ja: '帳簿' },
+        { href: '/gallery', en: 'GALLERY', ja: '画廊' },
+      ].map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class="sheet group flex flex-col items-center gap-1 px-3 py-4 text-center transition duration-200 hover:-translate-y-0.5"
+          >
+            <span class="font-eyebrow text-[10px] tracking-[0.3em] text-gilt-500 transition group-hover:text-gilt-600">
+              {item.en}
+            </span>
+            <span class="font-display text-base text-tide-900 md:text-lg">{item.ja}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
 
   <!-- CHAPTERS：話数の朱印が並ぶ目次 -->
   <section id="chapters" class="mx-auto max-w-2xl px-6 pb-28 pt-4 md:pb-36">
@@ -107,4 +146,20 @@ const coverSrc = '/cover.png';
       </p>
     )}
   </section>
+
+  <!-- 「つづきから読む」：last-read がある場合のみ表示 -->
+  <script is:inline>
+    (function () {
+      try {
+        var raw = localStorage.getItem('last-read');
+        if (!raw) return;
+        var data = JSON.parse(raw);
+        if (!data || !data.slug) return;
+        var el = document.getElementById('continue-reading');
+        if (!el) return;
+        el.setAttribute('href', '/chapter/' + data.slug);
+        el.hidden = false;
+      } catch (e) {}
+    })();
+  </script>
 </Base>

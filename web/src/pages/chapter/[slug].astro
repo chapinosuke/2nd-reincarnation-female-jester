@@ -31,7 +31,12 @@ const title = stripChapterPrefix(current.titleLine);
       <span class="font-eyebrow text-xs tracking-[0.35em] text-gilt-600">
         第{current.number}話
       </span>
-      <span class="w-14" aria-hidden="true"></span>
+      <div class="flex items-center gap-1" role="group" aria-label="文字サイズ">
+        <span class="mr-0.5 font-display text-[11px] text-ink-500" aria-hidden="true">字</span>
+        <button type="button" data-font-btn="s" aria-label="文字を小さく" class="font-btn">小</button>
+        <button type="button" data-font-btn="m" aria-label="文字を標準に" class="font-btn">中</button>
+        <button type="button" data-font-btn="l" aria-label="文字を大きく" class="font-btn">大</button>
+      </div>
     </div>
   </header>
 
@@ -99,4 +104,29 @@ const title = stripChapterPrefix(current.titleLine);
       </a>
     </div>
   </nav>
+
+  <!-- 読了位置の保存（続きから読む用） -->
+  <script is:inline define:vars={{ slug: current.slug, number: current.number, title }}>
+    try {
+      localStorage.setItem('last-read', JSON.stringify({ slug: slug, number: number, title: title }));
+    } catch (e) {}
+  </script>
+
+  <!-- 文字サイズ切替 -->
+  <script is:inline>
+    (function () {
+      function setSize(s) {
+        try {
+          localStorage.setItem('reader-font-size', s);
+        } catch (e) {}
+        document.documentElement.setAttribute('data-font-size', s);
+      }
+      var btns = document.querySelectorAll('[data-font-btn]');
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener('click', function () {
+          setSize(this.getAttribute('data-font-btn'));
+        });
+      }
+    })();
+  </script>
 </Base>

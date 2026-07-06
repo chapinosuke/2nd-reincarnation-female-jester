@@ -1,0 +1,187 @@
+---
+import Base from '../layouts/Base.astro';
+import PageNav from '../components/PageNav.astro';
+
+// パーティー4人（文面は確定稿・改変禁止）
+const party = [
+  {
+    hanko: '遊び人',
+    name: 'ミア',
+    qualifier: '',
+    intro:
+      '目が覚めたら「ミア」だった誰か。戦えない。魔法も使えない。装備はバニーガール衣装のみ。それでも、酒場で身体が覚えていた接客の眼と機転だけで、荒くれ者の視線も、場の空気も、まとめて動かしてしまう。心の声はなぜか「オレ」。声は、数えてみたら四種類あった。',
+    quote: '一言：「後ろ、取られてますよ」',
+    image: '/gallery/mia-turnaround.webp',
+    imageAlt: 'ミアの三面図（正面・側面・背面）',
+  },
+  {
+    hanko: '勇者',
+    name: 'アルト',
+    qualifier: '（自称）',
+    intro:
+      '気弱で慎重な青年。剣の柄は手垢で黒光りして、刀身は鏡のまま――つまり、抜いた回数が少ない。口癖は「誰か得意な人がやれば……」。それでも剣を捨てないことに、彼なりの意味がある。',
+    quote: '一言：「あの……すみません。本当に、立ってるだけでいいので……」',
+    image: null,
+    imageAlt: '',
+  },
+  {
+    hanko: '僧侶',
+    name: 'セラ',
+    qualifier: '（元・金貸しの娘）',
+    intro:
+      '三歳で算盤、五歳で帳簿、七歳で取り立て。回復魔法は「コストのかかる労働」と言い切り、赤字の依頼は受けない――はずなのに、彼女の選ぶ答えはいつも、誰も潰さない。彼女の口にする金額は、必ず計算が合う。',
+    quote: '一言：「礼を言うな。費用対効果で言ってる」',
+    image: null,
+    imageAlt: '',
+  },
+  {
+    hanko: '魔法使い',
+    name: 'ゴルド',
+    qualifier: '（武闘派）',
+    intro:
+      '元・武闘家。「魔法を唱えるより殴った方が早い」。魔王討伐の経験者らしいが、武勇伝は語るたびに細部が食い違う。酒が入ると手が出る。罰金は一件モンメリー2枚、帳簿に記されて妻へ送金される。',
+    quote: '一言：「歳を取ると、手は意思を持つ。俺じゃない、手だ」',
+    image: null,
+    imageAlt: '',
+  },
+];
+---
+
+<Base
+  title="人物 ｜ 2度目の転生は女遊び人でした"
+  description="『陽気な冒険者』の常連台帳より――パーティー4人と、その周辺の人物たち。"
+>
+  <PageNav label="CHARACTERS" />
+
+  <main class="mx-auto max-w-3xl px-6 pb-24 pt-14 md:pt-20">
+    <!-- 見出し -->
+    <header class="fade-in text-center">
+      <p class="font-eyebrow text-sm tracking-[0.5em] text-gilt-500">CHARACTERS</p>
+      <h1 class="mt-3 font-display text-4xl font-bold text-tide-900 md:text-5xl">人物</h1>
+      <p class="mt-4 text-sm text-ink-600">――『陽気な冒険者』の常連台帳より</p>
+      <div class="mx-auto mt-7 flex max-w-xs items-center gap-4" aria-hidden="true">
+        <div class="h-px flex-1 bg-gradient-to-r from-transparent to-gilt-400/50"></div>
+        <span class="text-xs text-seal-500">◆</span>
+        <div class="h-px flex-1 bg-gradient-to-l from-transparent to-gilt-400/50"></div>
+      </div>
+    </header>
+
+    <!-- パーティー4人 -->
+    <div class="mt-12 space-y-8">
+      {
+        party.map((c) => (
+          <article class="sheet fade-in px-6 py-8 md:px-9 md:py-9">
+            <div class="flex flex-col gap-7 md:flex-row md:items-start md:gap-8">
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center gap-4">
+                  <span class="hanko shrink-0 text-xs md:text-sm" aria-hidden="true">
+                    {c.hanko}
+                  </span>
+                  <div class="min-w-0">
+                    <h2 class="font-display text-2xl font-bold leading-tight text-tide-900 md:text-3xl">
+                      {c.name}
+                    </h2>
+                    <p class="mt-1 text-xs tracking-[0.15em] text-ink-500">
+                      {c.hanko}
+                      {c.qualifier}
+                    </p>
+                  </div>
+                </div>
+                <p class="mt-6 text-[0.95rem] leading-[2.05] tracking-[0.04em] text-ink-800">
+                  {c.intro}
+                </p>
+                <blockquote class="mt-6 border-l-2 border-gilt-400 pl-4 text-sm italic text-ink-700">
+                  {c.quote}
+                </blockquote>
+              </div>
+
+              {c.image && (
+                <figure class="mx-auto w-full max-w-[16rem] shrink-0 md:mx-0 md:w-56">
+                  <img
+                    src={c.image}
+                    alt={c.imageAlt}
+                    width="1600"
+                    height="1600"
+                    loading="lazy"
+                    class="w-full rounded-sm bg-paper-100 shadow-lg shadow-tide-900/20 ring-1 ring-gilt-400/50"
+                  />
+                  <figcaption class="mt-2 text-center font-eyebrow text-[10px] tracking-[0.25em] text-ink-500">
+                    TURNAROUND
+                  </figcaption>
+                </figure>
+              )}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <!-- マルヴァ：ティザーカード（このカードのみモーヴ差し色） -->
+    <article
+      class="fade-in relative mt-8 overflow-hidden rounded-[4px] px-6 py-8 md:px-9 md:py-9"
+      style="background: radial-gradient(140% 90% at 50% 0%, rgba(255,255,255,0.85), transparent 60%), linear-gradient(180deg, #fdfbfe 0%, #f3edf5 100%);"
+    >
+      <!-- モーヴの縁グラデ -->
+      <span
+        class="pointer-events-none absolute inset-0 rounded-[4px]"
+        aria-hidden="true"
+        style="padding:1px; background:linear-gradient(120deg, rgba(141,95,158,0.55), rgba(203,170,92,0.5)); -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude;"
+      ></span>
+      <div class="flex flex-col gap-7 md:flex-row md:items-center md:gap-8">
+        <!-- 肖像は置かず、mallow系の霞んだシルエット枠（CSSのみ） -->
+        <div
+          class="mx-auto h-44 w-36 shrink-0 rounded-sm md:mx-0"
+          aria-hidden="true"
+          style="border:1px solid rgba(141,95,158,0.35); background: radial-gradient(60% 42% at 50% 34%, rgba(141,95,158,0.5), transparent 60%), radial-gradient(90% 55% at 50% 100%, rgba(113,74,128,0.45), transparent 62%), linear-gradient(180deg, #f6f1f7 0%, #ece3ef 100%); filter: blur(0.3px);"
+        >
+          <span
+            class="flex h-full items-center justify-center font-display text-3xl"
+            style="color: rgba(113,74,128,0.55);">？</span>
+        </div>
+        <div class="min-w-0 flex-1">
+          <p class="font-eyebrow text-xs tracking-[0.4em]" style="color:#8d5f9e;">???</p>
+          <h2 class="mt-2 font-display text-2xl font-bold leading-tight md:text-3xl" style="color:#714a80;">
+            マルヴァ
+          </h2>
+          <p class="mt-1 text-xs tracking-[0.15em]" style="color:#8d5f9e;">？？？</p>
+          <p class="mt-5 text-[0.95rem] leading-[2.05] tracking-[0.04em] text-ink-800">
+            ゴルドの妻。セラは「姐さん」と呼ぶ。罰金の送金先。業界の古株は、その名を声を落として語る。――まだ誰も、その姿を見ていない。
+          </p>
+          <blockquote
+            class="mt-5 border-l-2 pl-4 text-sm italic"
+            style="border-color:#8d5f9e; color:#5c3a68;"
+          >
+            言伝：「そろそろ、そっちに戻る」
+          </blockquote>
+        </div>
+      </div>
+    </article>
+
+    <!-- 峠の主：ネタバレ折りたたみ -->
+    <details class="sheet fade-in group mt-8 px-6 py-5 md:px-9">
+      <summary
+        class="cursor-pointer list-none font-display text-base text-tide-900 marker:content-none [&::-webkit-details-marker]:hidden"
+      >
+        <span class="text-seal-500">▶</span> 峠の主について（第十五話より先を読んだ方だけ、開いてください）
+      </summary>
+      <div class="mt-5">
+        <p class="text-[0.95rem] leading-[2.05] tracking-[0.04em] text-ink-800">
+          古竜。峠の縄張りに数百年。討伐依頼はギルドに常設、高額、達成者なし。挑む者は皆、同じ名乗りと同じ台詞を持ってくる。殺すのはとうに飽きた。
+        </p>
+        <blockquote class="mt-5 border-l-2 border-gilt-400 pl-4 text-sm italic text-ink-700">
+          一言：「我が縄張りに、また羽虫が迷い込んできたか」
+        </blockquote>
+      </div>
+    </details>
+
+    <!-- 戻る導線 -->
+    <div class="mt-14 text-center">
+      <a
+        href="/"
+        class="inline-block rounded-sm border border-tide-500/60 px-8 py-3 font-eyebrow text-xs tracking-[0.3em] text-tide-700 transition hover:border-gilt-400 hover:text-gilt-600"
+      >
+        もくじにもどる
+      </a>
+    </div>
+  </main>
+</Base>

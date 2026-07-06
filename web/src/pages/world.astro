@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import PageNav from '../components/PageNav.astro';
+
+// 物価の目安（資料室調べ）※文面は確定稿・改変禁止
+const prices = [
+  { item: '屋台のスープ一杯', price: 'ピィ2枚' },
+  { item: '酒場で一晩の豪飲', price: 'ピィ12〜13枚' },
+  { item: '宿代（居眠り山羊亭・一泊・一行分）', price: 'ピィ6枚' },
+  { item: '臨時雇いの日当（相場より大幅に安い実績値）', price: 'ピィ2枚' },
+  { item: 'セクハラ罰金（パーティー内制度・一件）', price: 'モンメリー2枚' },
+];
+---
+
+<Base
+  title="世界観 ｜ 2度目の転生は女遊び人でした"
+  description="灰鷲ギルド ハイベル支部・資料室蔵――勇者・通貨・物価・ギルド・罰金・暮らしの覚書。"
+>
+  <PageNav label="WORLD" />
+
+  <main class="mx-auto max-w-3xl px-6 pb-24 pt-14 md:pt-20">
+    <!-- 見出し -->
+    <header class="fade-in text-center">
+      <p class="font-eyebrow text-sm tracking-[0.5em] text-gilt-500">WORLD</p>
+      <h1 class="mt-3 font-display text-4xl font-bold text-tide-900 md:text-5xl">世界観</h1>
+      <p class="mt-4 text-sm text-ink-600">――灰鷲ギルド　ハイベル支部・資料室蔵</p>
+      <div class="mx-auto mt-7 flex max-w-xs items-center gap-4" aria-hidden="true">
+        <div class="h-px flex-1 bg-gradient-to-r from-transparent to-gilt-400/50"></div>
+        <span class="text-xs text-seal-500">◆</span>
+        <div class="h-px flex-1 bg-gradient-to-l from-transparent to-gilt-400/50"></div>
+      </div>
+    </header>
+
+    <div class="mt-12 space-y-8">
+      <!-- 一 -->
+      <section class="sheet fade-in px-6 py-8 md:px-9 md:py-9">
+        <h2 class="flex items-baseline gap-3 font-display text-xl font-bold text-tide-900 md:text-2xl">
+          <span class="font-display text-lg text-gilt-500">一</span>勇者は自称である
+        </h2>
+        <p class="mt-5 text-[0.95rem] leading-[2.05] tracking-[0.04em] text-ink-800">
+          この世界において「勇者」は称号ではない。剣を持ち、名乗れば、その日から誰でも勇者である。ゆえに世界には勇者が溢れ、酒場は名乗りに拍手をしない。魔王は討伐されても、いずれ戻る。人々はそれを、季節のようなものとして受け入れている。ギルドの掲示板には今日も二枚、貼りっぱなしの依頼がある。「魔王討伐　常設　達成者なし」「古竜討伐　常設　高額報酬　達成者なし」。誰も、気に留めない。
+        </p>
+      </section>
+
+      <!-- 二 -->
+      <section class="sheet fade-in px-6 py-8 md:px-9 md:py-9">
+        <h2 class="flex items-baseline gap-3 font-display text-xl font-bold text-tide-900 md:text-2xl">
+          <span class="font-display text-lg text-gilt-500">二</span>通貨 ―― モンメリーとピィ
+        </h2>
+        <p class="mt-5 text-[0.95rem] leading-[2.05] tracking-[0.04em] text-ink-800">
+          上位通貨モンメリーと、日常の小銭ピィ。<strong class="text-ink-900">1モンメリー＝10ピィ</strong>。屋台のスープ一杯がピィ2枚。これが庶民の腹の基準である。
+        </p>
+        <p class="mt-4 text-[0.95rem] leading-[2.05] tracking-[0.04em] text-ink-800">
+          ミアはこの「モンメリー」という響きに、何かが引っかかっている。換算した先にあったはずの通貨の名前を、どうしても思い出せない。
+        </p>
+      </section>
+
+      <!-- 三 -->
+      <section class="sheet fade-in px-6 py-8 md:px-9 md:py-9">
+        <h2 class="flex items-baseline gap-3 font-display text-xl font-bold text-tide-900 md:text-2xl">
+          <span class="font-display text-lg text-gilt-500">三</span>物価の目安（資料室調べ）
+        </h2>
+        <div class="mt-5 overflow-x-auto">
+          <table class="w-full border-collapse text-[0.9rem] text-ink-800">
+            <thead>
+              <tr class="border-b border-gilt-400/50 text-left">
+                <th class="py-2 pr-4 font-display font-medium text-tide-900">品目</th>
+                <th class="py-2 pl-4 text-right font-display font-medium text-tide-900">価格</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                prices.map((row) => (
+                  <tr class="border-b border-paper-300/60 last:border-0">
+                    <td class="py-2.5 pr-4 leading-relaxed">{row.item}</td>
+                    <td class="whitespace-nowrap py-2.5 pl-4 text-right tabular-nums">{row.price}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 四 -->
+      <section class="sheet fade-in px-6 py-8 md:px-9 md:py-9">
+        <h2 class="flex items-baseline gap-3 font-display text-xl font-bold text-tide-900 md:text-2xl">
+          <span class="font-display text-lg text-gilt-500">四</span>灰鷲ギルド　ハイベル支部
+        </h2>
+        <p class="mt-5 text-[0.95rem] leading-[2.05] tracking-[0.04em] text-ink-800">
+          依頼の斡旋所であり、書類の城である。規約はひとつ覚えておけばいい。<strong class="text-ink-900">四人以上のパーティーでなければ、まともなランクの依頼は受けられない。</strong>人数さえ揃えば、職業は問わない。受付のドリスは言った。「あんたが何ができるかは、書類は問わない」。バニー衣装は、職業証の正装として認められている。前例があるらしい。
+        </p>
+      </section>
+
+      <!-- 五 -->
+      <section class="sheet fade-in px-6 py-8 md:px-9 md:py-9">
+        <h2 class="flex items-baseline gap-3 font-display text-xl font-bold text-tide-900 md:text-2xl">
+          <span class="font-display text-lg text-gilt-500">五</span>罰金制度
+        </h2>
+        <p class="mt-5 text-[0.95rem] leading-[2.05] tracking-[0.04em] text-ink-800">
+          パーティー内の私的制度。ゴルドの手が動いた場合、一件につきモンメリー2枚。セラが帳簿に記録し、マルヴァへ送金される。口頭のみ（「腰の動きが――」等）はノーカウント。抑止力として設計されたが、抑止できているかは帳簿が知っている。→ くわしくは<a
+            href="/ledger"
+            class="text-tide-600 underline decoration-gilt-400/60 underline-offset-2 transition hover:text-gilt-600">帳簿</a>へ
+        </p>
+      </section>
+
+      <!-- 六 -->
+      <section class="sheet fade-in px-6 py-8 md:px-9 md:py-9">
+        <h2 class="flex items-baseline gap-3 font-display text-xl font-bold text-tide-900 md:text-2xl">
+          <span class="font-display text-lg text-gilt-500">六</span>ハイベルの暮らし
+        </h2>
+        <p class="mt-5 text-[0.95rem] leading-[2.05] tracking-[0.04em] text-ink-800">
+          自治区ハイベル。ミアの職場は酒場『陽気な冒険者』、看板メニューは白ひげチーズ。パーティーの宿は街外れの『居眠り山羊亭』、看板山羊のクルルの瞼は経済指標と呼ばれるが、当てになった例しがない。
+        </p>
+      </section>
+    </div>
+
+    <!-- 戻る導線 -->
+    <div class="mt-14 text-center">
+      <a
+        href="/"
+        class="inline-block rounded-sm border border-tide-500/60 px-8 py-3 font-eyebrow text-xs tracking-[0.3em] text-tide-700 transition hover:border-gilt-400 hover:text-gilt-600"
+      >
+        もくじにもどる
+      </a>
+    </div>
+  </main>
+</Base>

@@ -136,6 +136,85 @@
   .chapter-body > h2:first-child {
     display: none;
   }
+
+  /* 文字サイズ切替ボタン（章ページの上部ナビ） */
+  .font-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 3px;
+    font-family: 'Zen Old Mincho', 'Noto Serif JP', serif;
+    font-size: 11px;
+    line-height: 1;
+    color: #78786d;
+    transition:
+      color 0.2s,
+      background-color 0.2s;
+  }
+  .font-btn:hover {
+    color: #0a5a5c;
+  }
+  /* 現在の文字サイズを示すアクティブ表示（既定は「中」） */
+  html[data-font-size='s'] [data-font-btn='s'],
+  html[data-font-size='l'] [data-font-btn='l'],
+  html[data-font-size='m'] [data-font-btn='m'],
+  html:not([data-font-size]) [data-font-btn='m'] {
+    background-color: rgba(15, 140, 141, 0.12);
+    color: #0a5a5c;
+    font-weight: 700;
+  }
+
+  /* 換算機：単位トグル */
+  .unit-btn {
+    border: 1px solid rgba(203, 170, 92, 0.5);
+    border-radius: 3px;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    color: #5c5d54;
+    background-color: #fbfaf4;
+    transition:
+      color 0.2s,
+      background-color 0.2s,
+      border-color 0.2s;
+  }
+  .unit-btn:hover {
+    color: #0a5a5c;
+    border-color: rgba(15, 140, 141, 0.5);
+  }
+  .unit-btn-active {
+    background-color: rgba(15, 140, 141, 0.12);
+    border-color: rgba(15, 140, 141, 0.6);
+    color: #0a5a5c;
+    font-weight: 700;
+  }
+
+  /* 換算機：プリセット */
+  .preset-btn {
+    border: 1px solid rgba(15, 140, 141, 0.6);
+    border-radius: 3px;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    color: #0a5a5c;
+    transition:
+      color 0.2s,
+      border-color 0.2s;
+  }
+  .preset-btn:hover {
+    border-color: #cbaa5c;
+    color: #8a6d2c;
+  }
+}
+
+/* 本文の文字サイズ（.prose）。中＝prose-lg 既定の 1.125rem */
+html[data-font-size='s'] .prose {
+  font-size: 0.95rem;
+}
+html[data-font-size='l'] .prose {
+  font-size: 1.3rem;
 }
 
 @keyframes stampIn {

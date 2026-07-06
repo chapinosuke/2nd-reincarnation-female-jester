@@ -1,0 +1,475 @@
+---
+import Base from '../layouts/Base.astro';
+import PageNav from '../components/PageNav.astro';
+
+// ===== チャート幾何（手書きSVG。外部ライブラリ不使用） =====
+const W = 640;
+const H = 320;
+const M = { l: 46, r: 18, t: 22, b: 34 };
+const plotW = W - M.l - M.r;
+const plotH = H - M.t - M.b;
+const plotBottom = M.t + plotH;
+const r1 = (n: number) => Math.round(n * 10) / 10;
+
+function mkScales(xD: number[], yD: number[]) {
+  return {
+    sx: (x: number) => r1(M.l + ((x - xD[0]) / (xD[1] - xD[0])) * plotW),
+    sy: (y: number) => r1(M.t + ((yD[1] - y) / (yD[1] - yD[0])) * plotH),
+  };
+}
+// step-after のパス（点→次の点は「水平に進んでから垂直に下る」）
+function stepPath(pts: number[][], sx: (n: number) => number, sy: (n: number) => number) {
+  return pts
+    .map((p, i) => (i === 0 ? `M${sx(p[0])},${sy(p[1])}` : `H${sx(p[0])}V${sy(p[1])}`))
+    .join('');
+}
+
+// --- チャートA：ミアの個人収支（累計・ピィ） ---
+const aData = [
+  [3, 0],
+  [4, -3],
+  [5, 0],
+  [7, 4],
+  [8, 8],
+  [19, 133],
+  [20, 133],
+];
+const aXD = [3, 20];
+const aYD = [-10, 140];
+const aS = mkScales(aXD, aYD);
+const aLine = stepPath(aData, aS.sx, aS.sy);
+const aZeroY = aS.sy(0);
+// 負値領域（step-after 線からゼロ線までの面をゼロ以下だけ塗る）
+const aArea =
+  `M${aS.sx(aData[0][0])},${aZeroY}L${aS.sx(aData[0][0])},${aS.sy(aData[0][1])}` +
+  aData
+    .slice(1)
+    .map((p) => `H${aS.sx(p[0])}V${aS.sy(p[1])}`)
+    .join('') +
+  `L${aS.sx(aData[aData.length - 1][0])},${aZeroY}Z`;
+const aYTicks = [0, 50, 100];
+const aXTicks = [3, 10, 15, 20];
+
+// --- チャートB：ゴルドの罰金（累計・モンメリー） ---
+const bData = [
+  [2, 18],
+  [6, 22],
+  [7, 24],
+  [14, 26],
+  [20, 28],
+];
+const bXD = [2, 20];
+const bYD = [0, 30];
+const bS = mkScales(bXD, bYD);
+const bLine = stepPath(bData, bS.sx, bS.sy);
+const bYTicks = [0, 10, 20, 30];
+const bXTicks = [2, 6, 14, 20];
+
+// ===== 収支の記録（表）※文面は確定稿・改変禁止 =====
+const ledgerRows = [
+  { ep: '第三話', event: '契約成立。報酬の四分の一均等割、ただし治療費は天引き', delta: '―', total: '0' },
+  { ep: '第四話', event: '債権回収（報酬20ピィ）。取り分5、治療費8を天引き', delta: '-3', total: '-3' },
+  { ep: '第五話', event: '白ひげチーズの商談成立。加算報酬12ピィ', delta: '+3', total: '0' },
+  { ep: '第六話', event: 'パーティー清算（酒場の払い12・宿代18を精算）', delta: '±0', total: '0' },
+  { ep: '第七話', event: '隊商護衛（報酬24ピィ）。取り分6、治療費2', delta: '+4', total: '+4' },
+  { ep: '第八話', event: 'コルム村の牙鼠駆除（報酬16ピィ）', delta: '+4', total: '+8' },
+  { ep: '第十三話', event: '破格の依頼を受注（モンメリー50枚。峠越え）', delta: '―', total: '+8' },
+  { ep: '第十九話', event: '依頼完遂。四人割で125ピィ（心付け別途）', delta: '+125', total: '+133' },
+  { ep: '第二十話', event: '雇用条件更新。治療費天引き廃止・功労加算', delta: '―', total: '+133' },
+];
+
+// 色（指示書指定を優先：チャートA=tide-600 / チャートB=seal-500）
+const C = {
+  tide600: '#0b6f71',
+  seal500: '#a83c2b',
+  paper300: '#ddd3b4',
+  ink600: '#5c5d54',
+  ink500: '#78786d',
+};
+---
+
+<Base
+  title="帳簿 ｜ 2度目の転生は女遊び人でした"
+  description="記帳：セラ。ミアの個人収支とゴルドの罰金、その累計を数字で確かめる。"
+>
+  <PageNav label="LEDGER" />
+
+  <main class="mx-auto max-w-3xl px-6 pb-24 pt-14 md:pt-20">
+    <!-- 見出し -->
+    <header class="fade-in text-center">
+      <p class="font-eyebrow text-sm tracking-[0.5em] text-gilt-500">LEDGER</p>
+      <h1 class="mt-3 font-display text-4xl font-bold text-tide-900 md:text-5xl">帳簿</h1>
+      <p class="mt-4 text-sm text-ink-600">――記帳：セラ（数字はすべて本編で確定した値）</p>
+      <p class="mt-3 text-xs text-ink-500">※第二十話までの内容を含みます</p>
+      <div class="mx-auto mt-7 flex max-w-xs items-center gap-4" aria-hidden="true">
+        <div class="h-px flex-1 bg-gradient-to-r from-transparent to-gilt-400/50"></div>
+        <span class="text-xs text-seal-500">◆</span>
+        <div class="h-px flex-1 bg-gradient-to-l from-transparent to-gilt-400/50"></div>
+      </div>
+    </header>
+
+    <div class="mt-12 space-y-8">
+      <!-- 6-1 チャートA：ミアの個人収支 -->
+      <section class="sheet fade-in px-5 py-7 md:px-8 md:py-8">
+        <h2 class="font-display text-xl font-bold text-tide-900 md:text-2xl">
+          ミアの個人収支
+        </h2>
+        <p class="mt-1 text-xs tracking-[0.1em] text-ink-500">累計・ピィ（第三話〜第二十話）</p>
+        <div class="mt-5 overflow-x-auto">
+          <svg
+            viewBox={`0 0 ${W} ${H}`}
+            width="100%"
+            role="img"
+            aria-labelledby="chartA-title chartA-desc"
+            class="block h-auto w-full min-w-[520px]"
+          >
+            <title id="chartA-title">ミアの個人収支（累計・ピィ）のステップ折れ線</title>
+            <desc id="chartA-desc"
+              >第三話0、第四話-3、第五話0、第七話+4、第八話+8、第十九話+133、第二十話+133。数値の詳細は下部の表を参照。</desc
+            >
+            <defs>
+              <clipPath id="belowZeroA">
+                <rect x={M.l} y={aZeroY} width={plotW} height={plotBottom - aZeroY}></rect>
+              </clipPath>
+            </defs>
+
+            <!-- Y方向の目盛り線とラベル -->
+            {
+              aYTicks.map((t) => (
+                <g>
+                  <line
+                    x1={M.l}
+                    x2={M.l + plotW}
+                    y1={aS.sy(t)}
+                    y2={aS.sy(t)}
+                    stroke={C.paper300}
+                    stroke-width="1"
+                    opacity="0.7"
+                  />
+                  <text
+                    x={M.l - 8}
+                    y={aS.sy(t) + 3.5}
+                    text-anchor="end"
+                    font-size="10"
+                    fill={C.ink500}
+                  >
+                    {t}
+                  </text>
+                </g>
+              ))
+            }
+            <!-- ゼロ線（破線・paper-300） -->
+            <line
+              x1={M.l}
+              x2={M.l + plotW}
+              y1={aZeroY}
+              y2={aZeroY}
+              stroke={C.paper300}
+              stroke-width="1.5"
+              stroke-dasharray="4 4"
+            ></line>
+
+            <!-- 負値領域（seal-500 / 8%） -->
+            <path d={aArea} fill={C.seal500} fill-opacity="0.08" clip-path="url(#belowZeroA)"></path>
+
+            <!-- X軸 -->
+            <line
+              x1={M.l}
+              x2={M.l + plotW}
+              y1={plotBottom}
+              y2={plotBottom}
+              stroke={C.paper300}
+              stroke-width="1"
+            ></line>
+            {
+              aXTicks.map((t) => (
+                <text
+                  x={aS.sx(t)}
+                  y={plotBottom + 16}
+                  text-anchor="middle"
+                  font-size="10"
+                  fill={C.ink500}
+                >
+                  第{t}話
+                </text>
+              ))
+            }
+
+            <!-- 折れ線 -->
+            <path
+              d={aLine}
+              fill="none"
+              stroke={C.tide600}
+              stroke-width="2"
+              stroke-linejoin="round"
+              stroke-linecap="round"></path>
+            <!-- ドット -->
+            {
+              aData.map((p) => (
+                <circle cx={aS.sx(p[0])} cy={aS.sy(p[1])} r="4" fill={C.tide600} />
+              ))
+            }
+
+            <!-- 注釈 -->
+            <text x={aS.sx(4) + 6} y={aS.sy(-3) - 8} font-size="10" fill={C.ink600}>
+              初仕事で赤字
+            </text>
+            <text x={aS.sx(19) - 6} y={aS.sy(133) + 16} text-anchor="end" font-size="10" fill={C.ink600}>
+              破格の依頼（モンメリー50枚・四人割）
+            </text>
+
+            <!-- 軸タイトル -->
+            <text x={M.l - 8} y={M.t - 8} font-size="9.5" fill={C.ink500}>ピィ</text>
+          </svg>
+        </div>
+        <p class="mt-3 text-xs leading-relaxed text-ink-500">
+          ※第十九話の心付け・第二十話の功労加算は金額未確定のため計上していない
+        </p>
+      </section>
+
+      <!-- 6-2 チャートB：ゴルドの罰金 -->
+      <section class="sheet fade-in px-5 py-7 md:px-8 md:py-8">
+        <div class="flex items-baseline justify-between gap-3">
+          <h2 class="font-display text-xl font-bold text-tide-900 md:text-2xl">ゴルドの罰金</h2>
+          <span class="shrink-0 text-xs text-ink-500">送金先：マルヴァ</span>
+        </div>
+        <p class="mt-1 text-xs tracking-[0.1em] text-ink-500">累計・モンメリー（第二話〜第二十話）</p>
+        <div class="mt-5 overflow-x-auto">
+          <svg
+            viewBox={`0 0 ${W} ${H}`}
+            width="100%"
+            role="img"
+            aria-labelledby="chartB-title chartB-desc"
+            class="block h-auto w-full min-w-[520px]"
+          >
+            <title id="chartB-title">ゴルドの罰金（累計・モンメリー）のステップ折れ線</title>
+            <desc id="chartB-desc"
+              >第二話18、第六話22、第七話24、第十四話26、第二十話28。帳簿の赤字として朱で示す。</desc
+            >
+            <!-- Y方向の目盛り線とラベル -->
+            {
+              bYTicks.map((t) => (
+                <g>
+                  <line
+                    x1={M.l}
+                    x2={M.l + plotW}
+                    y1={bS.sy(t)}
+                    y2={bS.sy(t)}
+                    stroke={C.paper300}
+                    stroke-width="1"
+                    opacity="0.7"
+                  />
+                  <text
+                    x={M.l - 8}
+                    y={bS.sy(t) + 3.5}
+                    text-anchor="end"
+                    font-size="10"
+                    fill={C.ink500}
+                  >
+                    {t}
+                  </text>
+                </g>
+              ))
+            }
+            <!-- X軸 -->
+            <line
+              x1={M.l}
+              x2={M.l + plotW}
+              y1={plotBottom}
+              y2={plotBottom}
+              stroke={C.paper300}
+              stroke-width="1"
+            ></line>
+            {
+              bXTicks.map((t) => (
+                <text
+                  x={bS.sx(t)}
+                  y={plotBottom + 16}
+                  text-anchor="middle"
+                  font-size="10"
+                  fill={C.ink500}
+                >
+                  第{t}話
+                </text>
+              ))
+            }
+
+            <!-- 折れ線（朱・seal-500） -->
+            <path
+              d={bLine}
+              fill="none"
+              stroke={C.seal500}
+              stroke-width="2"
+              stroke-linejoin="round"
+              stroke-linecap="round"></path>
+            {
+              bData.map((p) => (
+                <circle cx={bS.sx(p[0])} cy={bS.sy(p[1])} r="4" fill={C.seal500} />
+              ))
+            }
+
+            <!-- 注釈 -->
+            <text x={bS.sx(6) + 6} y={bS.sy(22) - 8} font-size="10" fill={C.ink600}>
+              ミアの自主申告分＋4枚
+            </text>
+
+            <!-- 軸タイトル -->
+            <text x={M.l - 8} y={M.t - 8} font-size="9.5" fill={C.ink500}>枚</text>
+          </svg>
+        </div>
+      </section>
+
+      <!-- 6-3 収支の記録（表） -->
+      <section class="sheet fade-in px-5 py-7 md:px-8 md:py-8">
+        <h2 class="font-display text-xl font-bold text-tide-900 md:text-2xl">収支の記録</h2>
+        <div class="mt-5 overflow-x-auto">
+          <table class="w-full border-collapse text-[0.85rem] text-ink-800">
+            <thead>
+              <tr class="border-b border-gilt-400/50 text-left align-bottom">
+                <th class="whitespace-nowrap py-2 pr-3 font-display font-medium text-tide-900">話</th>
+                <th class="py-2 pr-3 font-display font-medium text-tide-900">出来事</th>
+                <th class="whitespace-nowrap py-2 pr-3 text-right font-display font-medium text-tide-900">ミアの増減</th>
+                <th class="whitespace-nowrap py-2 text-right font-display font-medium text-tide-900">累計</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                ledgerRows.map((row) => (
+                  <tr class="border-b border-paper-300/60 last:border-0 align-top">
+                    <td class="whitespace-nowrap py-2.5 pr-3 font-display text-tide-900">{row.ep}</td>
+                    <td class="py-2.5 pr-3 leading-relaxed">{row.event}</td>
+                    <td class="whitespace-nowrap py-2.5 pr-3 text-right tabular-nums">{row.delta}</td>
+                    <td class="whitespace-nowrap py-2.5 text-right tabular-nums">{row.total}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 6-4 換算機 -->
+      <section class="sheet fade-in px-6 py-7 md:px-8 md:py-8">
+        <h2 class="font-display text-xl font-bold text-tide-900 md:text-2xl">換算機 ――スープ何杯分？</h2>
+        <p class="mt-1 text-xs text-ink-500">基準：屋台のスープ一杯＝ピィ2枚</p>
+
+        <div class="mt-6 flex flex-wrap items-end gap-4">
+          <label class="block">
+            <span class="mb-1 block text-xs tracking-[0.1em] text-ink-600">金額</span>
+            <input
+              id="conv-amount"
+              type="number"
+              min="0"
+              step="1"
+              value="12"
+              inputmode="numeric"
+              class="w-32 rounded-sm border border-gilt-400/50 bg-paper-50 px-3 py-2 font-display text-lg text-tide-900 tabular-nums outline-none focus:border-tide-500"
+            />
+          </label>
+          <div role="group" aria-label="単位" class="flex items-center gap-1 pb-1">
+            <button type="button" data-unit-btn="ピィ" class="unit-btn">ピィ</button>
+            <button type="button" data-unit-btn="モンメリー" class="unit-btn">モンメリー</button>
+          </div>
+        </div>
+
+        <dl class="mt-7 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
+          <div>
+            <dt class="text-xs text-ink-500">スープ</dt>
+            <dd class="mt-0.5 font-display text-tide-900">
+              <span id="out-soup" class="text-2xl tabular-nums">6</span>杯
+            </dd>
+          </div>
+          <div>
+            <dt class="text-xs text-ink-500">宿（一行分）</dt>
+            <dd class="mt-0.5 font-display text-tide-900">
+              <span id="out-inn" class="text-2xl tabular-nums">2</span>泊
+            </dd>
+          </div>
+          <div>
+            <dt class="text-xs text-ink-500">臨時日当</dt>
+            <dd class="mt-0.5 font-display text-tide-900">
+              <span id="out-wage" class="text-2xl tabular-nums">6</span>日分
+            </dd>
+          </div>
+          <div>
+            <dt class="text-xs text-ink-500">ゴルドの罰金</dt>
+            <dd class="mt-0.5 font-display text-tide-900">
+              <span id="out-fine" class="text-2xl tabular-nums">0.6</span>件分
+            </dd>
+          </div>
+        </dl>
+
+        <div class="mt-6 flex flex-wrap gap-3">
+          <button type="button" data-preset="50" class="preset-btn">モンメリー50枚（破格の依頼）</button>
+          <button type="button" data-preset="28" class="preset-btn">モンメリー28枚（罰金の累計）</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- 戻る導線 -->
+    <div class="mt-14 text-center">
+      <a
+        href="/"
+        class="inline-block rounded-sm border border-tide-500/60 px-8 py-3 font-eyebrow text-xs tracking-[0.3em] text-tide-700 transition hover:border-gilt-400 hover:text-gilt-600"
+      >
+        もくじにもどる
+      </a>
+    </div>
+  </main>
+
+  <!-- 換算機ロジック（vanilla JS・依存追加なし） -->
+  <script is:inline>
+    (function () {
+      var RATE = { soup: 2, inn: 6, wage: 2, fine: 20 }; // ピィ基準
+      var PII_PER_MONME = 10;
+      var amountEl = document.getElementById('conv-amount');
+      var unitBtns = document.querySelectorAll('[data-unit-btn]');
+      var presetBtns = document.querySelectorAll('[data-preset]');
+      var out = {
+        soup: document.getElementById('out-soup'),
+        inn: document.getElementById('out-inn'),
+        wage: document.getElementById('out-wage'),
+        fine: document.getElementById('out-fine'),
+      };
+      var unit = 'ピィ';
+
+      function fmt(n) {
+        var r = Math.round(n * 10) / 10; // 小数第一位まで
+        return Number.isInteger(r) ? String(r) : r.toFixed(1);
+      }
+      function setUnit(u) {
+        unit = u;
+        for (var i = 0; i < unitBtns.length; i++) {
+          var active = unitBtns[i].getAttribute('data-unit-btn') === u;
+          unitBtns[i].setAttribute('aria-pressed', active ? 'true' : 'false');
+          unitBtns[i].classList.toggle('unit-btn-active', active);
+        }
+        update();
+      }
+      function update() {
+        var v = parseFloat(amountEl.value);
+        if (!isFinite(v) || v < 0) v = 0;
+        var pii = unit === 'モンメリー' ? v * PII_PER_MONME : v;
+        out.soup.textContent = fmt(pii / RATE.soup);
+        out.inn.textContent = fmt(pii / RATE.inn);
+        out.wage.textContent = fmt(pii / RATE.wage);
+        out.fine.textContent = fmt(pii / RATE.fine);
+      }
+
+      amountEl.addEventListener('input', update);
+      for (var i = 0; i < unitBtns.length; i++) {
+        unitBtns[i].addEventListener('click', function () {
+          setUnit(this.getAttribute('data-unit-btn'));
+        });
+      }
+      for (var j = 0; j < presetBtns.length; j++) {
+        presetBtns[j].addEventListener('click', function () {
+          amountEl.value = this.getAttribute('data-preset');
+          setUnit('モンメリー');
+        });
+      }
+
+      setUnit('ピィ'); // 初期状態（12ピィ）
+    })();
+  </script>
+</Base>

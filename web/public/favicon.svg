@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- 朱印「遊」：話数判子（.hanko）と同じ流儀。seal-500、わずかな傾き、朱肉のかすれは小サイズでは省略 -->
+  <g transform="rotate(-4 32 32)">
+    <rect x="7" y="7" width="50" height="50" rx="7" fill="#fbfaf4"/>
+    <rect x="7" y="7" width="50" height="50" rx="7" fill="none" stroke="#a83c2b" stroke-width="4.5"/>
+    <text x="32" y="33.5" text-anchor="middle" dominant-baseline="central"
+      font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif"
+      font-size="34" font-weight="700" fill="#a83c2b">遊</text>
+  </g>
+</svg>

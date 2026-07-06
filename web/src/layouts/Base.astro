@@ -4,9 +4,25 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
+  ogType?: string;
 }
 
-const { title, description = '異世界転生コメディ・連載中' } = Astro.props;
+const {
+  title,
+  description = '異世界転生コメディ・連載中',
+  // TODO: astro.config.mjs に site を設定したら、new URL(ogImage, Astro.site) で絶対URL化する
+  ogImage = '/ogp.png',
+  ogType = 'website',
+} = Astro.props;
+
+const navLinks = [
+  { href: '/', label: 'もくじ' },
+  { href: '/characters', label: '人物' },
+  { href: '/world', label: '世界観' },
+  { href: '/ledger', label: '帳簿' },
+  { href: '/gallery', label: '画廊' },
+];
 ---
 
 <!doctype html>
@@ -16,6 +32,15 @@ const { title, description = '異世界転生コメディ・連載中' } = Astro
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#fbfaf4" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- OGP / Twitter Card（サイトURL未確定のため og:image は相対パス。デプロイ時に astro.config の site を設定して絶対URL化する） -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content={ogType} />
+    <meta name="twitter:card" content="summary_large_image" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -23,10 +48,40 @@ const { title, description = '異世界転生コメディ・連載中' } = Astro
       rel="stylesheet"
     />
     <title>{title}</title>
+    <!-- FOUC防止：保存済みの文字サイズ設定を描画前に適用する -->
+    <script is:inline>
+      (function () {
+        try {
+          var s = localStorage.getItem('reader-font-size');
+          if (s === 's' || s === 'm' || s === 'l') {
+            document.documentElement.setAttribute('data-font-size', s);
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body class="font-serif">
     <slot />
     <footer class="border-t border-gilt-400/30 py-10 text-center">
+      <nav class="mb-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 px-4">
+        {
+          navLinks.map((link, i) => (
+            <>
+              {i > 0 && (
+                <span class="text-ink-500" aria-hidden="true">
+                  ・
+                </span>
+              )}
+              <a
+                href={link.href}
+                class="text-xs tracking-[0.2em] text-tide-700 transition hover:text-gilt-600"
+              >
+                {link.label}
+              </a>
+            </>
+          ))
+        }
+      </nav>
       <p class="font-eyebrow text-[11px] tracking-[0.3em] text-tide-600">
         © {new Date().getFullYear()} 2度目の転生は女遊び人でした
       </p>
