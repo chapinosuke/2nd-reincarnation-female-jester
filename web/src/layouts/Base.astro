@@ -62,29 +62,52 @@ const navLinks = [
   </head>
   <body class="font-serif">
     <slot />
-    <footer class="border-t border-gilt-400/30 py-10 text-center">
-      <nav class="mb-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 px-4">
-        {
-          navLinks.map((link, i) => (
-            <>
-              {i > 0 && (
-                <span class="text-ink-500" aria-hidden="true">
-                  ・
-                </span>
-              )}
-              <a
-                href={link.href}
-                class="text-xs tracking-[0.2em] text-tide-700 transition hover:text-gilt-600"
-              >
-                {link.label}
-              </a>
-            </>
-          ))
-        }
-      </nav>
-      <p class="font-eyebrow text-[11px] tracking-[0.3em] text-tide-600">
-        © {new Date().getFullYear()} 2度目の転生は女遊び人でした
-      </p>
+    <footer class="relative isolate overflow-hidden text-center">
+      <!-- 背景：ハイベルの街の水彩画。上端は紙色へフェードさせ本文と地続きにする -->
+      <div class="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+        <div
+          class="absolute inset-0 bg-cover bg-bottom opacity-90"
+          style="background-image:url('/footer-town.webp')"
+        >
+        </div>
+        <!-- 上部フェード：丘の上の城より上の空だけ紙色へ短く溶かす（目次との余白を詰める） -->
+        <div
+          class="absolute inset-0"
+          style="background:linear-gradient(to bottom,#fbfaf4 0%,rgba(251,250,244,0.85) 6%,rgba(251,250,244,0.25) 14%,rgba(251,250,244,0) 22%)"
+        >
+        </div>
+        <!-- 下部：ナビ・著作権の可読性を保つ淡い紙のスクリム -->
+        <div
+          class="absolute inset-x-0 bottom-0 h-40"
+          style="background:linear-gradient(to top,rgba(251,250,244,0.94) 0%,rgba(251,250,244,0.7) 45%,rgba(251,250,244,0) 100%)"
+        >
+        </div>
+      </div>
+
+      <div class="relative px-4 pb-9 pt-[34vw]">
+        <nav class="mb-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+          {
+            navLinks.map((link, i) => (
+              <>
+                {i > 0 && (
+                  <span class="text-ink-500" aria-hidden="true">
+                    ・
+                  </span>
+                )}
+                <a
+                  href={link.href}
+                  class="text-xs tracking-[0.2em] text-tide-700 transition hover:text-gilt-600"
+                >
+                  {link.label}
+                </a>
+              </>
+            ))
+          }
+        </nav>
+        <p class="font-eyebrow text-[11px] tracking-[0.3em] text-tide-600">
+          © {new Date().getFullYear()} 2度目の転生は女遊び人でした
+        </p>
+      </div>
     </footer>
   </body>
 </html>
