@@ -3,6 +3,8 @@ import tailwind from '@astrojs/tailwind';
 import remarkBreaks from 'remark-breaks';
 
 export default defineConfig({
+  site: 'https://chapinosuke.github.io',
+  base: '/2nd-reincarnation-female-jester/',
   integrations: [tailwind({ applyBaseStyles: false })],
   server: { host: false, port: 4321 },
   vite: {

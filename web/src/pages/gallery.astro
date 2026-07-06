@@ -2,12 +2,14 @@
 import Base from '../layouts/Base.astro';
 import PageNav from '../components/PageNav.astro';
 
+const base = import.meta.env.BASE_URL;
+
 // キャプションは確定稿・改変禁止
 const works = [
-  { src: '/gallery/mia-mirror-shock.webp', caption: '目覚めたら、女だった' },
-  { src: '/gallery/mia-tavern-pouring.webp', caption: '職場は酒場『陽気な冒険者』' },
-  { src: '/gallery/mia-scolding-veteran.webp', caption: '勘定前に沈没する魔法使い' },
-  { src: '/gallery/party-cave-chase.webp', caption: '戦えないのに、前に出る' },
+  { src: `${base}gallery/mia-mirror-shock.webp`, caption: '目覚めたら、女だった' },
+  { src: `${base}gallery/mia-tavern-pouring.webp`, caption: '職場は酒場『陽気な冒険者』' },
+  { src: `${base}gallery/mia-scolding-veteran.webp`, caption: '勘定前に沈没する魔法使い' },
+  { src: `${base}gallery/party-cave-chase.webp`, caption: '戦えないのに、前に出る' },
 ];
 ---
 
@@ -57,7 +59,7 @@ const works = [
     <!-- 戻る導線 -->
     <div class="mt-14 text-center">
       <a
-        href="/"
+        href={base}
         class="inline-block rounded-sm border border-tide-500/60 px-8 py-3 font-eyebrow text-xs tracking-[0.3em] text-tide-700 transition hover:border-gilt-400 hover:text-gilt-600"
       >
         もくじにもどる

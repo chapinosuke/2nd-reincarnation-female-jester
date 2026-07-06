@@ -5,7 +5,8 @@ import { getChapters, groupByArc, toKanji, stripChapterPrefix } from '../lib/cha
 const chapters = await getChapters();
 const first = chapters[0];
 const arcs = groupByArc(chapters);
-const coverSrc = '/cover.png';
+const base = import.meta.env.BASE_URL;
+const coverSrc = `${base}cover.png`;
 ---
 
 <Base title="2度目の転生は女遊び人でした">
@@ -14,7 +15,7 @@ const coverSrc = '/cover.png';
     <!-- 背景：世界観のPVをループ再生。reduced-motion時はポスター静止画にフォールバック -->
     <div
       class="pointer-events-none absolute inset-0 z-0 bg-cover bg-center"
-      style="background-image:url('/hero-poster.webp')"
+      style={`background-image:url('${base}hero-poster.webp')`}
       aria-hidden="true"
     >
     </div>
@@ -25,10 +26,10 @@ const coverSrc = '/cover.png';
       loop
       playsinline
       preload="metadata"
-      poster="/hero-poster.webp"
+      poster={`${base}hero-poster.webp`}
       aria-hidden="true"
     >
-      <source src="/hero-bg.mp4" type="video/mp4" />
+      <source src={`${base}hero-bg.mp4`} type="video/mp4" />
     </video>
     <!-- 紙色オーバーレイ：可読性を確保しつつ白磁のトーンに馴染ませ、下端を次セクションへ繋ぐ -->
     <div
@@ -71,7 +72,7 @@ const coverSrc = '/cover.png';
         <div class="mt-9 flex flex-wrap items-center justify-center gap-4 md:justify-start">
           {first && (
             <a
-              href={`/chapter/${first.slug}`}
+              href={`${base}chapter/${first.slug}`}
               class="rounded-sm bg-seal-500 px-8 py-3 text-sm tracking-[0.2em] text-paper-50 shadow-lg shadow-seal-600/30 transition hover:bg-seal-400"
             >
               第一話から読む
@@ -79,7 +80,7 @@ const coverSrc = '/cover.png';
           )}
           <a
             id="continue-reading"
-            href="/"
+            href={base}
             hidden
             class="rounded-sm border border-tide-500/60 px-8 py-3 text-sm tracking-[0.2em] text-tide-700 transition hover:border-gilt-400 hover:text-gilt-600"
           >
@@ -100,10 +101,10 @@ const coverSrc = '/cover.png';
   <nav class="mx-auto max-w-2xl px-6 pb-4">
     <ul class="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
       {[
-        { href: '/characters', en: 'CHARACTERS', ja: '人物' },
-        { href: '/world', en: 'WORLD', ja: '世界観' },
-        { href: '/ledger', en: 'LEDGER', ja: '帳簿' },
-        { href: '/gallery', en: 'GALLERY', ja: '画廊' },
+        { href: `${base}characters`, en: 'CHARACTERS', ja: '人物' },
+        { href: `${base}world`, en: 'WORLD', ja: '世界観' },
+        { href: `${base}ledger`, en: 'LEDGER', ja: '帳簿' },
+        { href: `${base}gallery`, en: 'GALLERY', ja: '画廊' },
       ].map((item) => (
         <li>
           <a
@@ -156,7 +157,7 @@ const coverSrc = '/cover.png';
             {group.items.map((c, ci) => (
               <li class="border-b border-gilt-400/15 last:border-b-0">
                 <a
-                  href={`/chapter/${c.slug}`}
+                  href={`${base}chapter/${c.slug}`}
                   class="group flex items-center gap-4 py-3 transition duration-200"
                 >
                   <span
@@ -188,7 +189,7 @@ const coverSrc = '/cover.png';
   </section>
 
   <!-- 「つづきから読む」：last-read がある場合のみ表示 -->
-  <script is:inline>
+  <script is:inline define:vars={{ base }}>
     (function () {
       try {
         var raw = localStorage.getItem('last-read');
@@ -197,7 +198,7 @@ const coverSrc = '/cover.png';
         if (!data || !data.slug) return;
         var el = document.getElementById('continue-reading');
         if (el) {
-          el.setAttribute('href', '/chapter/' + data.slug);
+          el.setAttribute('href', base + 'chapter/' + data.slug);
           el.hidden = false;
         }
         // つづきから読む話を含む章（アーク）も初期状態で開く（先頭章に加えて）

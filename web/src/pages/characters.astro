@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import PageNav from '../components/PageNav.astro';
 
+const base = import.meta.env.BASE_URL;
+
 // パーティー4人（文面は確定稿・改変禁止）
 const party = [
   {
@@ -11,7 +13,7 @@ const party = [
     intro:
       '目が覚めたら「ミア」だった誰か。戦えない。魔法も使えない。装備はバニーガール衣装のみ。それでも、酒場で身体が覚えていた接客の眼と機転だけで、荒くれ者の視線も、場の空気も、まとめて動かしてしまう。心の声はなぜか「オレ」。声は、数えてみたら四種類あった。',
     quote: '一言：「後ろ、取られてますよ」',
-    image: '/characters/mia.webp',
+    image: `${base}characters/mia.webp`,
     imageAlt: 'ミアの三面図（正面・側面・背面）',
   },
   {
@@ -21,7 +23,7 @@ const party = [
     intro:
       '気弱で慎重な青年。剣の柄は手垢で黒光りして、刀身は鏡のまま――つまり、抜いた回数が少ない。口癖は「誰か得意な人がやれば……」。それでも剣を捨てないことに、彼なりの意味がある。',
     quote: '一言：「あの……すみません。本当に、立ってるだけでいいので……」',
-    image: '/characters/alto.webp',
+    image: `${base}characters/alto.webp`,
     imageAlt: 'アルトの三面図（正面・側面・背面）',
   },
   {
@@ -31,7 +33,7 @@ const party = [
     intro:
       '三歳で算盤、五歳で帳簿、七歳で取り立て。回復魔法は「コストのかかる労働」と言い切り、赤字の依頼は受けない――はずなのに、彼女の選ぶ答えはいつも、誰も潰さない。彼女の口にする金額は、必ず計算が合う。',
     quote: '一言：「礼を言うな。費用対効果で言ってる」',
-    image: '/characters/sera.webp',
+    image: `${base}characters/sera.webp`,
     imageAlt: 'セラの三面図（正面・側面・背面）',
   },
   {
@@ -41,7 +43,7 @@ const party = [
     intro:
       '元・武闘家。「魔法を唱えるより殴った方が早い」。魔王討伐の経験者らしいが、武勇伝は語るたびに細部が食い違う。酒が入ると手が出る。罰金は一件モンメリー2枚、帳簿に記されて妻へ送金される。',
     quote: '一言：「歳を取ると、手は意思を持つ。俺じゃない、手だ」',
-    image: '/characters/gold.webp',
+    image: `${base}characters/gold.webp`,
     imageAlt: 'ゴルドの三面図（正面・側面・背面）',
   },
 ];
@@ -173,7 +175,7 @@ const party = [
     <!-- 戻る導線 -->
     <div class="mt-14 text-center">
       <a
-        href="/"
+        href={base}
         class="inline-block rounded-sm border border-tide-500/60 px-8 py-3 font-eyebrow text-xs tracking-[0.3em] text-tide-700 transition hover:border-gilt-400 hover:text-gilt-600"
       >
         もくじにもどる
