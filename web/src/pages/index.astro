@@ -1,9 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getChapters, toKanji, stripChapterPrefix } from '../lib/chapters';
+import { getChapters, groupByArc, toKanji, stripChapterPrefix } from '../lib/chapters';
 
 const chapters = await getChapters();
 const first = chapters[0];
+const arcs = groupByArc(chapters);
 const coverSrc = '/cover.png';
 ---
 
@@ -98,8 +99,8 @@ const coverSrc = '/cover.png';
     </ul>
   </nav>
 
-  <!-- CHAPTERS：話数の朱印が並ぶ目次 -->
-  <section id="chapters" class="mx-auto max-w-2xl px-6 pb-28 pt-4 md:pb-36">
+  <!-- CHAPTERS：章（アーク）ごとに畳めるもくじ -->
+  <section id="chapters" class="mx-auto max-w-2xl px-6 pb-28 pt-16 md:pb-36 md:pt-24">
     <div class="flex items-center gap-5">
       <div class="tide-rule h-px flex-1 opacity-40" aria-hidden="true"></div>
       <h2 class="font-eyebrow text-sm tracking-[0.5em] text-gilt-500">CONTENTS</h2>
@@ -107,38 +108,56 @@ const coverSrc = '/cover.png';
     </div>
     <p class="mt-2 text-center text-xs tracking-[0.3em] text-ink-500">もくじ</p>
 
-    <ol class="mt-10 space-y-4">
-      {chapters.map((c, i) => (
-        <li>
-          <a
-            href={`/chapter/${c.slug}`}
-            class="sheet group flex items-center gap-5 px-6 py-5 transition duration-200 hover:-translate-y-0.5"
-          >
-            <span
-              class="hanko stamp-in shrink-0 text-xs md:text-sm"
-              style={`animation-delay: ${i * 70}ms`}
-              aria-hidden="true"
-            >
-              {`第${toKanji(c.number)}話`}
+    <div class="mt-10 space-y-4">
+      {arcs.map((group, gi) => (
+        <details
+          class="arc"
+          data-from={group.arc.from}
+          data-to={group.arc.to}
+          open={gi === 0}
+        >
+          <summary class="sheet flex cursor-pointer items-center gap-4 px-5 py-4 transition duration-200 hover:-translate-y-0.5">
+            <span class="hanko stamp-in shrink-0 text-[10px]" aria-hidden="true">
+              {`${group.arc.no}之章`}
             </span>
             <span class="min-w-0 flex-1">
-              <span class="sr-only">{`第${c.number}話　`}</span>
-              <span class="flex items-center gap-2">
-                <span
-                  class="w-4 shrink-0 -translate-x-1 font-eyebrow text-sm text-tide-500 opacity-0 transition duration-200 group-hover:translate-x-0 group-hover:opacity-100"
-                  aria-hidden="true"
-                >
-                  ▶
-                </span>
-                <span class="block truncate font-display text-lg font-medium text-tide-900 md:text-xl">
-                  {stripChapterPrefix(c.titleLine)}
-                </span>
+              <span class="block truncate font-display text-lg text-tide-900 md:text-xl">
+                {group.arc.title}
+              </span>
+              <span class="mt-0.5 block text-xs text-ink-500">
+                {`第${toKanji(group.items[0].number)}〜${toKanji(group.items[group.items.length - 1].number)}話`}
               </span>
             </span>
-          </a>
-        </li>
+            <span class="arc-marker shrink-0 font-eyebrow text-sm text-tide-500" aria-hidden="true">▽</span>
+          </summary>
+
+          <ol class="mt-1 pl-1">
+            {group.items.map((c, ci) => (
+              <li class="border-b border-gilt-400/15 last:border-b-0">
+                <a
+                  href={`/chapter/${c.slug}`}
+                  class="group flex items-center gap-4 py-3 transition duration-200"
+                >
+                  <span
+                    class="hanko stamp-in shrink-0 text-[10px]"
+                    style={`animation-delay: ${ci * 70}ms`}
+                    aria-hidden="true"
+                  >
+                    {`第${toKanji(c.number)}話`}
+                  </span>
+                  <span class="min-w-0 flex-1">
+                    <span class="sr-only">{`第${c.number}話　`}</span>
+                    <span class="block truncate font-display text-lg font-medium text-tide-900 transition duration-200 group-hover:text-seal-600 md:text-xl">
+                      {stripChapterPrefix(c.titleLine)}
+                    </span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </details>
       ))}
-    </ol>
+    </div>
 
     {chapters.length === 0 && (
       <p class="mt-10 text-center font-eyebrow text-sm tracking-widest text-ink-500">
@@ -156,9 +175,23 @@ const coverSrc = '/cover.png';
         var data = JSON.parse(raw);
         if (!data || !data.slug) return;
         var el = document.getElementById('continue-reading');
-        if (!el) return;
-        el.setAttribute('href', '/chapter/' + data.slug);
-        el.hidden = false;
+        if (el) {
+          el.setAttribute('href', '/chapter/' + data.slug);
+          el.hidden = false;
+        }
+        // つづきから読む話を含む章（アーク）も初期状態で開く（先頭章に加えて）
+        var num = typeof data.number === 'number' ? data.number : parseInt(data.slug, 10);
+        if (!isNaN(num)) {
+          var arcs = document.querySelectorAll('#chapters details.arc');
+          for (var i = 0; i < arcs.length; i++) {
+            var from = parseInt(arcs[i].getAttribute('data-from'), 10);
+            var to = parseInt(arcs[i].getAttribute('data-to'), 10);
+            if (num >= from && num <= to) {
+              arcs[i].open = true;
+              break;
+            }
+          }
+        }
       } catch (e) {}
     })();
   </script>

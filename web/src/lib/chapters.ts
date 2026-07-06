@@ -63,6 +63,36 @@ export function stripChapterPrefix(titleLine: string): string {
   return titleLine.replace(/^第[\s〇一二三四五六七八九十0-9]+話\s*/, '');
 }
 
+/** 章（アーク）の定義。章題を直すときは、この配列の title のみを編集すればよい。 */
+export interface Arc {
+  no: string;
+  title: string;
+  from: number;
+  to: number;
+}
+
+export const ARCS: Arc[] = [
+  { no: '一', title: '遊び人、目覚める', from: 1, to: 3 },
+  { no: '二', title: '書類と、日銭と', from: 4, to: 8 },
+  { no: '三', title: '勇者だらけの街', from: 9, to: 12 },
+  { no: '四', title: '峠越え', from: 13, to: 20 },
+];
+
+/**
+ * 章ごとに話をまとめる。各章は from<=number<=to の話を集める。
+ * どの章にも入らない話（21話以降など、また番号解釈に失敗した話）は最後の章に寄せる。
+ * 空の章は出力しない。話の順序は入力（number昇順）を維持する。
+ */
+export function groupByArc(chapters: ChapterMeta[]): { arc: Arc; items: ChapterMeta[] }[] {
+  const groups = ARCS.map((arc) => ({ arc, items: [] as ChapterMeta[] }));
+  const lastGroup = groups[groups.length - 1];
+  for (const c of chapters) {
+    const target = groups.find(({ arc }) => c.number >= arc.from && c.number <= arc.to) ?? lastGroup;
+    target?.items.push(c);
+  }
+  return groups.filter((g) => g.items.length > 0);
+}
+
 export function neighbors(chapters: ChapterMeta[], current: ChapterMeta) {
   const idx = chapters.findIndex((c) => c.slug === current.slug);
   return {

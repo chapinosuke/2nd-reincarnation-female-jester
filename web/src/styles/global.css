@@ -92,6 +92,20 @@
     background: linear-gradient(90deg, #0f8c8d 0%, #238c68 100%);
   }
 
+  /* 章（アーク）アコーディオン：summary のデフォルト三角を消し、開閉インジケータ ▽/△ を回転で示す */
+  .arc > summary {
+    list-style: none;
+  }
+  .arc > summary::-webkit-details-marker {
+    display: none;
+  }
+  .arc .arc-marker {
+    transition: transform 0.2s ease;
+  }
+  .arc[open] > summary .arc-marker {
+    transform: rotate(180deg);
+  }
+
   /* 捺印のモーション（目次で段差スタッガー） */
   .stamp-in {
     animation: stampIn 0.45s cubic-bezier(0.2, 1.4, 0.4, 1) both;
