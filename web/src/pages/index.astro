@@ -11,14 +11,35 @@ const coverSrc = '/cover.png';
 <Base title="2度目の転生は女遊び人でした">
   <!-- HERO：湖水色の見出しと一枚絵 -->
   <section class="relative overflow-hidden">
-    <div class="tide-rule absolute inset-x-0 top-0 h-[3px]" aria-hidden="true"></div>
-    <!-- エールの泡紋様：右奥にごく薄く敷く装飾。表紙背後のグローとなじませる -->
-    <img
-      src="/pattern-ale.svg"
-      alt=""
+    <!-- 背景：世界観のPVをループ再生。reduced-motion時はポスター静止画にフォールバック -->
+    <div
+      class="pointer-events-none absolute inset-0 z-0 bg-cover bg-center"
+      style="background-image:url('/hero-poster.webp')"
       aria-hidden="true"
-      class="pointer-events-none absolute inset-y-0 right-0 z-0 h-full w-auto opacity-60"
-    />
+    >
+    </div>
+    <video
+      class="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover motion-reduce:hidden"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      poster="/hero-poster.webp"
+      aria-hidden="true"
+    >
+      <source src="/hero-bg.mp4" type="video/mp4" />
+    </video>
+    <!-- 紙色オーバーレイ：可読性を確保しつつ白磁のトーンに馴染ませ、下端を次セクションへ繋ぐ -->
+    <div
+      class="pointer-events-none absolute inset-0 z-0"
+      aria-hidden="true"
+      style="background:linear-gradient(180deg, rgba(251,250,244,0.46) 0%, rgba(251,250,244,0.38) 46%, rgba(251,250,244,0.84) 84%, #fbfaf4 100%)"
+    >
+    </div>
+    <!-- 印刷網点：動画を紙面デザインに馴染ませる -->
+    <div class="hero-dots pointer-events-none absolute inset-0 z-0" aria-hidden="true"></div>
+    <div class="tide-rule absolute inset-x-0 top-0 z-10 h-[3px]" aria-hidden="true"></div>
     <div
       class="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-12 px-6 pt-16 pb-20 md:flex-row md:gap-16 md:pt-28 md:pb-28"
     >
@@ -34,16 +55,16 @@ const coverSrc = '/cover.png';
       </div>
 
       <div class="text-center md:text-left fade-in" style="animation-delay: 0.12s">
-        <p class="font-eyebrow text-xs tracking-[0.35em] text-tide-600">
+        <p class="hero-halo font-eyebrow text-xs tracking-[0.35em] text-tide-600">
           TRANSMIGRATION COMEDY
         </p>
-        <p class="mt-1 text-xs tracking-[0.3em] text-ink-500">異世界転生コメディ・連載中</p>
+        <p class="hero-halo mt-1 text-xs tracking-[0.3em] text-ink-500">異世界転生コメディ・連載中</p>
         <h1
-          class="mt-5 font-display text-4xl font-bold leading-snug text-tide-900 md:text-5xl md:leading-snug"
+          class="hero-halo mt-5 font-display text-4xl font-bold leading-snug text-tide-900 md:text-5xl md:leading-snug"
         >
           2度目の転生は<br />女遊び人でした
         </h1>
-        <p class="mt-6 max-w-md text-sm leading-loose text-ink-700 md:text-base">
+        <p class="hero-halo mt-6 max-w-md text-sm leading-loose text-ink-700 md:text-base">
           戦えない。魔法も使えない。装備はバニーガール衣装のみ。<br />
           そんな最底辺から、機転と人心掌握だけで「賢者」を目指す。
         </p>
