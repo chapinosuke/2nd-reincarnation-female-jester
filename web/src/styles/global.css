@@ -98,6 +98,44 @@
     background-size: 4px 4px;
   }
 
+  /*
+   * ヒーローの紙ウォッシュ：中央は薄くして酒場映像の熱を通し、
+   * 下端だけ紙色へ着地させる。暖色は gilt の放射光のみ（新色は足さない）。
+   */
+  .hero-wash {
+    background:
+      radial-gradient(68% 48% at 72% 42%, rgba(203, 170, 92, 0.16), transparent 58%),
+      radial-gradient(55% 42% at 28% 58%, rgba(168, 60, 43, 0.06), transparent 55%),
+      linear-gradient(
+        180deg,
+        rgba(251, 250, 244, 0.4) 0%,
+        rgba(251, 250, 244, 0.26) 38%,
+        rgba(251, 250, 244, 0.48) 68%,
+        rgba(251, 250, 244, 0.88) 88%,
+        #fbfaf4 100%
+      );
+  }
+
+  /* 表紙の背後：古金＋薄い湖水の二重グロー（表紙の暖色と UI の冷色をつなぐ） */
+  .cover-glow {
+    background:
+      radial-gradient(circle at 50% 42%, rgba(203, 170, 92, 0.34) 0%, transparent 52%),
+      radial-gradient(circle at 48% 58%, rgba(15, 140, 141, 0.14) 0%, transparent 62%);
+  }
+
+  /* インタラクティブな sheet：hover でわずかに金縁と影が立つ */
+  .sheet-lift {
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  .sheet-lift:hover {
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.65),
+      0 20px 38px -20px rgba(13, 51, 53, 0.42),
+      0 0 0 1px rgba(203, 170, 92, 0.32);
+  }
+
   /* ヒーローの見出し・コピーを、紙色の縁取り＋放射ぼかしで背景から分離してくっきり見せる（座布団は使わない） */
   .hero-halo {
     text-shadow:
@@ -276,6 +314,9 @@ html[data-font-size='l'] .prose {
   .stamp-in,
   .fade-in {
     animation: none;
+  }
+  .sheet-lift {
+    transition: none;
   }
   * {
     transition-duration: 0.01ms !important;
