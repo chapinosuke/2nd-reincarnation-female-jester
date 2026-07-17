@@ -20,6 +20,7 @@ export const GET: APIRoute = async ({ site }) => {
     base,
     `${base}news/`,
     `${base}story/`,
+    `${base}movie/`,
     `${base}characters/`,
     `${base}world/`,
     `${base}ledger/`,
