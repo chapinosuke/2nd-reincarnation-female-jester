@@ -18,6 +18,7 @@ export const GET: APIRoute = async ({ site }) => {
   const chapters = await getChapters();
   const paths = [
     base,
+    `${base}news/`,
     `${base}characters/`,
     `${base}world/`,
     `${base}ledger/`,

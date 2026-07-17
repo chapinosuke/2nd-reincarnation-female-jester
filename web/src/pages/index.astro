@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getChapters, groupByArc, toKanji, stripChapterPrefix } from '../lib/chapters';
+import { displayDate, NEWS, SITE_AUTHOR, SITE_DESCRIPTION } from '../lib/site';
 
 const chapters = await getChapters();
 const first = chapters[0];
@@ -9,20 +10,20 @@ const arcs = groupByArc(chapters);
 const base = import.meta.env.BASE_URL;
 const coverSrc = `${base}cover.png`;
 const homeUrl = Astro.site ? new URL(base, Astro.site).toString() : base;
-const siteDescription = '戦えない。魔法も使えない。装備はバニーガール衣装のみ。灰鷲ギルドの昼の書類から、陽気な冒険者の夜の話を——異世界転生コメディ、連載中。';
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: '2度目の転生は女遊び人でした',
   url: homeUrl,
-  description: siteDescription,
+  description: SITE_DESCRIPTION,
   inLanguage: 'ja',
+  author: { '@type': 'Person', name: SITE_AUTHOR },
 };
 ---
 
 <Base
   title="2度目の転生は女遊び人でした"
-  description={siteDescription}
+  description={SITE_DESCRIPTION}
   structuredData={websiteSchema}
 >
   <!-- HERO：酒場の熱を通しつつ、紙面の書類世界へ着地する -->
@@ -126,6 +127,26 @@ const websiteSchema = {
         </p>
       </div>
     </div>
+  </section>
+
+  <section id="news" class="mx-auto max-w-3xl px-6 pt-14 md:pt-20" aria-labelledby="news-heading">
+    <div class="flex items-end justify-between gap-4 border-b border-gilt-400/30 pb-3">
+      <div>
+        <p class="font-eyebrow text-xs tracking-[0.4em] text-gilt-500">NEWS</p>
+        <h2 id="news-heading" class="mt-1 font-display text-2xl font-bold text-tide-900">更新情報</h2>
+      </div>
+      <a href={`${base}news`} class="text-xs tracking-[0.12em] text-tide-700 hover:text-gilt-600">すべて見る ▶</a>
+    </div>
+    <ol class="divide-y divide-gilt-400/20">
+      {NEWS.slice(0, 3).map((item) => (
+        <li>
+          <a href={`${base}news/#${item.id}`} class="group grid gap-1 py-4 sm:grid-cols-[7.5rem_1fr] sm:items-baseline">
+            <time datetime={item.date} class="font-eyebrow text-[11px] tracking-[0.14em] text-gilt-600">{displayDate(item.date)}</time>
+            <span class="font-display text-sm leading-relaxed text-tide-900 transition group-hover:text-seal-600">{item.title}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
   </section>
 
   <!-- CHAPTERS：章（アーク）ごとに畳めるもくじ -->

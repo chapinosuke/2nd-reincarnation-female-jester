@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { SITE_AUTHOR } from '../lib/site';
 
 interface Props {
   title: string;
@@ -26,6 +27,7 @@ const absoluteOgImage = Astro.site ? new URL(ogImage, Astro.site).toString() : o
 
 const navLinks = [
   { href: base, label: 'もくじ' },
+  { href: `${base}news`, label: '更新' },
   { href: `${base}characters`, label: '人物' },
   { href: `${base}world`, label: '世界観' },
   { href: `${base}ledger`, label: '帳簿' },
@@ -43,6 +45,8 @@ const navLinks = [
     <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" href={`${base}sitemap.xml`} />
+    <link rel="alternate" type="application/rss+xml" title="更新情報" href={`${base}rss.xml`} />
+    <meta name="author" content={SITE_AUTHOR} />
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -126,7 +130,7 @@ const navLinks = [
           ハイベルの酒場と、ギルドの台帳と
         </p>
         <p class="font-eyebrow text-[11px] tracking-[0.3em] text-tide-600">
-          © {new Date().getFullYear()} 2度目の転生は女遊び人でした
+          © {new Date().getFullYear()} {SITE_AUTHOR} / 2度目の転生は女遊び人でした
         </p>
       </div>
     </footer>
