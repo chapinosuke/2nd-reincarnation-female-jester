@@ -30,19 +30,19 @@ function active(href: string) {
     <nav class="hidden items-center gap-5 lg:flex" aria-label="グローバルナビゲーション">
       {links.map((link) => (
         <a href={link.href} aria-current={active(link.href) ? 'page' : undefined} class:list={['group text-center', active(link.href) && 'text-seal-600']}>
-          <span class="block font-eyebrow text-[10px] tracking-[0.16em] text-tide-700 transition group-hover:text-seal-600">{link.en}</span>
-          <span class="mt-0.5 block text-[9px] tracking-[0.12em] text-ink-500">{link.ja}</span>
+          <span class="block font-eyebrow text-[11px] tracking-[0.16em] text-tide-700 transition group-hover:text-seal-600">{link.en}</span>
+          <span class="mt-0.5 block text-[11px] tracking-[0.12em] text-ink-600">{link.ja}</span>
         </a>
       ))}
     </nav>
 
     <details class="site-menu relative lg:hidden">
-      <summary class="cursor-pointer list-none rounded-sm border border-gilt-400/40 px-3 py-2 font-eyebrow text-[10px] tracking-[0.2em] text-tide-700 [&::-webkit-details-marker]:hidden">MENU</summary>
+      <summary class="cursor-pointer list-none rounded-sm border border-gilt-400/40 px-3 py-2 font-eyebrow text-[11px] tracking-[0.2em] text-tide-700 [&::-webkit-details-marker]:hidden">MENU</summary>
       <nav class="sheet absolute right-0 top-[calc(100%+0.65rem)] grid w-64 grid-cols-2 gap-px overflow-hidden p-2 shadow-xl" aria-label="モバイルナビゲーション">
         {links.map((link) => (
           <a href={link.href} aria-current={active(link.href) ? 'page' : undefined} class="rounded-sm px-3 py-3 transition hover:bg-tide-500/10">
-            <span class="block font-eyebrow text-[10px] tracking-[0.15em] text-tide-700">{link.en}</span>
-            <span class="mt-0.5 block text-[10px] text-ink-500">{link.ja}</span>
+            <span class="block font-eyebrow text-[11px] tracking-[0.15em] text-tide-700">{link.en}</span>
+            <span class="mt-0.5 block text-[11px] text-ink-600">{link.ja}</span>
           </a>
         ))}
       </nav>

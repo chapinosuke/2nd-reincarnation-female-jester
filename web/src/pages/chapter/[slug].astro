@@ -138,7 +138,7 @@ const structuredData = [
             href={`${base}chapter/${prev.slug}`}
             class="sheet sheet-lift group block px-5 py-4 hover:-translate-y-0.5"
           >
-            <p class="font-eyebrow text-[10px] tracking-[0.3em] text-ink-600">◀ まえのはなし</p>
+            <p class="font-eyebrow text-[11px] tracking-[0.3em] text-ink-600">◀ まえのはなし</p>
             <p class="mt-2 truncate font-display text-sm text-tide-900 group-hover:text-seal-600">
               第{prev.number}話　{stripChapterPrefix(prev.titleLine)}
             </p>
@@ -151,7 +151,7 @@ const structuredData = [
             href={`${base}chapter/${next.slug}`}
             class="group block rounded-sm border border-seal-500 bg-seal-500 px-5 py-4 text-right text-paper-50 shadow-lg shadow-seal-600/20 transition hover:-translate-y-0.5 hover:bg-seal-400"
           >
-            <p class="font-eyebrow text-[10px] tracking-[0.3em] text-paper-100">つぎのはなし ▶</p>
+            <p class="font-eyebrow text-[11px] tracking-[0.3em] text-paper-100">つぎのはなし ▶</p>
             <p class="mt-2 truncate font-display text-sm text-paper-50">
               第{next.number}話　{stripChapterPrefix(next.titleLine)}
             </p>
@@ -172,7 +172,7 @@ const structuredData = [
 
   <section class="mx-auto max-w-[52rem] px-6 pb-16 text-center" aria-labelledby="share-heading">
     <p id="share-heading" class="font-eyebrow text-xs tracking-[0.3em] text-gilt-600">SHARE THIS EPISODE</p>
-    <p class="mt-2 text-xs text-ink-500">この話を共有する</p>
+    <p class="mt-2 text-xs text-ink-600">この話を共有する</p>
     <div class="mt-5 flex flex-wrap justify-center gap-3">
       <button id="native-share" type="button" hidden class="rounded-sm bg-tide-600 px-5 py-2.5 text-xs tracking-[0.12em] text-paper-50">共有</button>
       <button id="copy-link" type="button" class="rounded-sm border border-tide-500/50 px-5 py-2.5 text-xs tracking-[0.12em] text-tide-700">リンクをコピー</button>

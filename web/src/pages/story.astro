@@ -4,6 +4,7 @@ import PageNav from '../components/PageNav.astro';
 import { SITE_TITLE } from '../lib/site';
 
 const base = import.meta.env.BASE_URL;
+const heroSrc = `${base}generated/hero-tavern-v2.webp`;
 const arcs = [
   {
     no: '一',
@@ -36,7 +37,7 @@ const arcs = [
   <PageNav label="STORY" />
   <main class="pb-24">
     <section class="relative isolate overflow-hidden">
-      <img src={`${base}hero-poster.webp`} alt="ミアたち四人が旅路に立つ" width="1280" height="720" class="h-[24rem] w-full object-cover md:h-[34rem]" />
+      <img src={heroSrc} alt="酒場『陽気な冒険者』で働くミアと仲間たち" width="1672" height="941" class="h-[24rem] w-full object-cover object-[72%_center] md:h-[34rem] md:object-center" />
       <div class="absolute inset-0 bg-gradient-to-t from-tide-900/95 via-tide-900/30 to-transparent" aria-hidden="true"></div>
       <div class="absolute inset-x-0 bottom-0 mx-auto max-w-4xl px-6 pb-10 text-paper-50 md:pb-14">
         <p class="font-eyebrow text-xs tracking-[0.45em] text-gilt-300">STORY</p>
@@ -51,15 +52,15 @@ const arcs = [
           目が覚めたら、知らない女の身体だった。名前はミア。職業は「遊び人」。戦闘能力なし、魔法なし、正装はバニーガール衣装。しかも身体は、オレの意識を置き去りにして完璧な接客をこなしてしまう。
         </p>
         <p class="mt-5 text-[1.02rem] leading-[2.15] tracking-[0.04em] text-ink-800">
-          気弱な自称勇者、搭算で治療する僧侶、魔法より先に手が出る老魔法使い。どこかズレた三人と組んだミアは、酒場の愛想と人心掌握だけを武器に、書類と日銭とお色気にまみれた冒険へ踏み出す。
+          気弱な自称勇者、打算で治療する僧侶、魔法より先に手が出る老魔法使い。どこかズレた三人と組んだミアは、酒場の愛想と人心掌握だけを武器に、書類と日銭とお色気にまみれた冒険へ踏み出す。
         </p>
-        <p class="mt-7 text-center text-xs leading-relaxed text-ink-500">※性的な凗談・接触を題材にしたコメディ表現を含みます。</p>
+        <p class="mt-7 text-center text-xs leading-relaxed text-ink-600">※性的な冗談・接触を題材にしたコメディ表現を含みます。</p>
       </div>
     </section>
 
     <section class="mx-auto max-w-3xl px-6 pt-16" aria-labelledby="arc-heading">
       <div class="text-center">
-        <p class="font-eyebrow text-xs tracking-[0.4em] text-gilt-500">VOLUME I</p>
+        <p class="font-eyebrow text-xs tracking-[0.4em] text-gilt-600">VOLUME I</p>
         <h2 id="arc-heading" class="mt-2 font-display text-3xl font-bold text-tide-900">第1巻　章紹介</h2>
       </div>
       <ol class="mt-10 space-y-5">
@@ -67,7 +68,7 @@ const arcs = [
           <li class="sheet grid gap-5 px-6 py-7 sm:grid-cols-[5rem_1fr] md:px-8">
             <span class="hanko mx-auto text-sm" aria-hidden="true">{arc.no}</span>
             <div>
-              <p class="font-eyebrow text-[10px] tracking-[0.25em] text-gilt-600">{arc.episodes}</p>
+              <p class="font-eyebrow text-[11px] tracking-[0.25em] text-gilt-600">{arc.episodes}</p>
               <h3 class="mt-1 font-display text-2xl font-bold text-tide-900">{arc.title}</h3>
               <p class="mt-4 text-sm leading-loose text-ink-700">{arc.body}</p>
             </div>
