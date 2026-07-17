@@ -1,0 +1,51 @@
+---
+const base = import.meta.env.BASE_URL;
+const path = Astro.url.pathname;
+interface Props { sticky?: boolean; }
+const { sticky = true } = Astro.props;
+const links = [
+  { href: `${base}news`, en: 'NEWS', ja: '更新' },
+  { href: `${base}story`, en: 'STORY', ja: '物語' },
+  { href: `${base}characters`, en: 'CHARACTER', ja: '人物' },
+  { href: `${base}world`, en: 'WORLD', ja: '世界' },
+  { href: `${base}#chapters`, en: 'NOVEL', ja: '本編' },
+  { href: `${base}movie`, en: 'MOVIE', ja: '映像' },
+  { href: `${base}gallery`, en: 'GALLERY', ja: '画廊' },
+];
+
+function active(href: string) {
+  const target = href.replace(/#.*$/, '');
+  return target !== base && path.startsWith(target);
+}
+---
+
+<header class:list={['site-header z-40 border-b border-gilt-400/25 bg-paper-50/95 backdrop-blur-md', sticky && 'sticky top-0']}>
+  <div class="tide-rule absolute inset-x-0 top-0 h-[2px]" aria-hidden="true"></div>
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6">
+    <a href={base} class="group flex items-center gap-2" aria-label="トップへ">
+      <span class="flex h-8 w-8 rotate-[-3deg] items-center justify-center rounded border-2 border-seal-500 font-display text-base font-bold text-seal-500">遊</span>
+      <span class="hidden font-display text-sm font-bold tracking-[0.06em] text-tide-900 sm:block">2度目の転生は女遊び人でした</span>
+    </a>
+
+    <nav class="hidden items-center gap-5 lg:flex" aria-label="グローバルナビゲーション">
+      {links.map((link) => (
+        <a href={link.href} aria-current={active(link.href) ? 'page' : undefined} class:list={['group text-center', active(link.href) && 'text-seal-600']}>
+          <span class="block font-eyebrow text-[10px] tracking-[0.16em] text-tide-700 transition group-hover:text-seal-600">{link.en}</span>
+          <span class="mt-0.5 block text-[9px] tracking-[0.12em] text-ink-500">{link.ja}</span>
+        </a>
+      ))}
+    </nav>
+
+    <details class="site-menu relative lg:hidden">
+      <summary class="cursor-pointer list-none rounded-sm border border-gilt-400/40 px-3 py-2 font-eyebrow text-[10px] tracking-[0.2em] text-tide-700 [&::-webkit-details-marker]:hidden">MENU</summary>
+      <nav class="sheet absolute right-0 top-[calc(100%+0.65rem)] grid w-64 grid-cols-2 gap-px overflow-hidden p-2 shadow-xl" aria-label="モバイルナビゲーション">
+        {links.map((link) => (
+          <a href={link.href} aria-current={active(link.href) ? 'page' : undefined} class="rounded-sm px-3 py-3 transition hover:bg-tide-500/10">
+            <span class="block font-eyebrow text-[10px] tracking-[0.15em] text-tide-700">{link.en}</span>
+            <span class="mt-0.5 block text-[10px] text-ink-500">{link.ja}</span>
+          </a>
+        ))}
+      </nav>
+    </details>
+  </div>
+</header>

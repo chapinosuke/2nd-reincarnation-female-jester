@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import GlobalNav from '../../components/GlobalNav.astro';
 import { render } from 'astro:content';
 import { getChapters, neighbors, toKanji, stripChapterPrefix } from '../../lib/chapters';
 
@@ -62,6 +63,7 @@ const structuredData = [
   structuredData={structuredData}
   bodyClass="reader-page"
 >
+  <GlobalNav sticky={false} />
   <!-- 上部ナビ -->
   <header class="reader-header sticky top-0 z-30 border-b border-gilt-400/25 bg-paper-50/90 backdrop-blur-md">
     <div class="tide-rule absolute inset-x-0 top-0 h-[2px]" aria-hidden="true"></div>

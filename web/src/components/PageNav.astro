@@ -1,22 +1,12 @@
 ---
-// 追加ページ共通の上部固定ナビ（章ページのヘッダーと同じ流儀。中央に英字ラベル）
+import GlobalNav from './GlobalNav.astro';
+
 interface Props {
   label: string;
 }
 const { label } = Astro.props;
-const base = import.meta.env.BASE_URL;
 ---
 
-<header class="sticky top-0 z-30 border-b border-gilt-400/25 bg-paper-50/90 backdrop-blur-md">
-  <div class="tide-rule absolute inset-x-0 top-0 h-[2px]" aria-hidden="true"></div>
-  <div class="mx-auto flex max-w-3xl items-center justify-between px-5 py-3.5">
-    <a
-      href={base}
-      class="font-eyebrow text-xs tracking-[0.25em] text-tide-700 transition hover:text-gilt-600"
-    >
-      ◀ もくじ
-    </a>
-    <span class="font-eyebrow text-xs tracking-[0.35em] text-gilt-600">{label}</span>
-    <span class="w-14" aria-hidden="true"></span>
-  </div>
-</header>
+<div aria-label={`${label}ページ`}>
+  <GlobalNav />
+</div>

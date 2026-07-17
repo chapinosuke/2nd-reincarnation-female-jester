@@ -136,6 +136,10 @@
       0 0 0 1px rgba(203, 170, 92, 0.32);
   }
 
+  .site-header [aria-current='page'] span:first-child {
+    color: #a83c2b;
+  }
+
   /* ヒーローの見出し・コピーを、紙色の縁取り＋放射ぼかしで背景から分離してくっきり見せる（座布団は使わない） */
   .hero-halo {
     text-shadow:

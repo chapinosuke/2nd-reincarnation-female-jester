@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import GlobalNav from '../components/GlobalNav.astro';
 import { getChapters, groupByArc, toKanji, stripChapterPrefix } from '../lib/chapters';
 import { displayDate, NEWS, SITE_AUTHOR, SITE_DESCRIPTION } from '../lib/site';
 
@@ -26,6 +27,7 @@ const websiteSchema = {
   description={SITE_DESCRIPTION}
   structuredData={websiteSchema}
 >
+  <GlobalNav />
   <!-- HERO：酒場の熱を通しつつ、紙面の書類世界へ着地する -->
   <section class="relative overflow-hidden">
     <!-- 背景：世界観のPVをループ再生。reduced-motion時はポスター静止画にフォールバック -->
