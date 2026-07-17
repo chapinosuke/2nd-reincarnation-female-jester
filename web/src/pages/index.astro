@@ -4,14 +4,26 @@ import { getChapters, groupByArc, toKanji, stripChapterPrefix } from '../lib/cha
 
 const chapters = await getChapters();
 const first = chapters[0];
+const latest = chapters.at(-1);
 const arcs = groupByArc(chapters);
 const base = import.meta.env.BASE_URL;
 const coverSrc = `${base}cover.png`;
+const homeUrl = Astro.site ? new URL(base, Astro.site).toString() : base;
+const siteDescription = '戦えない。魔法も使えない。装備はバニーガール衣装のみ。灰鷲ギルドの昼の書類から、陽気な冒険者の夜の話を——異世界転生コメディ、連載中。';
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: '2度目の転生は女遊び人でした',
+  url: homeUrl,
+  description: siteDescription,
+  inLanguage: 'ja',
+};
 ---
 
 <Base
   title="2度目の転生は女遊び人でした"
-  description="戦えない。魔法も使えない。装備はバニーガール衣装のみ。灰鷲ギルドの昼の書類から、陽気な冒険者の夜の話を——異世界転生コメディ、連載中。"
+  description={siteDescription}
+  structuredData={websiteSchema}
 >
   <!-- HERO：酒場の熱を通しつつ、紙面の書類世界へ着地する -->
   <section class="relative overflow-hidden">
@@ -23,7 +35,7 @@ const coverSrc = `${base}cover.png`;
     >
     </div>
     <video
-      class="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover motion-reduce:hidden"
+      class="pointer-events-none absolute inset-0 z-0 hidden h-full w-full object-cover md:block motion-reduce:hidden"
       autoplay
       muted
       loop
@@ -32,7 +44,7 @@ const coverSrc = `${base}cover.png`;
       poster={`${base}hero-poster.webp`}
       aria-hidden="true"
     >
-      <source src={`${base}hero-bg.mp4`} type="video/mp4" />
+      <source src={`${base}hero-bg.mp4`} type="video/mp4" media="(min-width: 768px)" />
     </video>
     <!-- 紙ウォッシュ＋古金の暖色光：映像の熱を残しつつ下端で紙面へ -->
     <div class="hero-wash pointer-events-none absolute inset-0 z-0" aria-hidden="true"></div>
@@ -44,13 +56,17 @@ const coverSrc = `${base}cover.png`;
     >
       <div class="relative shrink-0 fade-in">
         <div class="cover-glow absolute -inset-12 blur-3xl" aria-hidden="true"></div>
-        <img
-          src={coverSrc}
-          alt="表紙：酒場に立つバニーガール姿のミア"
-          width="600"
-          height="600"
-          class="relative w-64 rounded-sm shadow-2xl shadow-tide-900/35 ring-1 ring-gilt-400/70 md:w-80"
-        />
+        <picture>
+          <source srcset={`${base}cover.avif`} type="image/avif" />
+          <img
+            src={coverSrc}
+            alt="表紙：酒場に立つバニーガール姿のミア"
+            width="600"
+            height="600"
+            fetchpriority="high"
+            class="relative w-64 rounded-sm shadow-2xl shadow-tide-900/35 ring-1 ring-gilt-400/70 md:w-80"
+          />
+        </picture>
       </div>
 
       <div class="text-center md:text-left fade-in" style="animation-delay: 0.12s">
@@ -82,6 +98,14 @@ const coverSrc = `${base}cover.png`;
               第一話から読む
             </a>
           )}
+          {latest && latest.slug !== first?.slug && (
+            <a
+              href={`${base}chapter/${latest.slug}`}
+              class="rounded-sm border border-seal-500/70 bg-paper-50/65 px-8 py-3 text-sm tracking-[0.14em] text-seal-600 backdrop-blur-[2px] transition hover:bg-paper-50 hover:text-seal-500"
+            >
+              最新話を読む
+            </a>
+          )}
           <a
             id="continue-reading"
             href={base}
@@ -97,38 +121,15 @@ const coverSrc = `${base}cover.png`;
             もくじへ
           </a>
         </div>
+        <p class="hero-halo mt-4 text-xs tracking-[0.12em] text-ink-600">
+          全{chapters.length}話公開中 ・ 連載中
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- ページ入口：人物／世界観／帳簿／画廊（台帳メタファーの副題つき） -->
-  <!-- ヒーロー（映像）とのあいだに余白を取り、紙面に着地してからカードが始まる -->
-  <nav class="mx-auto max-w-3xl px-6 pb-4 pt-10 md:pt-14" aria-label="資料への入口">
-    <ul class="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
-      {[
-        { href: `${base}characters`, en: 'CHARACTERS', ja: '人物', sub: '常連台帳' },
-        { href: `${base}world`, en: 'WORLD', ja: '世界観', sub: '資料室蔵' },
-        { href: `${base}ledger`, en: 'LEDGER', ja: '帳簿', sub: '換算と罰金' },
-        { href: `${base}gallery`, en: 'GALLERY', ja: '画廊', sub: '一枚絵' },
-      ].map((item) => (
-        <li>
-          <a
-            href={item.href}
-            class="sheet sheet-lift group flex flex-col items-center gap-0.5 px-3 py-4 text-center hover:-translate-y-0.5"
-          >
-            <span class="font-eyebrow text-[10px] tracking-[0.3em] text-gilt-500 transition group-hover:text-gilt-600">
-              {item.en}
-            </span>
-            <span class="font-display text-base text-tide-900 md:text-lg">{item.ja}</span>
-            <span class="mt-0.5 text-[10px] tracking-[0.18em] text-ink-500">{item.sub}</span>
-          </a>
-        </li>
-      ))}
-    </ul>
-  </nav>
-
   <!-- CHAPTERS：章（アーク）ごとに畳めるもくじ -->
-  <section id="chapters" class="mx-auto max-w-3xl px-6 pb-28 pt-16 md:pb-36 md:pt-24">
+  <section id="chapters" class="mx-auto max-w-3xl scroll-mt-8 px-6 pb-20 pt-16 md:pb-24 md:pt-24">
     <div class="flex items-center gap-5">
       <div class="tide-rule h-px flex-1 opacity-40" aria-hidden="true"></div>
       <h2 class="font-eyebrow text-sm tracking-[0.5em] text-gilt-500">CONTENTS</h2>
@@ -197,6 +198,32 @@ const coverSrc = `${base}cover.png`;
     )}
   </section>
 
+  <!-- 読書導線の後に、設定資料への入口を置く -->
+  <nav class="mx-auto max-w-3xl px-6 pb-28" aria-label="資料への入口">
+    <p class="mb-5 text-center text-xs tracking-[0.2em] text-ink-500">物語の資料</p>
+    <ul class="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+      {[
+        { href: `${base}characters`, en: 'CHARACTERS', ja: '人物', sub: '常連台帳' },
+        { href: `${base}world`, en: 'WORLD', ja: '世界観', sub: '資料室蔵' },
+        { href: `${base}ledger`, en: 'LEDGER', ja: '帳簿', sub: '換算と罰金' },
+        { href: `${base}gallery`, en: 'GALLERY', ja: '画廊', sub: '一枚絵' },
+      ].map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class="sheet sheet-lift group flex flex-col items-center gap-0.5 px-3 py-4 text-center hover:-translate-y-0.5"
+          >
+            <span class="font-eyebrow text-[10px] tracking-[0.3em] text-gilt-500 transition group-hover:text-gilt-600">
+              {item.en}
+            </span>
+            <span class="font-display text-base text-tide-900 md:text-lg">{item.ja}</span>
+            <span class="mt-0.5 text-[10px] tracking-[0.18em] text-ink-500">{item.sub}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
   <!-- 「つづきから読む」：last-read がある場合のみ表示 -->
   <script is:inline define:vars={{ base }}>
     (function () {
@@ -207,7 +234,7 @@ const coverSrc = `${base}cover.png`;
         if (!data || !data.slug) return;
         var el = document.getElementById('continue-reading');
         if (el) {
-          el.setAttribute('href', base + 'chapter/' + data.slug);
+          el.setAttribute('href', base + 'chapter/' + data.slug + '?resume=1');
           el.hidden = false;
         }
         // つづきから読む話を含む章（アーク）も初期状態で開く（先頭章に加えて）

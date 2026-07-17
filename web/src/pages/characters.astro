@@ -84,7 +84,7 @@ const party = [
         party.map((c) => (
           <article class="sheet fade-in px-6 py-8 md:px-9 md:py-9">
             {/* 物語のワンシーン表情カット＋肩書き・紹介（三面図とは役割を分ける） */}
-            <div class="flex items-start gap-4 md:gap-6">
+            <div class="grid grid-cols-[7rem_minmax(0,1fr)] items-start gap-x-4 md:grid-cols-[9rem_minmax(0,1fr)] md:gap-x-6">
               <img
                 src={c.portrait}
                 alt={c.portraitAlt}
@@ -93,7 +93,7 @@ const party = [
                 loading="lazy"
                 class="h-28 w-28 shrink-0 rounded-sm object-cover shadow-md shadow-tide-900/25 ring-1 ring-gilt-400/50 md:h-36 md:w-36"
               />
-              <div class="min-w-0 flex-1">
+              <div class="min-w-0">
                 <div class="flex items-center gap-3 md:gap-4">
                   <span class="hanko shrink-0 text-[10px] md:text-xs" aria-hidden="true">
                     {c.hanko}
@@ -108,13 +108,13 @@ const party = [
                     </p>
                   </div>
                 </div>
-                <p class="mt-5 text-[0.95rem] leading-[2.05] tracking-[0.04em] text-ink-800">
-                  {c.intro}
-                </p>
-                <blockquote class="mt-5 border-l-2 border-gilt-400 pl-4 text-sm italic text-ink-700">
-                  {c.quote}
-                </blockquote>
               </div>
+              <p class="col-span-2 mt-5 text-[0.95rem] leading-[2.05] tracking-[0.04em] text-ink-800 md:col-span-1 md:col-start-2">
+                {c.intro}
+              </p>
+              <blockquote class="col-span-2 mt-5 border-l-2 border-gilt-400 pl-4 text-sm italic text-ink-700 md:col-span-1 md:col-start-2">
+                {c.quote}
+              </blockquote>
             </div>
 
             {/* 三面図：衣装・体型の設定資料 */}

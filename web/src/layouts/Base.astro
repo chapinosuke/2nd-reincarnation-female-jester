@@ -6,6 +6,7 @@ interface Props {
   description?: string;
   ogImage?: string;
   ogType?: string;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const base = import.meta.env.BASE_URL;
@@ -13,10 +14,15 @@ const base = import.meta.env.BASE_URL;
 const {
   title,
   description = '異世界転生コメディ・連載中',
-  // TODO: astro.config.mjs に site を設定したら、new URL(ogImage, Astro.site) で絶対URL化する
   ogImage = `${base}ogp.png`,
   ogType = 'website',
+  structuredData,
 } = Astro.props;
+
+const canonicalUrl = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site).toString()
+  : Astro.url.toString();
+const absoluteOgImage = Astro.site ? new URL(ogImage, Astro.site).toString() : ogImage;
 
 const navLinks = [
   { href: base, label: 'もくじ' },
@@ -35,13 +41,20 @@ const navLinks = [
     <meta name="description" content={description} />
     <meta name="theme-color" content="#fbfaf4" />
     <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="sitemap" href={`${base}sitemap.xml`} />
 
-    <!-- OGP / Twitter Card（サイトURL未確定のため og:image は相対パス。デプロイ時に astro.config の site を設定して絶対URL化する） -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={absoluteOgImage} />
     <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="2度目の転生は女遊び人でした" />
+    <meta property="og:locale" content="ja_JP" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteOgImage} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -50,6 +63,9 @@ const navLinks = [
       rel="stylesheet"
     />
     <title>{title}</title>
+    {structuredData && (
+      <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    )}
     <!-- FOUC防止：保存済みの文字サイズ設定を描画前に適用する -->
     <script is:inline>
       (function () {
@@ -86,7 +102,7 @@ const navLinks = [
         </div>
       </div>
 
-      <div class="relative px-4 pb-9 pt-[34vw]">
+      <div class="relative px-4 pb-9 pt-[clamp(14rem,34vw,34rem)]">
         <nav class="mb-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
           {
             navLinks.map((link, i) => (

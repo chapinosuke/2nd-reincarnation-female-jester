@@ -16,9 +16,51 @@ const { Content } = await render(current.entry);
 const { prev, next } = neighbors(chapters, current);
 const title = stripChapterPrefix(current.titleLine);
 const base = import.meta.env.BASE_URL;
+const rawBody = current.entry.body ?? '';
+const excerpt = rawBody
+  .split(/\r?\n/)
+  .slice(1)
+  .join(' ')
+  .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+  .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+  .replace(/[*_`>#~-]/g, '')
+  .replace(/\s+/g, ' ')
+  .trim();
+const description = `第${current.number}話「${title}」。${excerpt.slice(0, 110)}${excerpt.length > 110 ? '…' : ''}`;
+const chapterUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : Astro.url.toString();
+const homeUrl = Astro.site ? new URL(base, Astro.site).toString() : base;
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: current.titleLine,
+    description,
+    url: chapterUrl,
+    inLanguage: 'ja',
+    position: current.number,
+    isPartOf: {
+      '@type': 'CreativeWorkSeries',
+      name: '2度目の転生は女遊び人でした',
+      url: homeUrl,
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'もくじ', item: homeUrl },
+      { '@type': 'ListItem', position: 2, name: current.titleLine, item: chapterUrl },
+    ],
+  },
+];
 ---
 
-<Base title={`${current.titleLine} ｜ 2度目の転生は女遊び人でした`}>
+<Base
+  title={`${current.titleLine} ｜ 2度目の転生は女遊び人でした`}
+  description={description}
+  ogType="article"
+  structuredData={structuredData}
+>
   <!-- 上部ナビ -->
   <header class="sticky top-0 z-30 border-b border-gilt-400/25 bg-paper-50/90 backdrop-blur-md">
     <div class="tide-rule absolute inset-x-0 top-0 h-[2px]" aria-hidden="true"></div>
@@ -34,15 +76,18 @@ const base = import.meta.env.BASE_URL;
       </span>
       <div class="flex items-center gap-1" role="group" aria-label="文字サイズ">
         <span class="mr-0.5 font-display text-[11px] text-ink-500" aria-hidden="true">字</span>
-        <button type="button" data-font-btn="s" aria-label="文字を小さく" class="font-btn">小</button>
-        <button type="button" data-font-btn="m" aria-label="文字を標準に" class="font-btn">中</button>
-        <button type="button" data-font-btn="l" aria-label="文字を大きく" class="font-btn">大</button>
+        <button type="button" data-font-btn="s" aria-label="文字を小さく" aria-pressed="false" class="font-btn">小</button>
+        <button type="button" data-font-btn="m" aria-label="文字を標準に" aria-pressed="true" class="font-btn">中</button>
+        <button type="button" data-font-btn="l" aria-label="文字を大きく" aria-pressed="false" class="font-btn">大</button>
       </div>
+    </div>
+    <div class="absolute inset-x-0 bottom-0 h-[2px] bg-paper-200" aria-hidden="true">
+      <div id="reading-progress" class="h-full w-0 bg-gradient-to-r from-tide-500 to-sage-500"></div>
     </div>
   </header>
 
   <!-- 本文：一枚の書類として読む（1行おおよそ 38〜40 字。横に広げすぎると視線の往復が辛くなる） -->
-  <article class="sheet fade-in mx-auto my-10 max-w-[52rem] px-6 py-12 md:my-14 md:px-12 md:py-16">
+  <article id="reader-article" class="sheet fade-in mx-auto my-10 max-w-[52rem] px-6 py-12 md:my-14 md:px-12 md:py-16">
     <div class="text-center">
       <span class="hanko text-base md:text-lg" aria-hidden="true">
         {`第${toKanji(current.number)}話`}
@@ -85,10 +130,10 @@ const base = import.meta.env.BASE_URL;
         {next && (
           <a
             href={`${base}chapter/${next.slug}`}
-            class="sheet sheet-lift group block px-5 py-4 text-right hover:-translate-y-0.5"
+            class="group block rounded-sm border border-seal-500 bg-seal-500 px-5 py-4 text-right text-paper-50 shadow-lg shadow-seal-600/20 transition hover:-translate-y-0.5 hover:bg-seal-400"
           >
-            <p class="font-eyebrow text-[10px] tracking-[0.3em] text-ink-600">つぎのはなし ▶</p>
-            <p class="mt-2 truncate font-display text-sm text-tide-900 group-hover:text-seal-600">
+            <p class="font-eyebrow text-[10px] tracking-[0.3em] text-paper-100">つぎのはなし ▶</p>
+            <p class="mt-2 truncate font-display text-sm text-paper-50">
               第{next.number}話　{stripChapterPrefix(next.titleLine)}
             </p>
           </a>
@@ -106,11 +151,85 @@ const base = import.meta.env.BASE_URL;
     </div>
   </nav>
 
-  <!-- 読了位置の保存（続きから読む用） -->
+  <!-- スマホでの連続読書用ナビ -->
+  <nav
+    class="fixed inset-x-3 bottom-3 z-40 grid grid-cols-3 overflow-hidden rounded-md border border-gilt-400/40 bg-paper-50/95 shadow-xl shadow-tide-900/20 backdrop-blur-md md:hidden"
+    aria-label="読書ナビゲーション"
+  >
+    {prev ? (
+      <a href={`${base}chapter/${prev.slug}`} class="flex min-h-12 items-center justify-center border-r border-gilt-400/25 text-sm text-tide-700">
+        ◀ 前話
+      </a>
+    ) : (
+      <span class="border-r border-gilt-400/25" aria-hidden="true"></span>
+    )}
+    <a href={base} class="flex min-h-12 items-center justify-center border-r border-gilt-400/25 text-sm text-tide-700">
+      もくじ
+    </a>
+    {next ? (
+      <a href={`${base}chapter/${next.slug}`} class="flex min-h-12 items-center justify-center bg-seal-500 text-sm text-paper-50">
+        次話 ▶
+      </a>
+    ) : (
+      <a href={base} class="flex min-h-12 items-center justify-center text-sm text-tide-700">
+        読了
+      </a>
+    )}
+  </nav>
+
+  <!-- 読書進捗とスクロール位置の保存 -->
   <script is:inline define:vars={{ slug: current.slug, number: current.number, title }}>
-    try {
-      localStorage.setItem('last-read', JSON.stringify({ slug: slug, number: number, title: title }));
-    } catch (e) {}
+    (function () {
+      var article = document.getElementById('reader-article');
+      var bar = document.getElementById('reading-progress');
+      if (!article || !bar) return;
+      var ticking = false;
+
+      function ratio() {
+        var start = window.scrollY + article.getBoundingClientRect().top;
+        var distance = Math.max(1, article.offsetHeight - window.innerHeight);
+        return Math.max(0, Math.min(1, (window.scrollY - start) / distance));
+      }
+
+      function update() {
+        var progress = ratio();
+        bar.style.width = Math.round(progress * 1000) / 10 + '%';
+        try {
+          localStorage.setItem('last-read', JSON.stringify({
+            slug: slug,
+            number: number,
+            title: title,
+            progress: progress
+          }));
+        } catch (e) {}
+        ticking = false;
+      }
+
+      function requestUpdate() {
+        if (!ticking) {
+          ticking = true;
+          window.requestAnimationFrame(update);
+        }
+      }
+
+      if (new URLSearchParams(window.location.search).get('resume') === '1') {
+        try {
+          var saved = JSON.parse(localStorage.getItem('last-read') || 'null');
+          if (saved && saved.slug === slug && typeof saved.progress === 'number') {
+            window.requestAnimationFrame(function () {
+              var start = window.scrollY + article.getBoundingClientRect().top;
+              var distance = Math.max(1, article.offsetHeight - window.innerHeight);
+              window.scrollTo({ top: start + distance * saved.progress, behavior: 'auto' });
+              requestUpdate();
+            });
+          }
+        } catch (e) {}
+      }
+
+      window.addEventListener('scroll', requestUpdate, { passive: true });
+      window.addEventListener('resize', requestUpdate);
+      requestUpdate();
+    })();
   </script>
 
   <!-- 文字サイズ切替 -->
@@ -121,6 +240,9 @@ const base = import.meta.env.BASE_URL;
           localStorage.setItem('reader-font-size', s);
         } catch (e) {}
         document.documentElement.setAttribute('data-font-size', s);
+        for (var j = 0; j < btns.length; j++) {
+          btns[j].setAttribute('aria-pressed', btns[j].getAttribute('data-font-btn') === s ? 'true' : 'false');
+        }
       }
       var btns = document.querySelectorAll('[data-font-btn]');
       for (var i = 0; i < btns.length; i++) {
@@ -128,6 +250,7 @@ const base = import.meta.env.BASE_URL;
           setSize(this.getAttribute('data-font-btn'));
         });
       }
+      setSize(document.documentElement.getAttribute('data-font-size') || 'm');
     })();
   </script>
 </Base>
