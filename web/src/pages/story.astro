@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import PageNav from '../components/PageNav.astro';
+import { SITE_TITLE } from '../lib/site';
+
+const base = import.meta.env.BASE_URL;
+const arcs = [
+  {
+    no: '一',
+    episodes: '第1〜3話',
+    title: '遊び人、目覚める',
+    body: '目が覚めたら、ミアという名のバニーガールになっていた。戦えず、魔法もなく、あるのは酒場で人を転がす接客術だけ。そんな彼女に、四人目を探す三人組が声をかける。',
+  },
+  {
+    no: '二',
+    episodes: '第4〜8話',
+    title: '書類と、日銭と',
+    body: '臨時雇いの一日は、なし崩しに続いていく。取り立て、商談、護衛、牙鼠駆除。治療費を差し引かれれば赤字になる最底辺の依頼で、ミアは戦う以外の勝ち方を見つけていく。',
+  },
+  {
+    no: '三',
+    episodes: '第9〜12話',
+    title: '勇者だらけの街',
+    body: '勇者は、名乗れば誰でもなれる。自称勇者が溢れるハイベルで起きた騒動は、気弱なアルトがその名を背負う理由と、ゴルドの怪しい武勇伝につながっていく。',
+  },
+  {
+    no: '四',
+    episodes: '第13〜20話',
+    title: '峠越え',
+    body: '破格の報酬に釣られ、一行は危険な峠越えへ。順調だった旅路は、峠の主との遭遇で崩壊する。力では勝てない相手を前に、遊び人の読みと四人のズレが、最後の切り札になる。',
+  },
+];
+---
+
+<Base title={`STORY ｜ ${SITE_TITLE}`} description="戦えない女遊び人ミアと、どこかズレた冒険者三人の旅——第1巻のあらすじと章紹介。">
+  <PageNav label="STORY" />
+  <main class="pb-24">
+    <section class="relative isolate overflow-hidden">
+      <img src={`${base}hero-poster.webp`} alt="ミアたち四人が旅路に立つ" width="1280" height="720" class="h-[24rem] w-full object-cover md:h-[34rem]" />
+      <div class="absolute inset-0 bg-gradient-to-t from-tide-900/95 via-tide-900/30 to-transparent" aria-hidden="true"></div>
+      <div class="absolute inset-x-0 bottom-0 mx-auto max-w-4xl px-6 pb-10 text-paper-50 md:pb-14">
+        <p class="font-eyebrow text-xs tracking-[0.45em] text-gilt-300">STORY</p>
+        <h1 class="mt-3 font-display text-4xl font-bold leading-tight md:text-6xl">戦えない。<br />だから、人を動かす。</h1>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-3xl px-6 pt-14 md:pt-20">
+      <div class="sheet px-7 py-9 md:px-12 md:py-12">
+        <p class="text-center font-eyebrow text-xs tracking-[0.35em] text-seal-500">ISEKAI RISQUÉ COMEDY</p>
+        <p class="mt-7 text-[1.02rem] leading-[2.15] tracking-[0.04em] text-ink-800">
+          目が覚めたら、知らない女の身体だった。名前はミア。職業は「遊び人」。戦闘能力なし、魔法なし、正装はバニーガール衣装。しかも身体は、オレの意識を置き去りにして完璧な接客をこなしてしまう。
+        </p>
+        <p class="mt-5 text-[1.02rem] leading-[2.15] tracking-[0.04em] text-ink-800">
+          気弱な自称勇者、搭算で治療する僧侶、魔法より先に手が出る老魔法使い。どこかズレた三人と組んだミアは、酒場の愛想と人心掌握だけを武器に、書類と日銭とお色気にまみれた冒険へ踏み出す。
+        </p>
+        <p class="mt-7 text-center text-xs leading-relaxed text-ink-500">※性的な凗談・接触を題材にしたコメディ表現を含みます。</p>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-3xl px-6 pt-16" aria-labelledby="arc-heading">
+      <div class="text-center">
+        <p class="font-eyebrow text-xs tracking-[0.4em] text-gilt-500">VOLUME I</p>
+        <h2 id="arc-heading" class="mt-2 font-display text-3xl font-bold text-tide-900">第1巻　章紹介</h2>
+      </div>
+      <ol class="mt-10 space-y-5">
+        {arcs.map((arc) => (
+          <li class="sheet grid gap-5 px-6 py-7 sm:grid-cols-[5rem_1fr] md:px-8">
+            <span class="hanko mx-auto text-sm" aria-hidden="true">{arc.no}</span>
+            <div>
+              <p class="font-eyebrow text-[10px] tracking-[0.25em] text-gilt-600">{arc.episodes}</p>
+              <h3 class="mt-1 font-display text-2xl font-bold text-tide-900">{arc.title}</h3>
+              <p class="mt-4 text-sm leading-loose text-ink-700">{arc.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <div class="mt-12 text-center">
+        <a href={`${base}chapter/01`} class="inline-block rounded-sm bg-seal-500 px-9 py-3.5 text-sm tracking-[0.18em] text-paper-50 shadow-lg shadow-seal-600/20 transition hover:bg-seal-400">第一話から読む</a>
+      </div>
+    </section>
+  </main>
+</Base>

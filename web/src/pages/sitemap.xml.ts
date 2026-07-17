@@ -19,6 +19,7 @@ export const GET: APIRoute = async ({ site }) => {
   const paths = [
     base,
     `${base}news/`,
+    `${base}story/`,
     `${base}characters/`,
     `${base}world/`,
     `${base}ledger/`,
