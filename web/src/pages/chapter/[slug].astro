@@ -60,9 +60,10 @@ const structuredData = [
   description={description}
   ogType="article"
   structuredData={structuredData}
+  bodyClass="reader-page"
 >
   <!-- 上部ナビ -->
-  <header class="sticky top-0 z-30 border-b border-gilt-400/25 bg-paper-50/90 backdrop-blur-md">
+  <header class="reader-header sticky top-0 z-30 border-b border-gilt-400/25 bg-paper-50/90 backdrop-blur-md">
     <div class="tide-rule absolute inset-x-0 top-0 h-[2px]" aria-hidden="true"></div>
     <div class="mx-auto flex max-w-[52rem] items-center justify-between px-5 py-3.5">
       <a
@@ -74,12 +75,27 @@ const structuredData = [
       <span class="font-eyebrow text-xs tracking-[0.35em] text-gilt-600">
         第{current.number}話
       </span>
-      <div class="flex items-center gap-1" role="group" aria-label="文字サイズ">
-        <span class="mr-0.5 font-display text-[11px] text-ink-500" aria-hidden="true">字</span>
-        <button type="button" data-font-btn="s" aria-label="文字を小さく" aria-pressed="false" class="font-btn">小</button>
-        <button type="button" data-font-btn="m" aria-label="文字を標準に" aria-pressed="true" class="font-btn">中</button>
-        <button type="button" data-font-btn="l" aria-label="文字を大きく" aria-pressed="false" class="font-btn">大</button>
-      </div>
+      <details class="reader-settings relative">
+        <summary class="cursor-pointer list-none rounded-sm border border-gilt-400/40 px-3 py-2 text-xs tracking-[0.12em] text-tide-700 [&::-webkit-details-marker]:hidden">表示</summary>
+        <div class="sheet absolute right-0 top-[calc(100%+0.6rem)] z-50 w-64 px-4 py-4 text-left shadow-xl">
+          <fieldset>
+            <legend class="text-xs tracking-[0.12em] text-ink-600">文字サイズ</legend>
+            <div class="mt-2 flex gap-2" role="group">
+              <button type="button" data-font-btn="s" aria-label="文字を小さく" aria-pressed="false" class="font-btn">小</button>
+              <button type="button" data-font-btn="m" aria-label="文字を標準に" aria-pressed="true" class="font-btn">中</button>
+              <button type="button" data-font-btn="l" aria-label="文字を大きく" aria-pressed="false" class="font-btn">大</button>
+            </div>
+          </fieldset>
+          <fieldset class="mt-4 border-t border-gilt-400/20 pt-4">
+            <legend class="text-xs tracking-[0.12em] text-ink-600">背景</legend>
+            <div class="mt-2 grid grid-cols-3 gap-2" role="group">
+              <button type="button" data-theme-btn="paper" aria-pressed="true" class="theme-btn theme-btn-paper">生成り</button>
+              <button type="button" data-theme-btn="white" aria-pressed="false" class="theme-btn theme-btn-white">白</button>
+              <button type="button" data-theme-btn="night" aria-pressed="false" class="theme-btn theme-btn-night">夜</button>
+            </div>
+          </fieldset>
+        </div>
+      </details>
     </div>
     <div class="absolute inset-x-0 bottom-0 h-[2px] bg-paper-200" aria-hidden="true">
       <div id="reading-progress" class="h-full w-0 bg-gradient-to-r from-tide-500 to-sage-500"></div>
@@ -87,7 +103,7 @@ const structuredData = [
   </header>
 
   <!-- 本文：一枚の書類として読む（1行おおよそ 38〜40 字。横に広げすぎると視線の往復が辛くなる） -->
-  <article id="reader-article" class="sheet fade-in mx-auto my-10 max-w-[52rem] px-6 py-12 md:my-14 md:px-12 md:py-16">
+  <article id="reader-article" class="chapter-sheet sheet fade-in mx-auto my-10 max-w-[52rem] px-6 py-12 md:my-14 md:px-12 md:py-16">
     <div class="text-center">
       <span class="hanko text-base md:text-lg" aria-hidden="true">
         {`第${toKanji(current.number)}話`}
@@ -202,6 +218,16 @@ const structuredData = [
             progress: progress
           }));
         } catch (e) {}
+        if (progress >= 0.9) {
+          try {
+            var read = JSON.parse(localStorage.getItem('read-chapters') || '[]');
+            if (!Array.isArray(read)) read = [];
+            if (read.indexOf(slug) === -1) {
+              read.push(slug);
+              localStorage.setItem('read-chapters', JSON.stringify(read));
+            }
+          } catch (e) {}
+        }
         ticking = false;
       }
 
@@ -229,6 +255,23 @@ const structuredData = [
       window.addEventListener('scroll', requestUpdate, { passive: true });
       window.addEventListener('resize', requestUpdate);
       requestUpdate();
+    })();
+  </script>
+
+  <script is:inline>
+    (function () {
+      var themeBtns = document.querySelectorAll('[data-theme-btn]');
+      function setTheme(theme) {
+        document.documentElement.setAttribute('data-reader-theme', theme);
+        try { localStorage.setItem('reader-theme', theme); } catch (e) {}
+        for (var i = 0; i < themeBtns.length; i++) {
+          themeBtns[i].setAttribute('aria-pressed', themeBtns[i].getAttribute('data-theme-btn') === theme ? 'true' : 'false');
+        }
+      }
+      for (var i = 0; i < themeBtns.length; i++) {
+        themeBtns[i].addEventListener('click', function () { setTheme(this.getAttribute('data-theme-btn')); });
+      }
+      setTheme(document.documentElement.getAttribute('data-reader-theme') || 'paper');
     })();
   </script>
 

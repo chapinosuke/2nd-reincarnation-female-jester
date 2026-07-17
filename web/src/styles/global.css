@@ -227,6 +227,21 @@
   .font-btn:hover {
     color: #0a5a5c;
   }
+
+  .theme-btn {
+    min-height: 2.5rem;
+    border: 1px solid rgba(171, 138, 62, 0.35);
+    border-radius: 3px;
+    font-size: 0.75rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .theme-btn-paper { background: #f6f2e6; color: #454640; }
+  .theme-btn-white { background: #fff; color: #333; }
+  .theme-btn-night { background: #182221; color: #e7e2d5; }
+  .theme-btn[aria-pressed='true'] {
+    border-color: #0f8c8d;
+    box-shadow: 0 0 0 2px rgba(15, 140, 141, 0.14);
+  }
   /* 現在の文字サイズを示すアクティブ表示（既定は「中」） */
   html[data-font-size='s'] [data-font-btn='s'],
   html[data-font-size='l'] [data-font-btn='l'],
@@ -286,6 +301,41 @@ html[data-font-size='s'] .prose {
 }
 html[data-font-size='l'] .prose {
   font-size: 1.3rem;
+}
+
+html[data-reader-theme='white'] .reader-page {
+  background-color: #ffffff;
+  background-image: none;
+}
+html[data-reader-theme='white'] .reader-page .chapter-sheet {
+  background: #ffffff;
+}
+html[data-reader-theme='night'] .reader-page {
+  background-color: #111817;
+  background-image: radial-gradient(48rem 26rem at 50% -6rem, rgba(15, 140, 141, 0.1), transparent 65%);
+}
+html[data-reader-theme='night'] .reader-page .reader-header {
+  background-color: rgba(17, 24, 23, 0.94);
+  border-color: rgba(203, 170, 92, 0.25);
+}
+html[data-reader-theme='night'] .reader-page .reader-header a,
+html[data-reader-theme='night'] .reader-page .reader-header span,
+html[data-reader-theme='night'] .reader-page .reader-header summary {
+  color: #d8d8cf;
+}
+html[data-reader-theme='night'] .reader-page .chapter-sheet {
+  background: linear-gradient(180deg, #1a2524 0%, #151e1d 100%);
+  border-color: rgba(203, 170, 92, 0.28);
+}
+html[data-reader-theme='night'] .reader-page .chapter-sheet h1,
+html[data-reader-theme='night'] .reader-page .chapter-sheet h2,
+html[data-reader-theme='night'] .reader-page .chapter-sheet h3 {
+  color: #e8dfc7;
+}
+html[data-reader-theme='night'] .reader-page .chapter-sheet .chapter-body,
+html[data-reader-theme='night'] .reader-page .chapter-sheet .chapter-body p,
+html[data-reader-theme='night'] .reader-page .chapter-sheet .chapter-body li {
+  color: #d8d8cf;
 }
 
 @keyframes stampIn {

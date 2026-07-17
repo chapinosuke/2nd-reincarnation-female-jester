@@ -189,6 +189,7 @@ const websiteSchema = {
               <li class="border-b border-gilt-400/15 last:border-b-0">
                 <a
                   href={`${base}chapter/${c.slug}`}
+                  data-chapter-link={c.slug}
                   class="group flex items-center gap-4 py-3 transition duration-200"
                 >
                   <span
@@ -204,6 +205,7 @@ const websiteSchema = {
                       {stripChapterPrefix(c.titleLine)}
                     </span>
                   </span>
+                  <span data-read-badge hidden class="shrink-0 rounded-full bg-tide-500/10 px-2 py-1 text-[10px] tracking-[0.1em] text-tide-700">読了</span>
                 </a>
               </li>
             ))}
@@ -270,6 +272,21 @@ const websiteSchema = {
               break;
             }
           }
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <script is:inline>
+    (function () {
+      try {
+        var read = JSON.parse(localStorage.getItem('read-chapters') || '[]');
+        if (!Array.isArray(read)) return;
+        for (var i = 0; i < read.length; i++) {
+          var link = document.querySelector('[data-chapter-link="' + read[i] + '"]');
+          if (!link) continue;
+          var badge = link.querySelector('[data-read-badge]');
+          if (badge) badge.hidden = false;
         }
       } catch (e) {}
     })();
