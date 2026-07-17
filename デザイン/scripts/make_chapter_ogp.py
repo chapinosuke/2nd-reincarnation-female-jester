@@ -34,6 +34,33 @@ def main():
     bg = bg.crop(((bg.width - W) // 2, (bg.height - H) // 2, (bg.width + W) // 2, (bg.height + H) // 2))
     bg = ImageEnhance.Color(bg).enhance(0.78).filter(ImageFilter.GaussianBlur(1.2))
 
+    # サイト共通OGP。トップのキービジュアルと同じパーティー絵を使う。
+    site = bg.copy().convert("RGBA")
+    site_overlay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    sod = ImageDraw.Draw(site_overlay)
+    sod.rectangle((0, 0, W, H), fill=(7, 31, 32, 82))
+    for x in range(790):
+        alpha = int(235 * (1 - x / 790))
+        sod.line((x, 0, x, H), fill=(13, 51, 53, alpha))
+    site = Image.alpha_composite(site, site_overlay)
+    sd = ImageDraw.Draw(site)
+    paper = (251, 250, 244, 255)
+    gold = (232, 220, 174, 255)
+    eyebrow = ImageFont.truetype(FONT, 22, index=0)
+    title_font = ImageFont.truetype(FONT, 62, index=2)
+    copy_font = ImageFont.truetype(FONT, 24, index=0)
+    sd.text((70, 92), "ORIGINAL FANTASY PROJECT / WEB NOVEL", font=eyebrow, fill=gold)
+    sd.text((70, 170), "2度目の転生は", font=title_font, fill=paper)
+    sd.text((70, 252), "女遊び人でした", font=title_font, fill=paper)
+    sd.line((70, 357, 680, 357), fill=gold, width=2)
+    sd.text((70, 395), "戦えない。魔法も使えない。", font=copy_font, fill=paper)
+    sd.text((70, 440), "装備はバニーガール衣装のみ。", font=copy_font, fill=gold)
+    sd.rectangle((0, 0, W, 4), fill=(15, 140, 141, 255))
+    sd.rectangle((0, H - 4, W, H), fill=(35, 140, 104, 255))
+    site_out = ROOT / "web" / "public" / "ogp.jpg"
+    site.convert("RGB").save(site_out, "JPEG", quality=88, optimize=True, progressive=True)
+    print("wrote", site_out)
+
     for path in sorted(CHAPTERS.glob("第*話.md")):
         match = re.search(r"第(\d+)話", path.stem)
         if not match:
