@@ -59,6 +59,7 @@ const structuredData = [
 <Base
   title={`${current.titleLine} ｜ 2度目の転生は女遊び人でした`}
   description={description}
+  ogImage={`${base}og/chapter-${current.slug}.jpg`}
   ogType="article"
   structuredData={structuredData}
   bodyClass="reader-page"
@@ -169,6 +170,17 @@ const structuredData = [
     </div>
   </nav>
 
+  <section class="mx-auto max-w-[52rem] px-6 pb-16 text-center" aria-labelledby="share-heading">
+    <p id="share-heading" class="font-eyebrow text-xs tracking-[0.3em] text-gilt-600">SHARE THIS EPISODE</p>
+    <p class="mt-2 text-xs text-ink-500">この話を共有する</p>
+    <div class="mt-5 flex flex-wrap justify-center gap-3">
+      <button id="native-share" type="button" hidden class="rounded-sm bg-tide-600 px-5 py-2.5 text-xs tracking-[0.12em] text-paper-50">共有</button>
+      <button id="copy-link" type="button" class="rounded-sm border border-tide-500/50 px-5 py-2.5 text-xs tracking-[0.12em] text-tide-700">リンクをコピー</button>
+      <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${current.titleLine} ｜ 2度目の転生は女遊び人でした`)}&url=${encodeURIComponent(chapterUrl)}`} target="_blank" rel="noopener noreferrer" class="rounded-sm border border-gilt-400/60 px-5 py-2.5 text-xs tracking-[0.12em] text-gilt-600">Xで共有</a>
+    </div>
+    <p id="copy-status" class="mt-3 min-h-5 text-xs text-tide-700" aria-live="polite"></p>
+  </section>
+
   <!-- スマホでの連続読書用ナビ -->
   <nav
     class="fixed inset-x-3 bottom-3 z-40 grid grid-cols-3 overflow-hidden rounded-md border border-gilt-400/40 bg-paper-50/95 shadow-xl shadow-tide-900/20 backdrop-blur-md md:hidden"
@@ -274,6 +286,28 @@ const structuredData = [
         themeBtns[i].addEventListener('click', function () { setTheme(this.getAttribute('data-theme-btn')); });
       }
       setTheme(document.documentElement.getAttribute('data-reader-theme') || 'paper');
+    })();
+  </script>
+
+  <script is:inline define:vars={{ shareTitle: current.titleLine, shareUrl: chapterUrl }}>
+    (function () {
+      var copy = document.getElementById('copy-link');
+      var status = document.getElementById('copy-status');
+      var native = document.getElementById('native-share');
+      if (copy) copy.addEventListener('click', async function () {
+        try {
+          await navigator.clipboard.writeText(shareUrl);
+          if (status) status.textContent = 'リンクをコピーしました。';
+        } catch (e) {
+          if (status) status.textContent = shareUrl;
+        }
+      });
+      if (native && navigator.share) {
+        native.hidden = false;
+        native.addEventListener('click', function () {
+          navigator.share({ title: shareTitle, text: shareTitle, url: shareUrl }).catch(function () {});
+        });
+      }
     })();
   </script>
 
