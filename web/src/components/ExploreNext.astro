@@ -1,0 +1,34 @@
+---
+interface Props {
+  current: 'story' | 'characters' | 'world' | 'ledger' | 'gallery' | 'movie' | 'news';
+}
+
+const { current } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const items = [
+  { key: 'story', href: `${base}story`, en: 'STORY', ja: '物語', sub: 'あらすじを読む' },
+  { key: 'characters', href: `${base}characters`, en: 'CHARACTERS', ja: '人物', sub: '常連台帳を見る' },
+  { key: 'world', href: `${base}world`, en: 'WORLD', ja: '世界観', sub: '資料室を訪ねる' },
+  { key: 'ledger', href: `${base}ledger`, en: 'LEDGER', ja: '帳簿', sub: '収支を確かめる' },
+  { key: 'gallery', href: `${base}gallery`, en: 'GALLERY', ja: '画廊', sub: '一枚絵を見る' },
+  { key: 'movie', href: `${base}movie`, en: 'MOVIE', ja: '映像', sub: 'ティザーを見る' },
+].filter((item) => item.key !== current);
+---
+
+<nav class="mt-16 border-t border-gilt-400/30 pt-10" aria-label="次に見る">
+  <div class="text-center">
+    <p class="font-eyebrow text-xs tracking-[0.3em] text-gilt-600">EXPLORE</p>
+    <h2 class="mt-2 font-display text-xl font-bold text-tide-900">次に見る</h2>
+  </div>
+  <ul class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
+    {items.map((item) => (
+      <li>
+        <a href={item.href} class="sheet sheet-lift group block h-full px-4 py-4 hover:-translate-y-0.5">
+          <span class="block font-eyebrow text-[10px] tracking-[0.16em] text-gilt-600">{item.en}</span>
+          <span class="mt-1 block font-display text-base font-bold text-tide-900 transition group-hover:text-seal-600">{item.ja}</span>
+          <span class="mt-1 block text-[11px] leading-relaxed tracking-[0.04em] text-ink-600">{item.sub} ▶</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>

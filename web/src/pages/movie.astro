@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageNav from '../components/PageNav.astro';
+import ExploreNext from '../components/ExploreNext.astro';
 import { SITE_TITLE } from '../lib/site';
 
 const base = import.meta.env.BASE_URL;
@@ -38,5 +39,6 @@ const movies = [
     <div class="mt-12 text-center">
       <a href={`${base}chapter/01`} class="inline-block rounded-sm bg-seal-500 px-9 py-3.5 text-sm tracking-[0.18em] text-paper-50 transition hover:bg-seal-400">物語のはじまりを読む</a>
     </div>
+    <ExploreNext current="movie" />
   </main>
 </Base>

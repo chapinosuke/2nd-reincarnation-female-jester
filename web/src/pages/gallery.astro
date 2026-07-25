@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageNav from '../components/PageNav.astro';
+import ExploreNext from '../components/ExploreNext.astro';
 
 const base = import.meta.env.BASE_URL;
 
@@ -37,14 +38,24 @@ const works = [
       {
         works.map((w) => (
           <figure class="sheet fade-in overflow-hidden p-3 md:p-4">
-            <img
-              src={w.src}
-              alt={w.caption}
-              width="1600"
-              height="1600"
-              loading="lazy"
-              class="w-full rounded-sm bg-paper-100 shadow-lg shadow-tide-900/20 ring-1 ring-gilt-400/50"
-            />
+            <button
+              type="button"
+              class="group relative block w-full cursor-zoom-in overflow-hidden rounded-sm focus-visible:outline-offset-4"
+              data-gallery-open
+              data-src={w.src}
+              data-caption={w.caption}
+              aria-label={`「${w.caption}」を拡大表示`}
+            >
+              <img
+                src={w.src}
+                alt={w.caption}
+                width="1600"
+                height="1600"
+                loading="lazy"
+                class="w-full bg-paper-100 shadow-lg shadow-tide-900/20 ring-1 ring-gilt-400/50 transition duration-300 group-hover:scale-[1.015]"
+              />
+              <span class="absolute bottom-3 right-3 rounded-sm bg-tide-900/75 px-2.5 py-1.5 text-[11px] text-paper-50 opacity-90 backdrop-blur-sm transition group-hover:bg-seal-500">拡大 ＋</span>
+            </button>
             <figcaption class="flex items-center gap-2 px-1 pb-1 pt-4 font-display text-sm text-tide-900 md:text-base">
               <span class="text-xs text-seal-500" aria-hidden="true">
                 ◆
@@ -56,6 +67,8 @@ const works = [
       }
     </div>
 
+    <ExploreNext current="gallery" />
+
     <!-- 戻る導線 -->
     <div class="mt-14 text-center">
       <a
@@ -66,4 +79,52 @@ const works = [
       </a>
     </div>
   </main>
+
+  <dialog id="gallery-lightbox" class="m-auto max-h-[96svh] w-[min(94vw,72rem)] max-w-none overflow-visible bg-transparent p-0 backdrop:bg-tide-900/90 backdrop:backdrop-blur-sm">
+    <div class="relative rounded-sm border border-gilt-400/50 bg-paper-50 p-2 shadow-2xl sm:p-3">
+      <button type="button" data-gallery-close class="absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-tide-900/80 text-xl text-paper-50 backdrop-blur-sm" aria-label="拡大表示を閉じる">×</button>
+      <img data-gallery-image alt="" class="mx-auto max-h-[80svh] w-auto rounded-sm object-contain" />
+      <div class="flex items-center justify-between gap-3 px-2 pb-1 pt-3">
+        <button type="button" data-gallery-prev class="rounded-sm border border-gilt-400/40 px-3 py-2 text-xs text-tide-700" aria-label="前の画像">◀ 前</button>
+        <p data-gallery-caption class="min-w-0 flex-1 text-center font-display text-sm text-tide-900 sm:text-base"></p>
+        <button type="button" data-gallery-next class="rounded-sm border border-gilt-400/40 px-3 py-2 text-xs text-tide-700" aria-label="次の画像">次 ▶</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script is:inline>
+    (function () {
+      var dialog = document.getElementById('gallery-lightbox');
+      if (!dialog || typeof dialog.showModal !== 'function') return;
+      var triggers = Array.prototype.slice.call(document.querySelectorAll('[data-gallery-open]'));
+      var image = dialog.querySelector('[data-gallery-image]');
+      var caption = dialog.querySelector('[data-gallery-caption]');
+      var current = 0;
+
+      function show(index) {
+        current = (index + triggers.length) % triggers.length;
+        var trigger = triggers[current];
+        image.src = trigger.getAttribute('data-src');
+        image.alt = trigger.getAttribute('data-caption');
+        caption.textContent = '「' + trigger.getAttribute('data-caption') + '」';
+      }
+
+      triggers.forEach(function (trigger, index) {
+        trigger.addEventListener('click', function () {
+          show(index);
+          dialog.showModal();
+        });
+      });
+      dialog.querySelector('[data-gallery-close]').addEventListener('click', function () { dialog.close(); });
+      dialog.querySelector('[data-gallery-prev]').addEventListener('click', function () { show(current - 1); });
+      dialog.querySelector('[data-gallery-next]').addEventListener('click', function () { show(current + 1); });
+      dialog.addEventListener('click', function (event) {
+        if (event.target === dialog) dialog.close();
+      });
+      dialog.addEventListener('keydown', function (event) {
+        if (event.key === 'ArrowLeft') show(current - 1);
+        if (event.key === 'ArrowRight') show(current + 1);
+      });
+    })();
+  </script>
 </Base>

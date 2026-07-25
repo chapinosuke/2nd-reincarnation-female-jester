@@ -62,7 +62,7 @@ const structuredData = [
   ogImage={`${base}og/chapter-${current.slug}.jpg`}
   ogType="article"
   structuredData={structuredData}
-  bodyClass="reader-page"
+  bodyClass="reader-page pb-20 md:pb-0"
 >
   <GlobalNav sticky={false} />
   <!-- 上部ナビ -->
@@ -71,11 +71,11 @@ const structuredData = [
     <div class="mx-auto flex max-w-[52rem] items-center justify-between px-5 py-3.5">
       <a
         href={base}
-        class="font-eyebrow text-xs tracking-[0.25em] text-tide-700 transition hover:text-gilt-600"
+        class="text-xs tracking-[0.06em] text-tide-700 transition hover:text-gilt-600"
       >
         ◀ もくじ
       </a>
-      <span class="font-eyebrow text-xs tracking-[0.35em] text-gilt-600">
+      <span class="text-xs tracking-[0.08em] text-gilt-600">
         第{current.number}話
       </span>
       <details class="reader-settings relative">
@@ -106,7 +106,7 @@ const structuredData = [
   </header>
 
   <!-- 本文：一枚の書類として読む（1行おおよそ 38〜40 字。横に広げすぎると視線の往復が辛くなる） -->
-  <article id="reader-article" class="chapter-sheet sheet fade-in mx-auto my-10 max-w-[52rem] px-6 py-12 md:my-14 md:px-12 md:py-16">
+  <article id="reader-article" class="chapter-sheet sheet fade-in mx-2 my-6 max-w-[52rem] px-5 py-10 sm:mx-auto sm:my-10 sm:px-6 sm:py-12 md:my-14 md:px-12 md:py-16">
     <div class="text-center">
       <span class="hanko text-base md:text-lg" aria-hidden="true">
         {`第${toKanji(current.number)}話`}
@@ -130,15 +130,15 @@ const structuredData = [
   </article>
 
   <!-- 章ナビゲーション -->
-  <nav class="mx-auto max-w-[52rem] px-6 pb-16">
-    <div class="grid grid-cols-2 gap-4">
+  <nav class="mx-auto max-w-[52rem] px-3 pb-16 sm:px-6">
+    <div class="grid grid-cols-2 gap-2 sm:gap-4">
       <div>
         {prev && (
           <a
             href={`${base}chapter/${prev.slug}`}
             class="sheet sheet-lift group block px-5 py-4 hover:-translate-y-0.5"
           >
-            <p class="font-eyebrow text-[11px] tracking-[0.3em] text-ink-600">◀ まえのはなし</p>
+            <p class="text-[11px] tracking-[0.05em] text-ink-600">◀ まえのはなし</p>
             <p class="mt-2 truncate font-display text-sm text-tide-900 group-hover:text-seal-600">
               第{prev.number}話　{stripChapterPrefix(prev.titleLine)}
             </p>
@@ -151,7 +151,7 @@ const structuredData = [
             href={`${base}chapter/${next.slug}`}
             class="group block rounded-sm border border-seal-500 bg-seal-500 px-5 py-4 text-right text-paper-50 shadow-lg shadow-seal-600/20 transition hover:-translate-y-0.5 hover:bg-seal-400"
           >
-            <p class="font-eyebrow text-[11px] tracking-[0.3em] text-paper-100">つぎのはなし ▶</p>
+            <p class="text-[11px] tracking-[0.05em] text-paper-100">つぎのはなし ▶</p>
             <p class="mt-2 truncate font-display text-sm text-paper-50">
               第{next.number}話　{stripChapterPrefix(next.titleLine)}
             </p>
@@ -163,14 +163,14 @@ const structuredData = [
     <div class="mt-12 text-center">
       <a
         href={base}
-        class="inline-block rounded-sm border border-tide-500/60 px-8 py-3 font-eyebrow text-xs tracking-[0.3em] text-tide-700 transition hover:border-gilt-400 hover:text-gilt-600"
+        class="inline-block rounded-sm border border-tide-500/60 px-8 py-3 text-xs tracking-[0.06em] text-tide-700 transition hover:border-gilt-400 hover:text-gilt-600"
       >
         もくじにもどる
       </a>
     </div>
   </nav>
 
-  <section class="mx-auto max-w-[52rem] px-6 pb-16 text-center" aria-labelledby="share-heading">
+  <section class="mx-auto max-w-[52rem] px-6 pb-24 text-center md:pb-16" aria-labelledby="share-heading">
     <p id="share-heading" class="font-eyebrow text-xs tracking-[0.3em] text-gilt-600">SHARE THIS EPISODE</p>
     <p class="mt-2 text-xs text-ink-600">この話を共有する</p>
     <div class="mt-5 flex flex-wrap justify-center gap-3">

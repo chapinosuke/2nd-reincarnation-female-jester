@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageNav from '../components/PageNav.astro';
+import ExploreNext from '../components/ExploreNext.astro';
 
 const base = import.meta.env.BASE_URL;
 
@@ -33,9 +34,30 @@ const prices = [
       </div>
     </header>
 
+    <nav class="sheet mt-10 px-5 py-5 md:px-7" aria-label="世界観の目次">
+      <p class="text-center text-xs tracking-[0.08em] text-ink-600">資料を選ぶ</p>
+      <ol class="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
+        {[
+          ['heroes', '一', '勇者'],
+          ['currency', '二', '通貨'],
+          ['prices', '三', '物価'],
+          ['guild', '四', 'ギルド'],
+          ['fines', '五', '罰金制度'],
+          ['life', '六', '暮らし'],
+        ].map(([id, no, label]) => (
+          <li>
+            <a href={`#${id}`} class="flex items-center gap-2 rounded-sm border border-gilt-400/25 px-3 py-2.5 text-sm text-tide-700 transition hover:border-tide-500/50 hover:bg-tide-500/5">
+              <span class="font-display text-gilt-600">{no}</span>
+              <span>{label}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+
     <div class="mt-12 space-y-8">
       <!-- 一 -->
-      <section class="sheet fade-in px-6 py-8 md:px-9 md:py-9">
+      <section id="heroes" class="sheet fade-in scroll-mt-24 px-6 py-8 md:px-9 md:py-9">
         <h2 class="flex items-baseline gap-3 font-display text-xl font-bold text-tide-900 md:text-2xl">
           <span class="font-display text-lg text-gilt-600">一</span>勇者は自称である
         </h2>
@@ -45,7 +67,7 @@ const prices = [
       </section>
 
       <!-- 二 -->
-      <section class="sheet fade-in px-6 py-8 md:px-9 md:py-9">
+      <section id="currency" class="sheet fade-in scroll-mt-24 px-6 py-8 md:px-9 md:py-9">
         <h2 class="flex items-baseline gap-3 font-display text-xl font-bold text-tide-900 md:text-2xl">
           <span class="font-display text-lg text-gilt-600">二</span>通貨 ―― モンメリーとピィ
         </h2>
@@ -58,7 +80,7 @@ const prices = [
       </section>
 
       <!-- 三 -->
-      <section class="sheet fade-in px-6 py-8 md:px-9 md:py-9">
+      <section id="prices" class="sheet fade-in scroll-mt-24 px-6 py-8 md:px-9 md:py-9">
         <h2 class="flex items-baseline gap-3 font-display text-xl font-bold text-tide-900 md:text-2xl">
           <span class="font-display text-lg text-gilt-600">三</span>物価の目安（資料室調べ）
         </h2>
@@ -85,7 +107,7 @@ const prices = [
       </section>
 
       <!-- 四 -->
-      <section class="sheet fade-in px-6 py-8 md:px-9 md:py-9">
+      <section id="guild" class="sheet fade-in scroll-mt-24 px-6 py-8 md:px-9 md:py-9">
         <h2 class="flex items-baseline gap-3 font-display text-xl font-bold text-tide-900 md:text-2xl">
           <span class="font-display text-lg text-gilt-600">四</span>灰鷲ギルド　ハイベル支部
         </h2>
@@ -95,7 +117,7 @@ const prices = [
       </section>
 
       <!-- 五 -->
-      <section class="sheet fade-in px-6 py-8 md:px-9 md:py-9">
+      <section id="fines" class="sheet fade-in scroll-mt-24 px-6 py-8 md:px-9 md:py-9">
         <h2 class="flex items-baseline gap-3 font-display text-xl font-bold text-tide-900 md:text-2xl">
           <span class="font-display text-lg text-gilt-600">五</span>罰金制度
         </h2>
@@ -107,7 +129,7 @@ const prices = [
       </section>
 
       <!-- 六 -->
-      <section class="sheet fade-in px-6 py-8 md:px-9 md:py-9">
+      <section id="life" class="sheet fade-in scroll-mt-24 px-6 py-8 md:px-9 md:py-9">
         <h2 class="flex items-baseline gap-3 font-display text-xl font-bold text-tide-900 md:text-2xl">
           <span class="font-display text-lg text-gilt-600">六</span>ハイベルの暮らし
         </h2>
@@ -116,6 +138,8 @@ const prices = [
         </p>
       </section>
     </div>
+
+    <ExploreNext current="world" />
 
     <!-- 戻る導線 -->
     <div class="mt-14 text-center">

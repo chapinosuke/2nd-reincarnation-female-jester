@@ -6,6 +6,7 @@ import { displayDate, NEWS, SITE_AUTHOR, SITE_DESCRIPTION } from '../lib/site';
 
 const chapters = await getChapters();
 const first = chapters[0];
+const latest = chapters.at(-1);
 const arcs = groupByArc(chapters);
 const base = import.meta.env.BASE_URL;
 const coverSrc = `${base}cover.png`;
@@ -29,7 +30,7 @@ const websiteSchema = {
 >
   <GlobalNav />
   <!-- HERO：人物資料と同じパーティービジュアルを主役にする -->
-  <section class="relative isolate flex min-h-[76svh] items-end overflow-hidden md:min-h-[82svh]">
+  <section class="relative isolate flex min-h-[68svh] items-end overflow-hidden sm:min-h-[76svh] md:min-h-[82svh]">
     <div
       class="pointer-events-none absolute inset-0 z-0 bg-cover bg-[position:72%_center] md:bg-center"
       style={`background-image:url('${base}hero-poster.webp')`}
@@ -51,30 +52,30 @@ const websiteSchema = {
     <div class="hero-cinematic-wash pointer-events-none absolute inset-0 z-0" aria-hidden="true"></div>
     <div class="hero-dots pointer-events-none absolute inset-0 z-0" aria-hidden="true"></div>
     <div class="tide-rule absolute inset-x-0 top-0 z-10 h-[3px]" aria-hidden="true"></div>
-    <div class="relative z-10 mx-auto w-full max-w-6xl px-5 pb-8 pt-28 sm:px-8 md:pb-14">
-      <div class="fade-in max-w-[36rem] rounded-sm border border-gilt-500 bg-paper-50/80 px-6 py-7 shadow-2xl shadow-tide-900/30 ring-1 ring-tide-900/20 backdrop-blur-md md:px-9 md:py-9">
+    <div class="relative z-10 mx-auto w-full max-w-6xl px-4 pb-5 pt-20 sm:px-8 sm:pb-8 sm:pt-28 md:pb-14">
+      <div class="fade-in max-w-[36rem] rounded-sm border border-gilt-500 bg-paper-50/82 px-5 py-5 shadow-2xl shadow-tide-900/30 ring-1 ring-tide-900/20 backdrop-blur-md sm:px-6 sm:py-7 md:px-9 md:py-9">
         <p class="hero-halo font-eyebrow text-[11px] tracking-[0.32em] text-gilt-600 sm:text-xs">
           ORIGINAL FANTASY PROJECT / WEB NOVEL
         </p>
-        <p class="hero-halo mt-1 text-xs tracking-[0.25em] text-seal-600">異世界お色気コメディ・連載中</p>
+        <p class="hero-halo mt-1 text-xs tracking-[0.08em] text-seal-600">異世界お色気コメディ・連載中</p>
         <h1
-          class="hero-halo mt-5 font-display text-4xl font-bold leading-snug text-tide-900 sm:text-5xl md:text-6xl"
+          class="hero-halo mt-3 font-display text-[2rem] font-bold leading-snug text-tide-900 sm:mt-5 sm:text-5xl md:text-6xl"
         >
           2度目の転生は<br />女遊び人でした
         </h1>
-        <p class="hero-halo mt-5 max-w-md text-sm leading-loose text-ink-700 md:text-base">
+        <p class="hero-halo mt-3 max-w-md text-[13px] leading-relaxed text-ink-700 sm:mt-5 sm:text-sm sm:leading-loose md:text-base">
           戦えない。魔法も使えない。装備はバニーガール衣装のみ。<br />
           そんな最底辺から、機転と人心掌握だけで「賢者」を目指す。
         </p>
-        <p class="hero-halo mt-3 max-w-md text-xs leading-relaxed tracking-[0.06em] text-tide-700 md:text-sm">
+        <p class="hero-halo mt-3 hidden max-w-md text-xs leading-relaxed tracking-[0.06em] text-tide-700 sm:block md:text-sm">
           灰鷲ギルドの昼の書類から、<br class="sm:hidden" />陽気な冒険者の夜の話を——。
         </p>
-        <div class="mt-7 flex flex-wrap items-center gap-3">
+        <div class="mt-5 flex flex-wrap items-center gap-2.5 sm:mt-7 sm:gap-3">
           {first && (
             <a
               id="start-reading"
               href={`${base}chapter/${first.slug}`}
-              class="rounded-sm bg-seal-500 px-8 py-3 text-sm tracking-[0.2em] text-paper-50 shadow-lg shadow-seal-600/30 ring-1 ring-seal-400/40 transition hover:bg-seal-400"
+              class="inline-flex w-full justify-center rounded-sm bg-seal-500 px-6 py-3 text-sm tracking-[0.08em] text-paper-50 shadow-lg shadow-seal-600/30 ring-1 ring-seal-400/40 transition hover:bg-seal-400 sm:w-auto sm:px-8"
             >
               第一話から読む
             </a>
@@ -83,13 +84,13 @@ const websiteSchema = {
             id="continue-reading"
             href={base}
             hidden
-            class="rounded-sm border border-gilt-400/70 bg-paper-50/55 px-8 py-3 text-sm tracking-[0.2em] text-tide-700 backdrop-blur-[2px] transition hover:border-gilt-500 hover:text-gilt-600"
+            class="inline-flex w-full justify-center rounded-sm border border-gilt-400/70 bg-paper-50/55 px-6 py-3 text-sm tracking-[0.08em] text-tide-700 backdrop-blur-[2px] transition hover:border-gilt-500 hover:text-gilt-600 sm:w-auto sm:px-8"
           >
             つづきから読む
           </a>
           <a
             href="#chapters"
-            class="rounded-sm border border-gilt-400/70 bg-paper-50/55 px-8 py-3 font-eyebrow text-xs tracking-[0.3em] text-tide-700 backdrop-blur-[2px] transition hover:border-gilt-500 hover:text-gilt-600"
+            class="inline-flex w-full justify-center rounded-sm border border-gilt-400/70 bg-paper-50/55 px-6 py-3 text-xs tracking-[0.08em] text-tide-700 backdrop-blur-[2px] transition hover:border-gilt-500 hover:text-gilt-600 sm:w-auto sm:px-8"
           >
             もくじへ
           </a>
@@ -101,14 +102,36 @@ const websiteSchema = {
     </div>
   </section>
 
-  <section class="mx-auto max-w-3xl px-6 pt-14 md:pt-20" aria-labelledby="story-preview-heading">
+  <!-- ファーストビュー直下に、迷わず読書へ戻れる短い導線を置く -->
+  <nav class="mx-auto max-w-3xl px-4 pt-4 sm:px-6 sm:pt-6" aria-label="読書への近道">
+    <div class="sheet grid grid-cols-3 divide-x divide-gilt-400/25 overflow-hidden">
+      {first && (
+        <a href={`${base}chapter/${first.slug}`} class="group px-2 py-3 text-center transition hover:bg-tide-500/5 sm:px-4 sm:py-4">
+          <span class="block text-[10px] tracking-[0.08em] text-ink-600">はじめから</span>
+          <span class="mt-1 block font-display text-sm text-tide-900 transition group-hover:text-seal-600">第1話</span>
+        </a>
+      )}
+      {latest && (
+        <a href={`${base}chapter/${latest.slug}`} class="group px-2 py-3 text-center transition hover:bg-tide-500/5 sm:px-4 sm:py-4">
+          <span class="block text-[10px] tracking-[0.08em] text-ink-600">最新話を読む</span>
+          <span class="mt-1 block font-display text-sm text-tide-900 transition group-hover:text-seal-600">第{latest.number}話</span>
+        </a>
+      )}
+      <a href="#chapters" class="group px-2 py-3 text-center transition hover:bg-tide-500/5 sm:px-4 sm:py-4">
+        <span class="block text-[10px] tracking-[0.08em] text-ink-600">話を選ぶ</span>
+        <span class="mt-1 block font-display text-sm text-tide-900 transition group-hover:text-seal-600">もくじ</span>
+      </a>
+    </div>
+  </nav>
+
+  <section class="mx-auto max-w-3xl px-6 pt-10 md:pt-16" aria-labelledby="story-preview-heading">
     <a href={`${base}story`} class="sheet sheet-lift group grid overflow-hidden sm:grid-cols-[42%_1fr] hover:-translate-y-0.5">
       <img src={heroSrc} alt="" width="1672" height="941" loading="lazy" class="h-full min-h-44 w-full object-cover" />
       <div class="px-6 py-7 md:px-8">
         <p class="font-eyebrow text-xs tracking-[0.35em] text-gilt-600">STORY</p>
         <h2 id="story-preview-heading" class="mt-2 font-display text-2xl font-bold text-tide-900">戦えない。<br />だから、人を動かす。</h2>
         <p class="mt-3 text-sm leading-relaxed text-ink-600">ネタバレなしのあらすじと、第1巻の章紹介へ。</p>
-        <span class="mt-4 inline-block text-xs tracking-[0.14em] text-seal-600">あらすじを読む ▶</span>
+        <span class="mt-4 inline-block text-xs tracking-[0.06em] text-seal-600">あらすじを読む ▶</span>
       </div>
     </a>
   </section>
@@ -131,7 +154,7 @@ const websiteSchema = {
         <p class="font-eyebrow text-xs tracking-[0.4em] text-gilt-600">NEWS</p>
         <h2 id="news-heading" class="mt-1 font-display text-2xl font-bold text-tide-900">更新情報</h2>
       </div>
-      <a href={`${base}news`} class="text-xs tracking-[0.12em] text-tide-700 hover:text-gilt-600">すべて見る ▶</a>
+      <a href={`${base}news`} class="text-xs tracking-[0.06em] text-tide-700 hover:text-gilt-600">すべて見る ▶</a>
     </div>
     <ol class="divide-y divide-gilt-400/20">
       {NEWS.slice(0, 3).map((item) => (
@@ -162,8 +185,8 @@ const websiteSchema = {
         </div>
         <p class="mt-5 text-sm leading-loose text-ink-700">二度目の転生で授かったのは、戦闘力ではなく「女遊び人」の職業。最弱装備から始まる、賢者を目指す異世界お色気コメディ。</p>
         <div class="mt-6 flex flex-wrap gap-3">
-          <a href={`${base}chapter/${first?.slug}`} class="rounded-sm bg-seal-500 px-6 py-3 text-xs tracking-[0.14em] text-paper-50 transition hover:bg-seal-400">第一話から読む</a>
-          <a href="#chapters" class="rounded-sm border border-tide-500/50 px-6 py-3 text-xs tracking-[0.14em] text-tide-700">もくじへ</a>
+          <a href={`${base}chapter/${first?.slug}`} class="rounded-sm bg-seal-500 px-6 py-3 text-xs tracking-[0.06em] text-paper-50 transition hover:bg-seal-400">第一話から読む</a>
+          <a href="#chapters" class="rounded-sm border border-tide-500/50 px-6 py-3 text-xs tracking-[0.06em] text-tide-700">もくじへ</a>
         </div>
       </div>
     </div>

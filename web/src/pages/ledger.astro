@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageNav from '../components/PageNav.astro';
+import ExploreNext from '../components/ExploreNext.astro';
 
 const base = import.meta.env.BASE_URL;
 
@@ -407,6 +408,8 @@ const C = {
         </div>
       </section>
     </div>
+
+    <ExploreNext current="ledger" />
 
     <!-- 戻る導線 -->
     <div class="mt-14 text-center">

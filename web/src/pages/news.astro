@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageNav from '../components/PageNav.astro';
+import ExploreNext from '../components/ExploreNext.astro';
 import { displayDate, NEWS, REPOSITORY_URL, SITE_AUTHOR, SITE_TITLE } from '../lib/site';
 
 const base = import.meta.env.BASE_URL;
@@ -32,5 +33,6 @@ const base = import.meta.env.BASE_URL;
         <a href={`${base}rss.xml`} class="rounded-sm border border-gilt-400/50 px-5 py-2 text-xs tracking-[0.12em] text-gilt-600 transition hover:border-tide-500 hover:text-tide-700">RSSで更新を受け取る</a>
       </div>
     </section>
+    <ExploreNext current="news" />
   </main>
 </Base>
