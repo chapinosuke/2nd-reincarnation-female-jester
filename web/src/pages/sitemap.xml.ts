@@ -14,7 +14,7 @@ function escapeXml(value: string) {
 
 export const GET: APIRoute = async ({ site }) => {
   const base = import.meta.env.BASE_URL;
-  const origin = site ?? new URL('https://chapinosuke.github.io');
+  const origin = site ?? new URL('https://nidome-no-tensei.pages.dev');
   const chapters = await getChapters();
   const paths = [
     base,

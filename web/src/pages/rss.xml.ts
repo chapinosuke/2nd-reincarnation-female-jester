@@ -9,7 +9,7 @@ function xml(value: string) {
 
 export const GET: APIRoute = ({ site }) => {
   const base = import.meta.env.BASE_URL;
-  const origin = site ?? new URL('https://chapinosuke.github.io');
+  const origin = site ?? new URL('https://nidome-no-tensei.pages.dev');
   const siteUrl = new URL(base, origin).toString();
   const feedUrl = new URL(`${base}rss.xml`, origin).toString();
   const items = NEWS.map((item) => {
