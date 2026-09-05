@@ -68,6 +68,7 @@ const navLinks = [
       href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Zen+Old+Mincho:wght@500;600;700;900&family=Noto+Serif+JP:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    {bodyClass.includes('teaser-page') && <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet" />}
     <title>{title}</title>
     {structuredData && (
       <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />

@@ -1,0 +1,32 @@
+---
+import TitleLogo from './TitleLogo.astro';
+const base = import.meta.env.BASE_URL;
+const links = [
+  { href: '#top', ja: 'トップ', en: 'TOP' },
+  { href: '#news', ja: 'おしらせ', en: 'NEWS' },
+  { href: '#introduction', ja: 'はじめに', en: 'INTRODUCTION' },
+  { href: '#characters', ja: 'キャラクター', en: 'CHARACTERS' },
+  { href: '#movie', ja: 'ムービー', en: 'MOVIE' },
+  { href: '#novel', ja: '原作小説', en: 'NOVEL' },
+  { href: '#chapters', ja: 'もくじ', en: 'CONTENTS' },
+];
+---
+<header class="cute-sidebar">
+  <a class="cute-mini-logo" href="#top" aria-label="2度目の転生は女遊び人でした トップへ"><TitleLogo /></a>
+  <button class="cute-menu-button" type="button" aria-controls="cute-navigation" aria-expanded="false"><span aria-hidden="true">☰</span>メニュー</button>
+  <nav id="cute-navigation" class="cute-navigation" aria-label="メインメニュー">{links.map(link => <a href={link.href}><span>{link.ja}</span><small>{link.en}</small></a>)}</nav>
+  <div class="cute-sidebar-bottom"><span aria-hidden="true">✦</span><p>今日も、異世界を<br />なんとか生きてます。</p><a href={`${base}world`}>ハイベルへようこそ →</a></div>
+</header>
+<script>
+  const sidebar = document.querySelector<HTMLElement>('.cute-sidebar');
+  const toggle = sidebar?.querySelector<HTMLButtonElement>('.cute-menu-button');
+  const nav = sidebar?.querySelector<HTMLElement>('.cute-navigation');
+  if (sidebar && toggle && nav) {
+    sidebar.classList.add('nav-ready');
+    const closeMenu = () => toggle.setAttribute('aria-expanded', 'false');
+    toggle.addEventListener('click', () => toggle.setAttribute('aria-expanded', String(toggle.getAttribute('aria-expanded') !== 'true')));
+    nav.addEventListener('click', event => { if ((event.target as HTMLElement).closest('a')) closeMenu(); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') { closeMenu(); toggle.focus(); } });
+    document.addEventListener('pointerdown', event => { if (!sidebar.contains(event.target as Node)) closeMenu(); });
+  }
+</script>

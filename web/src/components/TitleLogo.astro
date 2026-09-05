@@ -1,0 +1,13 @@
+---
+import { SITE_TITLE } from '../lib/site';
+interface Props { eager?: boolean; }
+const { eager = false } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+<span class="generated-title-logo">
+  <img src={`${base}generated/anime-title-logo-v1.webp`} alt={SITE_TITLE} width="1881" height="836" loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : 'auto'} decoding="async" />
+</span>
+<style>
+  .generated-title-logo { display: block; position: relative; width: 100%; aspect-ratio: 1881 / 836; overflow: hidden; }
+  .generated-title-logo img { position: absolute; width: 100%; max-width: none; height: auto; left: 0; top: 0; }
+</style>

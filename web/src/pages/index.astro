@@ -1,6 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
-import GlobalNav from '../components/GlobalNav.astro';
+import TeaserNav from '../components/TeaserNav.astro';
+import TitleLogo from '../components/TitleLogo.astro';
+import CharacterPortrait from '../components/CharacterPortrait.astro';
+import '../styles/teaser.css';
 import { getChapters, groupByArc, toKanji, stripChapterPrefix } from '../lib/chapters';
 import { displayDate, NEWS, SITE_AUTHOR, SITE_DESCRIPTION } from '../lib/site';
 
@@ -10,7 +13,14 @@ const latest = chapters.at(-1);
 const arcs = groupByArc(chapters);
 const base = import.meta.env.BASE_URL;
 const coverSrc = `${base}cover.png`;
-const heroSrc = `${base}generated/hero-tavern-v2.webp`;
+const heroSrc = `${base}generated/party-cute-teaser-v2.webp`;
+const standeeBase = `${base}characters/standees/`;
+const party = [
+  { id: 'mia', name: 'ミア', en: 'MIA', role: '遊び人 ／ 賢者を目指す転生者', quote: '後ろ、取られてますよ', quip: '戦えないけど、がんばります！', bio: '目が覚めたら「ミア」だった。戦えない。魔法も使えない。装備はバニーガール衣装のみ。それでも酒場では、機転と接客で場の空気を動かしてしまう。心の声はなぜか「オレ」。目指すは、いつか賢者になること。', stamp: '装備は、これだけ。' },
+  { id: 'alto', name: 'アルト', en: 'ALTO', role: '勇者（自称） ／ 慎重すぎる青年', quote: '誰か得意な人がやれば……', quip: '本当に、僕がやるんですか？', bio: '勇者は名乗れば誰でもなれる世界なので、名乗ってしまった。気弱で慎重、剣を抜くより謝る方が得意。実家は食堂で、旅先の料理はおまかせ。剣より包丁の方が、よほど手に馴染むらしい。', stamp: '勇者、募集中では？' },
+  { id: 'sera', name: 'セラ', en: 'SERA', role: '僧侶 ／ 元・金貸しの娘', quote: '育ちがいいからね', quip: 'その治療、有料です。', bio: '三歳で算盤、五歳で帳簿、七歳で取り立て。回復魔法も「コストのかかる労働」、赤字の依頼は原則お断り。損得で語るくせに、選ぶ答えはいつも誰も潰さない。パーティーの財布と秩序を握る人。', stamp: 'きっちり、記録します。' },
+  { id: 'gold', name: 'ゴルド', en: 'GOLD', role: '魔法使い ／ 元・武闘家', quote: '年寄り扱いせんかい！', quip: '殴った方が、早い！', bio: '魔法を唱えるより殴った方が早い、武闘派の魔法使い。酒好きで、財布はよく失くす。魔王討伐の武勇伝は、語るたび細部が変わる。それでも戦場では、なぜか誰より仲間の位置を見ている。', stamp: '魔法使いです。一応。' },
+];
 const homeUrl = Astro.site ? new URL(base, Astro.site).toString() : base;
 const websiteSchema = {
   '@context': 'https://schema.org',
@@ -27,170 +37,57 @@ const websiteSchema = {
   title="2度目の転生は女遊び人でした"
   description={SITE_DESCRIPTION}
   structuredData={websiteSchema}
+  bodyClass="teaser-page"
 >
-  <GlobalNav />
-  <!-- HERO：人物資料と同じパーティービジュアルを主役にする -->
-  <section class="relative isolate flex min-h-[68svh] items-end overflow-hidden sm:min-h-[76svh] md:min-h-[82svh]">
-    <div
-      class="pointer-events-none absolute inset-0 z-0 bg-cover bg-[position:72%_center] md:bg-center"
-      style={`background-image:url('${base}hero-poster.webp')`}
-      aria-hidden="true"
-    >
-    </div>
-    <video
-      class="pointer-events-none absolute inset-0 z-0 hidden h-full w-full object-cover md:block motion-reduce:hidden"
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="metadata"
-      poster={`${base}hero-poster.webp`}
-      aria-hidden="true"
-    >
-      <source src={`${base}hero-bg.mp4`} type="video/mp4" media="(min-width: 768px)" />
-    </video>
-    <div class="hero-cinematic-wash pointer-events-none absolute inset-0 z-0" aria-hidden="true"></div>
-    <div class="hero-dots pointer-events-none absolute inset-0 z-0" aria-hidden="true"></div>
-    <div class="tide-rule absolute inset-x-0 top-0 z-10 h-[3px]" aria-hidden="true"></div>
-    <div class="relative z-10 mx-auto w-full max-w-6xl px-4 pb-5 pt-20 sm:px-8 sm:pb-8 sm:pt-28 md:pb-14">
-      <div class="fade-in max-w-[36rem] rounded-sm border border-gilt-500 bg-paper-50/82 px-5 py-5 shadow-2xl shadow-tide-900/30 ring-1 ring-tide-900/20 backdrop-blur-md sm:px-6 sm:py-7 md:px-9 md:py-9">
-        <p class="hero-halo font-eyebrow text-[11px] tracking-[0.32em] text-gilt-600 sm:text-xs">
-          ORIGINAL FANTASY PROJECT / WEB NOVEL
-        </p>
-        <p class="hero-halo mt-1 text-xs tracking-[0.08em] text-seal-600">異世界お色気コメディ・連載中</p>
-        <h1
-          class="hero-halo mt-3 font-display text-[2rem] font-bold leading-snug text-tide-900 sm:mt-5 sm:text-5xl md:text-6xl"
-        >
-          2度目の転生は<br />女遊び人でした
-        </h1>
-        <p class="hero-halo mt-3 max-w-md text-[13px] leading-relaxed text-ink-700 sm:mt-5 sm:text-sm sm:leading-loose md:text-base">
-          戦えない。魔法も使えない。装備はバニーガール衣装のみ。<br />
-          そんな最底辺から、機転と人心掌握だけで「賢者」を目指す。
-        </p>
-        <p class="hero-halo mt-3 hidden max-w-md text-xs leading-relaxed tracking-[0.06em] text-tide-700 sm:block md:text-sm">
-          灰鷲ギルドの昼の書類から、<br class="sm:hidden" />陽気な冒険者の夜の話を——。
-        </p>
-        <div class="mt-5 flex flex-wrap items-center gap-2.5 sm:mt-7 sm:gap-3">
-          {first && (
-            <a
-              id="start-reading"
-              href={`${base}chapter/${first.slug}`}
-              class="inline-flex w-full justify-center rounded-sm bg-seal-500 px-6 py-3 text-sm tracking-[0.08em] text-paper-50 shadow-lg shadow-seal-600/30 ring-1 ring-seal-400/40 transition hover:bg-seal-400 sm:w-auto sm:px-8"
-            >
-              第一話から読む
-            </a>
-          )}
-          <a
-            id="continue-reading"
-            href={base}
-            hidden
-            class="inline-flex w-full justify-center rounded-sm border border-gilt-400/70 bg-paper-50/55 px-6 py-3 text-sm tracking-[0.08em] text-tide-700 backdrop-blur-[2px] transition hover:border-gilt-500 hover:text-gilt-600 sm:w-auto sm:px-8"
-          >
-            つづきから読む
-          </a>
-          <a
-            href="#chapters"
-            class="inline-flex w-full justify-center rounded-sm border border-gilt-400/70 bg-paper-50/55 px-6 py-3 text-xs tracking-[0.08em] text-tide-700 backdrop-blur-[2px] transition hover:border-gilt-500 hover:text-gilt-600 sm:w-auto sm:px-8"
-          >
-            もくじへ
-          </a>
-        </div>
-        <p class="hero-halo mt-4 text-xs tracking-[0.12em] text-ink-600">
-          全{chapters.length}話公開中 ・ 連載中
-        </p>
+  <a class="teaser-skip" href="#main">本文へスキップ</a>
+  <TeaserNav />
+  <main id="main" class="cute-page">
+    <section id="top" class="cute-hero" aria-labelledby="teaser-title">
+      <div class="cute-keyvisual">
+        <img class="cute-key-art" src={heroSrc} alt="ミアを中心に、気弱なアルト、しっかり者のセラ、豪快なゴルドが集まるキービジュアル" width="1536" height="1024" fetchpriority="high" />
+        <p class="cute-catch">人生、二度目も<br /><span>想定外っ！</span></p>
+        <p class="cute-hero-bubble">職業：遊び人<br /><strong>装備、これだけ!?</strong></p>
+        <div class="cute-title-wrap"><h1 id="teaser-title" class="cute-title"><TitleLogo eager /></h1><p>最弱装備の、異世界お色気コメディ</p></div>
+        <span class="cute-spark spark-left" aria-hidden="true">✦</span><span class="cute-spark spark-right" aria-hidden="true">✧</span>
       </div>
-    </div>
-  </section>
+      <div class="cute-announcement"><p>WEB小説・第1巻</p><strong>全<span>{chapters.length}話</span>、公開中っ！</strong></div>
+      <a class="cute-scroll" href="#news">つづきを見る<span aria-hidden="true">↓</span></a>
+    </section>
 
-  <!-- ファーストビュー直下に、迷わず読書へ戻れる短い導線を置く -->
-  <nav class="mx-auto max-w-3xl px-4 pt-4 sm:px-6 sm:pt-6" aria-label="読書への近道">
-    <div class="sheet grid grid-cols-3 divide-x divide-gilt-400/25 overflow-hidden">
-      {first && (
-        <a href={`${base}chapter/${first.slug}`} class="group px-2 py-3 text-center transition hover:bg-tide-500/5 sm:px-4 sm:py-4">
-          <span class="block text-[10px] tracking-[0.08em] text-ink-600">はじめから</span>
-          <span class="mt-1 block font-display text-sm text-tide-900 transition group-hover:text-seal-600">第1話</span>
-        </a>
-      )}
-      {latest && (
-        <a href={`${base}chapter/${latest.slug}`} class="group px-2 py-3 text-center transition hover:bg-tide-500/5 sm:px-4 sm:py-4">
-          <span class="block text-[10px] tracking-[0.08em] text-ink-600">最新話を読む</span>
-          <span class="mt-1 block font-display text-sm text-tide-900 transition group-hover:text-seal-600">第{latest.number}話</span>
-        </a>
-      )}
-      <a href="#chapters" class="group px-2 py-3 text-center transition hover:bg-tide-500/5 sm:px-4 sm:py-4">
-        <span class="block text-[10px] tracking-[0.08em] text-ink-600">話を選ぶ</span>
-        <span class="mt-1 block font-display text-sm text-tide-900 transition group-hover:text-seal-600">もくじ</span>
-      </a>
-    </div>
-  </nav>
+    <section id="news" class="cute-news cute-section" aria-labelledby="news-heading">
+      <header class="cute-heading"><p>NEWS</p><h2 id="news-heading">おしらせ</h2></header>
+      <div class="cute-news-paper">{NEWS.slice(0, 2).map(item => <details><summary><time datetime={item.date}>{displayDate(item.date)}</time><span>{item.title}</span><b aria-hidden="true">＋</b></summary><p>{item.body}</p></details>)}<a class="cute-inline-link" href={`${base}news`}>おしらせ一覧へ <span aria-hidden="true">→</span></a></div>
+    </section>
 
-  <section class="mx-auto max-w-3xl px-6 pt-10 md:pt-16" aria-labelledby="story-preview-heading">
-    <a href={`${base}story`} class="sheet sheet-lift group grid overflow-hidden sm:grid-cols-[42%_1fr] hover:-translate-y-0.5">
-      <img src={heroSrc} alt="" width="1672" height="941" loading="lazy" class="h-full min-h-44 w-full object-cover" />
-      <div class="px-6 py-7 md:px-8">
-        <p class="font-eyebrow text-xs tracking-[0.35em] text-gilt-600">STORY</p>
-        <h2 id="story-preview-heading" class="mt-2 font-display text-2xl font-bold text-tide-900">戦えない。<br />だから、人を動かす。</h2>
-        <p class="mt-3 text-sm leading-relaxed text-ink-600">ネタバレなしのあらすじと、第1巻の章紹介へ。</p>
-        <span class="mt-4 inline-block text-xs tracking-[0.06em] text-seal-600">あらすじを読む ▶</span>
+    <section id="introduction" class="cute-intro cute-section" aria-labelledby="intro-heading">
+      <header class="cute-heading"><p>INTRODUCTION</p><h2 id="intro-heading">二度目の人生へ、ようこそっ。</h2></header>
+      <div class="cute-intro-paper"><p>今度こそ、まともな人生！<small>……のはずが、</small></p><h3>職業、<span>女遊び人!?</span></h3><div class="cute-intro-lines"><p>戦えない。魔法も使えない。<br />装備は、バニーガール衣装のみ。<br />二度目の異世界生活、前途多難すぎる。</p><p>酒場『陽気な冒険者』で出会ったのは、<br />気弱な勇者、損得勘定の僧侶、<br />そして、殴る魔法使い。</p><p>ちぐはぐな仲間と、世知辛い毎日。<br /><strong>最弱の職業から、賢者を目指しますっ！</strong></p></div><a class="cute-inline-link" href={`${base}story`}>物語をもっと知る →</a><span class="cute-sticker">異世界 × お仕事<br /><b>ときどき、冒険。</b></span></div>
+      <div class="cute-intro-face face-alto" aria-hidden="true"><div class="intro-portrait"><CharacterPortrait character="alto" /></div><span>誰か得意な人が……</span></div>
+      <div class="cute-intro-face face-sera" aria-hidden="true"><div class="intro-portrait"><CharacterPortrait character="sera" /></div><span>赤字は、お断り。</span></div>
+    </section>
+
+    <section id="characters" class="cute-characters cute-section" aria-labelledby="characters-heading">
+      <header class="cute-heading"><p>CHARACTERS</p><h2 id="characters-heading">このパーティー、クセが強い。</h2></header>
+      <div class="cute-cast-browser" data-cast-browser>
+        <div class="cute-cast-tabs" role="tablist" aria-label="キャラクターを選ぶ" hidden>{party.map((c, i) => <button id={`tab-${c.id}`} type="button" role="tab" aria-selected={i === 0 ? 'true' : 'false'} aria-controls={`panel-${c.id}`} tabindex={i === 0 ? 0 : -1} data-cast-tab><span class={`cute-tab-face cast-${c.id}`}><CharacterPortrait character={c.id} /></span><strong>{c.name}</strong></button>)}</div>
+        <div class="cute-cast-stage">{party.map((c) => <article id={`panel-${c.id}`} class={`cute-cast-panel cast-${c.id}`} aria-labelledby={`cast-name-${c.id}`} data-cast-panel>
+          <div class="cute-cast-art"><p>{c.quip}</p><div class="cute-cast-cutout"><img src={`${standeeBase}${c.id}-v1.webp`} alt={`${c.name}の立ち絵`} width="1024" height="1536" loading="lazy" /></div></div>
+          <div class="cute-cast-copy"><p class="cute-cast-role">{c.role}</p><h3 id={`cast-name-${c.id}`}>{c.name}</h3><p class="cute-cast-roman">{c.en}</p><blockquote>「{c.quote}」</blockquote><p class="cute-cast-bio">{c.bio}</p><p class="cute-cast-stamp">{c.stamp}</p><a class="cute-inline-link" href={`${base}characters#${c.id}`}>もっと知る →</a></div>
+        </article>)}</div>
+        <div class="cute-cast-controls" hidden><button type="button" data-cast-prev aria-label="前のキャラクター">←</button><span data-cast-count aria-live="polite" aria-atomic="true">ミア / 01</span><button type="button" data-cast-next aria-label="次のキャラクター">→</button></div>
       </div>
-    </a>
-  </section>
+      <p class="cute-cast-note">強さだけじゃ、冒険はできない。<br /><span>酒場『陽気な冒険者』の常連たち</span></p>
+    </section>
 
-  <section class="mx-auto max-w-3xl px-6 pt-5">
-    <a href={`${base}movie`} class="sheet sheet-lift group flex items-center gap-5 overflow-hidden p-3 hover:-translate-y-0.5">
-      <img src={`${base}movie/teaser-01-poster.jpg`} alt="" width="720" height="720" loading="lazy" class="h-24 w-24 shrink-0 rounded-sm object-cover sm:h-28 sm:w-28" />
-      <div class="min-w-0 py-2">
-        <p class="font-eyebrow text-xs tracking-[0.35em] text-gilt-600">MOVIE</p>
-        <h2 class="mt-1 font-display text-xl font-bold text-tide-900">ティザー映像</h2>
-        <p class="mt-2 text-xs leading-relaxed text-ink-600">音と動きで覗く、ハイベルのひとかけら。</p>
-      </div>
-      <span class="ml-auto shrink-0 pr-3 text-seal-500" aria-hidden="true">▶</span>
-    </a>
-  </section>
+    <section id="movie" class="cute-movie cute-section" aria-labelledby="movie-heading">
+      <header class="cute-heading"><p>MOVIE</p><h2 id="movie-heading">動くミアたち、のぞいてみる？</h2></header>
+      <a class="cute-movie-frame" href={`${base}movie`}><img src={`${base}hero-poster.webp`} alt="ティザー映像を見る" width="1280" height="720" loading="lazy" /><span class="cute-movie-label">ティザー映像、公開中！</span><span class="cute-movie-play" aria-hidden="true">▶</span><span class="cute-movie-caption">ハイベルの日常を、ちょっとだけ。<b aria-hidden="true">↗</b></span></a>
+    </section>
 
-  <section id="news" class="mx-auto max-w-3xl px-6 pt-14 md:pt-20" aria-labelledby="news-heading">
-    <div class="flex items-end justify-between gap-4 border-b border-gilt-400/30 pb-3">
-      <div>
-        <p class="font-eyebrow text-xs tracking-[0.4em] text-gilt-600">NEWS</p>
-        <h2 id="news-heading" class="mt-1 font-display text-2xl font-bold text-tide-900">更新情報</h2>
-      </div>
-      <a href={`${base}news`} class="text-xs tracking-[0.06em] text-tide-700 hover:text-gilt-600">すべて見る ▶</a>
-    </div>
-    <ol class="divide-y divide-gilt-400/20">
-      {NEWS.slice(0, 3).map((item) => (
-        <li>
-          <a href={`${base}news/#${item.id}`} class="group grid gap-1 py-4 sm:grid-cols-[7.5rem_1fr] sm:items-baseline">
-            <time datetime={item.date} class="font-eyebrow text-[11px] tracking-[0.14em] text-gilt-600">{displayDate(item.date)}</time>
-            <span class="font-display text-sm leading-relaxed text-tide-900 transition group-hover:text-seal-600">{item.title}</span>
-          </a>
-        </li>
-      ))}
-    </ol>
-  </section>
-
-  <section class="mx-auto max-w-3xl px-6 pt-16" aria-labelledby="novel-heading">
-    <div class="sheet grid items-center gap-8 overflow-hidden px-6 py-8 sm:grid-cols-[13rem_1fr] md:px-9 md:py-10">
-      <picture class="mx-auto">
-        <source srcset={`${base}cover.avif`} type="image/avif" />
-        <img src={coverSrc} alt="WEB小説第1巻表紙" width="600" height="600" loading="lazy" class="w-48 rounded-sm shadow-xl shadow-tide-900/25 ring-1 ring-gilt-400/50 sm:w-52" />
-      </picture>
-      <div>
-        <p class="font-eyebrow text-xs tracking-[0.35em] text-gilt-600">WEB NOVEL / VOLUME I</p>
-        <h2 id="novel-heading" class="mt-2 font-display text-3xl font-bold leading-snug text-tide-900">2度目の転生は<br />女遊び人でした</h2>
-        <p class="mt-3 text-xs tracking-[0.12em] text-ink-600">原作・執筆：chapinosuke 　全{chapters.length}話</p>
-        <div class="mt-4 flex flex-wrap gap-2">
-          {['異世界転生', 'お色気コメディ', '女主人公', 'お仕事', '冒険'].map((tag) => (
-            <span class="rounded-full border border-gilt-400/35 bg-paper-50 px-3 py-1 text-[11px] text-ink-600">{tag}</span>
-          ))}
-        </div>
-        <p class="mt-5 text-sm leading-loose text-ink-700">二度目の転生で授かったのは、戦闘力ではなく「女遊び人」の職業。最弱装備から始まる、賢者を目指す異世界お色気コメディ。</p>
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a href={`${base}chapter/${first?.slug}`} class="rounded-sm bg-seal-500 px-6 py-3 text-xs tracking-[0.06em] text-paper-50 transition hover:bg-seal-400">第一話から読む</a>
-          <a href="#chapters" class="rounded-sm border border-tide-500/50 px-6 py-3 text-xs tracking-[0.06em] text-tide-700">もくじへ</a>
-        </div>
-      </div>
-    </div>
-  </section>
+    <section id="novel" class="cute-novel cute-section" aria-labelledby="novel-heading">
+      <header class="cute-heading"><p>ORIGINAL NOVEL</p><h2 id="novel-heading">冒険の続きは、こちらから。</h2></header>
+      <div class="cute-novel-paper"><picture><source srcset={`${base}cover.avif`} type="image/avif" /><img src={coverSrc} alt="WEB小説第1巻表紙" width="600" height="600" loading="lazy" /></picture><div><p class="cute-novel-label">第1巻・全{chapters.length}話</p><h3>最弱の遊び人が、<br />「賢者」を目指すまで。</h3><p>原作・執筆：{SITE_AUTHOR}</p><div class="cute-novel-actions">{first && <a id="start-reading" class="cute-button" href={`${base}chapter/${first.slug}`}>第一話から読む <span aria-hidden="true">→</span></a>}<a id="continue-reading" class="cute-button" href={base} hidden>つづきから読む <span aria-hidden="true">→</span></a>{latest && <a class="cute-inline-link" href={`${base}chapter/${latest.slug}`}>最新話を読む →</a>}</div></div></div>
+    </section>
 
   <!-- CHAPTERS：章（アーク）ごとに畳めるもくじ -->
   <section id="chapters" class="mx-auto max-w-3xl scroll-mt-8 px-6 pb-20 pt-16 md:pb-24 md:pt-24">
@@ -289,6 +186,38 @@ const websiteSchema = {
       ))}
     </ul>
   </nav>
+
+    <footer class="cute-footer"><a class="cute-back-top" href="#top">↑<span>いちばん上へ</span></a><a class="cute-mini-logo" href="#top"><TitleLogo /></a><p>笑って、働いて、ときどき冒険。</p><small>© {new Date().getFullYear()} {SITE_AUTHOR}</small></footer>
+  </main>
+
+  <script>
+    const browser = document.querySelector<HTMLElement>('[data-cast-browser]');
+    if (browser) {
+      const tabs = Array.from(browser.querySelectorAll<HTMLButtonElement>('[data-cast-tab]'));
+      const panels = Array.from(browser.querySelectorAll<HTMLElement>('[data-cast-panel]'));
+      const count = browser.querySelector<HTMLElement>('[data-cast-count]');
+      let selected = 0;
+      function selectCharacter(index: number, focus = false) {
+        selected = (index + tabs.length) % tabs.length;
+        tabs.forEach((tab, i) => { tab.setAttribute('aria-selected', String(i === selected)); tab.tabIndex = i === selected ? 0 : -1; });
+        panels.forEach((panel, i) => { panel.hidden = i !== selected; panel.setAttribute('role', 'tabpanel'); panel.setAttribute('aria-labelledby', tabs[i].id); panel.tabIndex = 0; });
+        if (count) count.textContent = `${tabs[selected].textContent?.trim()} / ${String(selected + 1).padStart(2, '0')}`;
+        if (focus) tabs[selected].focus();
+      }
+      browser.querySelector<HTMLElement>('.cute-cast-tabs')!.hidden = false;
+      browser.querySelector<HTMLElement>('.cute-cast-controls')!.hidden = false;
+      tabs.forEach((tab, i) => {
+        tab.addEventListener('click', () => selectCharacter(i));
+        tab.addEventListener('keydown', event => {
+          const next = event.key === 'ArrowRight' ? i + 1 : event.key === 'ArrowLeft' ? i - 1 : event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : null;
+          if (next !== null) { event.preventDefault(); selectCharacter(next, true); }
+        });
+      });
+      browser.querySelector('[data-cast-prev]')?.addEventListener('click', () => selectCharacter(selected - 1));
+      browser.querySelector('[data-cast-next]')?.addEventListener('click', () => selectCharacter(selected + 1));
+      selectCharacter(0);
+    }
+  </script>
 
   <!-- 「つづきから読む」：last-read がある場合のみ表示 -->
   <script is:inline define:vars={{ base }}>

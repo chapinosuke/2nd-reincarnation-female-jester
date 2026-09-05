@@ -1,0 +1,153 @@
+{
+  "mode": "built-in image_gen",
+  "assets": [
+    {
+      "name": "mia",
+      "prompt": "Use case: stylized-concept\nAsset type: transparent PNG character cutout for a bright Japanese fantasy anime website.\nInput image: Mia character turnaround, reference for identity, face, hair, colors and costume only.\nPrimary request: Create exactly ONE full-body adult woman, Mia, using the reference identity. Brown long hair and brown eyes, black bunny ears, black bunny costume, white collar with black bowtie, white wrist cuffs, dark tights and black shoes. Cheerful friendly smile, tasteful upright standing pose with one hand on her hip. Clean cute Japanese anime linework and crisp cel shading. Preserve reference clothing and face.\nComposition: centered, portrait approximately 1024x1536, full body head-to-toe including entire bunny ears and shoes, generous clear margins.\nBackground: genuinely TRANSPARENT PNG using real alpha channel, with all pixels outside the character alpha=0. This is an asset cutout to be placed on arbitrary CSS backgrounds. No painted background. Do not render a checkerboard, white, black, gray, or solid-color background. The alpha channel itself must provide transparency.\nAvoid: text, watermark, multiple figures, turnaround sheet, scenery, floor, cast shadow, decorative objects or props, cropped ears or feet. Nonsexual character presentation.",
+      "verification": {
+        "mode": "RGBA",
+        "dimensions": [
+          1024,
+          1536
+        ],
+        "alpha_extrema": [
+          0,
+          254
+        ],
+        "alpha_zero_pixels": 1224719,
+        "total_pixels": 1572864,
+        "alpha_positive_bbox": [
+          45,
+          0,
+          1010,
+          1536
+        ],
+        "character_bbox_alpha_over_127": [
+          281,
+          7,
+          750,
+          1525
+        ],
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "original": "assets/character/standees/mia-v1.png",
+      "website": "web/public/characters/standees/mia-v1.webp"
+    },
+    {
+      "name": "alto",
+      "prompt": "Use case: stylized-concept\nAsset type: transparent PNG character cutout for a bright Japanese fantasy anime website.\nInput image: Alto character turnaround, reference for identity, face, hair, colors and costume only.\nPrimary request: Create exactly ONE full-body adult man, Alto, using the reference identity. Short tousled blond hair, green eyes, slightly shy friendly expression. Red cape, brown leather breastplate and shoulder armor over blue long-sleeved tunic, leather belt and bracers, olive-gray trousers and brown boots matching reference. Tasteful upright standing pose, one hand near the chest cape clasp and other arm relaxed. Clean cute Japanese anime linework and crisp cel shading. Preserve reference clothing and face.\nComposition: centered, portrait approximately 1024x1536, full body head-to-toe including all hair and shoes, generous clear margins of at least 5% around complete figure.\nBackground: genuinely TRANSPARENT PNG using real alpha channel, with all pixels outside the character alpha=0. This is an asset cutout to be placed on arbitrary CSS backgrounds. No painted background. Do not render a checkerboard, white, black, gray, or solid-color background. The alpha channel itself must provide transparency.\nAvoid: text, watermark, multiple figures, turnaround sheet, scenery, floor, cast shadow, decorative objects or props, cropped head or feet. Nonsexual character presentation.",
+      "verification": {
+        "mode": "RGBA",
+        "dimensions": [
+          1024,
+          1536
+        ],
+        "alpha_extrema": [
+          0,
+          254
+        ],
+        "alpha_zero_pixels": 1025485,
+        "total_pixels": 1572864,
+        "alpha_positive_bbox": [
+          0,
+          1,
+          1010,
+          1525
+        ],
+        "character_bbox_alpha_over_127": [
+          178,
+          11,
+          867,
+          1522
+        ],
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "original": "assets/character/standees/alto-v1.png",
+      "website": "web/public/characters/standees/alto-v1.webp"
+    },
+    {
+      "name": "sera",
+      "prompt": "Use case: stylized-concept\nAsset type: transparent PNG character cutout for a bright Japanese fantasy anime website.\nInput image: Sera character turnaround, reference for identity, face, hair, colors and costume only.\nPrimary request: Create exactly ONE full-body adult woman, Sera, using the reference identity. Long blue hair, blue eyes, determined slightly stern face, upright standing with folded arms. Preserve the white and gold priest hat, white sleeveless long clerical outfit with gold trim and black chest inset, detached white sleeves, dark tights and blue boots of reference. Clean cute Japanese anime linework and crisp cel shading. Preserve reference clothing and face.\nComposition: centered, portrait approximately 1024x1536, full body head-to-toe including entire hat and shoes, generous clear margins of at least 5% around complete figure.\nBackground: genuinely TRANSPARENT PNG using real alpha channel, with all pixels outside the character alpha=0. This is an asset cutout to be placed on arbitrary CSS backgrounds. No painted background. Do not render a checkerboard, white, black, gray, or solid-color background. The alpha channel itself must provide transparency.\nAvoid: text, watermark, multiple figures, turnaround sheet, scenery, floor, cast shadow, decorative objects or props, cropped hat or feet. Tasteful nonsexual character presentation.",
+      "verification": {
+        "mode": "RGBA",
+        "dimensions": [
+          1024,
+          1536
+        ],
+        "alpha_extrema": [
+          0,
+          254
+        ],
+        "alpha_zero_pixels": 1120263,
+        "total_pixels": 1572864,
+        "alpha_positive_bbox": [
+          65,
+          0,
+          912,
+          1526
+        ],
+        "character_bbox_alpha_over_127": [
+          241,
+          11,
+          784,
+          1522
+        ],
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "original": "assets/character/standees/sera-v1.png",
+      "website": "web/public/characters/standees/sera-v1.webp"
+    },
+    {
+      "name": "gold",
+      "prompt": "Use case: stylized-concept\nAsset type: transparent PNG character cutout for a bright Japanese fantasy anime website.\nInput image: Gold character turnaround, reference for identity, face, hair, colors and costume only.\nPrimary request: Create exactly ONE full-body older adult man, Gold, using the reference identity. Muscular broad build, swept-back short white hair, white eyebrows and full white beard and mustache. Friendly confident broad smile, upright standing with both hands on hips. Preserve sleeveless dark forest-green long tunic with olive trim and lace-up neck, brown belt, green wristbands, black trousers and brown boots of reference. Clean cute Japanese anime linework and crisp cel shading. Preserve reference clothing and face.\nComposition: centered, portrait approximately 1024x1536, full body head-to-toe including all hair and shoes, generous clear margins of at least 5% around complete figure.\nBackground: genuinely TRANSPARENT PNG using real alpha channel, with all pixels outside the character alpha=0. This is an asset cutout to be placed on arbitrary CSS backgrounds. No painted background. Do not render a checkerboard, white, black, gray, or solid-color background. The alpha channel itself must provide transparency.\nAvoid: text, watermark, multiple figures, turnaround sheet, scenery, floor, cast shadow, decorative objects or props, cropped hair or feet. Tasteful nonsexual character presentation.",
+      "verification": {
+        "mode": "RGBA",
+        "dimensions": [
+          1024,
+          1536
+        ],
+        "alpha_extrema": [
+          0,
+          254
+        ],
+        "alpha_zero_pixels": 970736,
+        "total_pixels": 1572864,
+        "alpha_positive_bbox": [
+          49,
+          13,
+          1002,
+          1536
+        ],
+        "character_bbox_alpha_over_127": [
+          138,
+          16,
+          884,
+          1524
+        ],
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "original": "assets/character/standees/gold-v1.png",
+      "website": "web/public/characters/standees/gold-v1.webp"
+    }
+  ]
+}

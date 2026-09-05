@@ -1,59 +1,56 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageNav from '../components/PageNav.astro';
+import CharacterPortrait from '../components/CharacterPortrait.astro';
 import ExploreNext from '../components/ExploreNext.astro';
 
 const base = import.meta.env.BASE_URL;
 
 // パーティー4人（物語準拠。台帳口調＋コメディ寄り）
-// portrait＝物語のワンシーン表情カット / turnaround＝三面図（設定資料）
+// 人物の肖像は透過立ち絵を使用。三面図は設定資料として保持。
 // 持論・人生哲学の本編挿入は 設定/追記修正事項.md を正とする（サイトプロフィールには載せない）
 const party = [
   {
     hanko: '遊び人',
+    id: 'mia',
     name: 'ミア',
     qualifier: '',
     intro:
       '目が覚めたら「ミア」だった。戦えない。魔法も使えない。装備はバニーガール衣装のみ――つまり、ほぼ裸に近い状態で異世界デビューした。それでも酒場『陽気な冒険者』では、身体が勝手に接客を始め、荒くれの視線も場の空気もまとめて動かす。心の声はなぜか「オレ」。表に出る声は数えてみたら四種類。なかには、関西弁が漏れる回もある。',
     quote: '一言：「後ろ、取られてますよ」',
-    portrait: `${base}characters/mia-portrait.webp`,
-    portraitAlt: '下アングルでてへぺろするミア',
     turnaround: `${base}characters/mia.webp`,
     turnaroundAlt: 'ミアの三面図（正面・側面・背面）',
   },
   {
     hanko: '勇者',
+    id: 'alto',
     name: 'アルト',
     qualifier: '（自称）',
     intro:
       '気弱で慎重な青年。勇者は名乗れば誰でもなれる世界なので、彼も名乗ってしまった。口癖は「誰か得意な人がやれば……」。剣の柄は手垢で黒光り、刀身は鏡のまま――つまり、抜いた回数が少ない。意味もなく手拭いを畳み直す。一年前は謝りを五回連続で重ねていたが、今は二回で済むらしい。実家は食堂で、旅先でも料理は任される。剣より包丁の方が、よほど手に馴染むらしい。',
     quote: '一言：「誰か得意な人がやれば……」',
-    portrait: `${base}characters/alto-portrait.webp`,
-    portraitAlt: '冷や汗をかきながら謝るアルト',
     turnaround: `${base}characters/alto.webp`,
     turnaroundAlt: 'アルトの三面図（正面・側面・背面）',
   },
   {
     hanko: '僧侶',
+    id: 'sera',
     name: 'セラ',
     qualifier: '（元・金貸しの娘）',
     intro:
       '三歳で算盤、五歳で帳簿、七歳で取り立て。回復魔法は「コストのかかる労働」、赤字の依頼は原則お断り。耳には予備の羽根ペン、口にする金額は必ず計算が合う。ゴルドの手癖には羽根ペンの柄で応酬し、ミアと打撃が同期することもある。損得で語るくせに、選ぶ答えはいつも誰も潰さない――困ったことに。',
     quote: '一言：「育ちがいいからね」',
-    portrait: `${base}characters/sera-portrait.webp`,
-    portraitAlt: '帳簿の前で値を言い渡すセラ',
     turnaround: `${base}characters/sera.webp`,
     turnaroundAlt: 'セラの三面図（正面・側面・背面）',
   },
   {
     hanko: '魔法使い',
+    id: 'gold',
     name: 'ゴルド',
     qualifier: '（武闘派）',
     intro:
       '元・武闘家。口癖は「魔法を唱えるより殴った方が早い」。魔王討伐の経験者らしいが、武勇伝は語るたびに細部が食い違う。酒が入ると手が出る。言い訳は「俺じゃない、手だ」。財布はよく失くす。戦場では、なぜか誰より仲間の位置を見ている。',
     quote: '一言：「年寄り扱いせんかい！」',
-    portrait: `${base}characters/gold-portrait.webp`,
-    portraitAlt: '酒場で店員に手を出すゴルド',
     turnaround: `${base}characters/gold.webp`,
     turnaroundAlt: 'ゴルドの三面図（正面・側面・背面）',
   },
@@ -83,17 +80,12 @@ const party = [
     <div class="mt-12 space-y-8">
       {
         party.map((c) => (
-          <article class="sheet fade-in px-6 py-8 md:px-9 md:py-9">
-            {/* 物語のワンシーン表情カット＋肩書き・紹介（三面図とは役割を分ける） */}
+          <article id={c.id} class="sheet fade-in scroll-mt-24 px-6 py-8 md:px-9 md:py-9">
+            {/* 透過立ち絵のポートレート＋肩書き・紹介 */}
             <div class="grid grid-cols-[7rem_minmax(0,1fr)] items-start gap-x-4 md:grid-cols-[9rem_minmax(0,1fr)] md:gap-x-6">
-              <img
-                src={c.portrait}
-                alt={c.portraitAlt}
-                width="640"
-                height="640"
-                loading="lazy"
-                class="h-28 w-28 shrink-0 rounded-sm object-cover shadow-md shadow-tide-900/25 ring-1 ring-gilt-400/50 md:h-36 md:w-36"
-              />
+              <div class="h-28 w-28 shrink-0 overflow-hidden rounded-full ring-1 ring-gilt-400/50 md:h-36 md:w-36">
+                <CharacterPortrait character={c.id} label={`${c.name}のポートレート`} />
+              </div>
               <div class="min-w-0">
                 <div class="flex items-center gap-3 md:gap-4">
                   <span class="hanko shrink-0 text-[10px] md:text-xs" aria-hidden="true">
