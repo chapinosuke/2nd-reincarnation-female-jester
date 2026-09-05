@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageNav from '../components/PageNav.astro';
+import PageHeading from '../components/PageHeading.astro';
 import ExploreNext from '../components/ExploreNext.astro';
 import { SITE_TITLE } from '../lib/site';
 
@@ -36,14 +37,12 @@ const arcs = [
 
 <Base title={`STORY ｜ ${SITE_TITLE}`} description="戦えない女遊び人ミアと、どこかズレた冒険者三人の旅——第1巻のあらすじと章紹介。">
   <PageNav label="STORY" />
-  <main class="pb-24">
-    <section class="relative isolate overflow-hidden">
-      <img src={heroSrc} alt="酒場『陽気な冒険者』で働くミアと仲間たち" width="1672" height="941" class="h-[24rem] w-full object-cover object-[72%_center] md:h-[34rem] md:object-center" />
-      <div class="absolute inset-0 bg-gradient-to-t from-tide-900/95 via-tide-900/30 to-transparent" aria-hidden="true"></div>
-      <div class="absolute inset-x-0 bottom-0 mx-auto max-w-4xl px-6 pb-10 text-paper-50 md:pb-14">
-        <p class="font-eyebrow text-xs tracking-[0.45em] text-gilt-300">STORY</p>
-        <h1 class="mt-3 font-display text-4xl font-bold leading-tight md:text-6xl">戦えない。<br />だから、人を動かす。</h1>
-      </div>
+  <main id="page-content" class="pb-24">
+    <section class="pop-story-hero mx-auto max-w-6xl px-6 pt-12">
+      <PageHeading eyebrow="STORY" title="戦えない。だから、人を動かす。" />
+      <figure class="sheet mt-9 overflow-hidden p-2 md:p-3">
+        <img src={heroSrc} alt="酒場『陽気な冒険者』で働くミアと仲間たち" width="1672" height="941" class="w-full rounded-2xl" fetchpriority="high" />
+      </figure>
     </section>
 
     <section class="mx-auto max-w-3xl px-6 pt-14 md:pt-20">

@@ -11,11 +11,11 @@ const items = [
   { key: 'world', href: `${base}world`, en: 'WORLD', ja: '世界観', sub: '資料室を訪ねる' },
   { key: 'ledger', href: `${base}ledger`, en: 'LEDGER', ja: '帳簿', sub: '収支を確かめる' },
   { key: 'gallery', href: `${base}gallery`, en: 'GALLERY', ja: '画廊', sub: '一枚絵を見る' },
-  { key: 'movie', href: `${base}movie`, en: 'MOVIE', ja: '映像', sub: 'ティザーを見る' },
+  { key: 'movie', href: `${base}movie`, en: 'MOVIE', ja: '映像', sub: '映像を見る' },
 ].filter((item) => item.key !== current);
 ---
 
-<nav class="mt-16 border-t border-gilt-400/30 pt-10" aria-label="次に見る">
+<nav class="pop-explore mt-16 border-t border-gilt-400/30 pt-10" aria-label="次に見る">
   <div class="text-center">
     <p class="font-eyebrow text-xs tracking-[0.3em] text-gilt-600">EXPLORE</p>
     <h2 class="mt-2 font-display text-xl font-bold text-tide-900">次に見る</h2>

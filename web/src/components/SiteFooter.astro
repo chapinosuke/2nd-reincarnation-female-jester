@@ -1,0 +1,22 @@
+---
+import TitleLogo from './TitleLogo.astro';
+import { SITE_AUTHOR } from '../lib/site';
+const base = import.meta.env.BASE_URL;
+const links = [
+  { href: base, label: 'トップ' },
+  { href: `${base}#chapters`, label: 'もくじ' },
+  { href: `${base}characters`, label: 'キャラクター' },
+  { href: `${base}world`, label: '世界観' },
+  { href: `${base}ledger`, label: '帳簿' },
+  { href: `${base}movie`, label: 'ムービー' },
+  { href: `${base}gallery`, label: 'ギャラリー' },
+  { href: `${base}news`, label: 'おしらせ' },
+];
+---
+<footer class="pop-footer">
+  <a class="pop-back-top" href="#site-top">↑ <span>いちばん上へ</span></a>
+  <a class="pop-footer-logo" href={base} aria-label="トップへ"><TitleLogo /></a>
+  <p>笑って、働いて、ときどき冒険。</p>
+  <nav aria-label="フッターメニュー">{links.map(link => <a href={link.href}>{link.label}</a>)}</nav>
+  <small>© {new Date().getFullYear()} {SITE_AUTHOR}</small>
+</footer>

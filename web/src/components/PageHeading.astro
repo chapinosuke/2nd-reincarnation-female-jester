@@ -1,0 +1,10 @@
+---
+interface Props { eyebrow: string; title: string; description?: string; note?: string; }
+const { eyebrow, title, description, note } = Astro.props;
+---
+<header class="pop-heading fade-in">
+  <p class="pop-heading-label">{eyebrow}</p>
+  <h1>{title}</h1>
+  {description && <p class="pop-heading-description">{description}</p>}
+  {note && <p class="pop-heading-note">{note}</p>}
+</header>

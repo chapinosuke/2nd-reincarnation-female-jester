@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageNav from '../components/PageNav.astro';
+import PageHeading from '../components/PageHeading.astro';
 import CharacterPortrait from '../components/CharacterPortrait.astro';
 import ExploreNext from '../components/ExploreNext.astro';
 
@@ -63,18 +64,9 @@ const party = [
 >
   <PageNav label="CHARACTERS" />
 
-  <main class="mx-auto max-w-3xl px-6 pb-24 pt-14 md:pt-20">
+  <main id="page-content" class="mx-auto max-w-3xl px-6 pb-24 pt-14 md:pt-20">
     <!-- 見出し -->
-    <header class="fade-in text-center">
-      <p class="font-eyebrow text-sm tracking-[0.5em] text-gilt-600">CHARACTERS</p>
-      <h1 class="mt-3 font-display text-4xl font-bold text-tide-900 md:text-5xl">人物</h1>
-      <p class="mt-4 text-sm text-ink-600">――『陽気な冒険者』の常連台帳より</p>
-      <div class="mx-auto mt-7 flex max-w-xs items-center gap-4" aria-hidden="true">
-        <div class="h-px flex-1 bg-gradient-to-r from-transparent to-gilt-400/50"></div>
-        <span class="text-xs text-seal-500">◆</span>
-        <div class="h-px flex-1 bg-gradient-to-l from-transparent to-gilt-400/50"></div>
-      </div>
-    </header>
+    <PageHeading eyebrow="CHARACTERS" title="キャラクター" description="酒場「陽気な冒険者」の常連たち" />
 
     <!-- パーティー4人 -->
     <div class="mt-12 space-y-8">
@@ -87,7 +79,7 @@ const party = [
                 <CharacterPortrait character={c.id} label={`${c.name}のポートレート`} />
               </div>
               <div class="min-w-0">
-                <div class="flex items-center gap-3 md:gap-4">
+                <div class="pop-character-title flex items-center gap-3 md:gap-4">
                   <span class="hanko shrink-0 text-[10px] md:text-xs" aria-hidden="true">
                     {c.hanko}
                   </span>
@@ -131,15 +123,9 @@ const party = [
 
     <!-- マルヴァ：ティザーカード（このカードのみモーヴ差し色） -->
     <article
-      class="fade-in relative mt-8 overflow-hidden rounded-[4px] px-6 py-8 md:px-9 md:py-9"
+      class="sheet fade-in relative mt-8 overflow-hidden px-6 py-8 md:px-9 md:py-9"
       style="background: radial-gradient(140% 90% at 50% 0%, rgba(255,255,255,0.85), transparent 60%), linear-gradient(180deg, #fdfbfe 0%, #f3edf5 100%);"
     >
-      <!-- モーヴの縁グラデ -->
-      <span
-        class="pointer-events-none absolute inset-0 rounded-[4px]"
-        aria-hidden="true"
-        style="padding:1px; background:linear-gradient(120deg, rgba(141,95,158,0.55), rgba(203,170,92,0.5)); -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude;"
-      ></span>
       <div class="flex flex-col gap-7 md:flex-row md:items-center md:gap-8">
         <!-- 肖像は置かず、mallow系の霞んだシルエット枠（CSSのみ） -->
         <div
@@ -192,7 +178,7 @@ const party = [
     <!-- 戻る導線 -->
     <div class="mt-14 text-center">
       <a
-        href={base}
+        href={`${base}#chapters`}
         class="inline-block rounded-sm border border-tide-500/60 px-8 py-3 font-eyebrow text-xs tracking-[0.3em] text-tide-700 transition hover:border-gilt-400 hover:text-gilt-600"
       >
         もくじにもどる

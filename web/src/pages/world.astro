@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageNav from '../components/PageNav.astro';
+import PageHeading from '../components/PageHeading.astro';
 import ExploreNext from '../components/ExploreNext.astro';
 
 const base = import.meta.env.BASE_URL;
@@ -21,18 +22,9 @@ const prices = [
 >
   <PageNav label="WORLD" />
 
-  <main class="mx-auto max-w-3xl px-6 pb-24 pt-14 md:pt-20">
+  <main id="page-content" class="mx-auto max-w-3xl px-6 pb-24 pt-14 md:pt-20">
     <!-- 見出し -->
-    <header class="fade-in text-center">
-      <p class="font-eyebrow text-sm tracking-[0.5em] text-gilt-600">WORLD</p>
-      <h1 class="mt-3 font-display text-4xl font-bold text-tide-900 md:text-5xl">世界観</h1>
-      <p class="mt-4 text-sm text-ink-600">――灰鷲ギルド　ハイベル支部・資料室蔵</p>
-      <div class="mx-auto mt-7 flex max-w-xs items-center gap-4" aria-hidden="true">
-        <div class="h-px flex-1 bg-gradient-to-r from-transparent to-gilt-400/50"></div>
-        <span class="text-xs text-seal-500">◆</span>
-        <div class="h-px flex-1 bg-gradient-to-l from-transparent to-gilt-400/50"></div>
-      </div>
-    </header>
+    <PageHeading eyebrow="WORLD" title="世界観" description="ハイベルの街と、冒険の暮らし" />
 
     <nav class="sheet mt-10 px-5 py-5 md:px-7" aria-label="世界観の目次">
       <p class="text-center text-xs tracking-[0.08em] text-ink-600">資料を選ぶ</p>
@@ -144,7 +136,7 @@ const prices = [
     <!-- 戻る導線 -->
     <div class="mt-14 text-center">
       <a
-        href={base}
+        href={`${base}#chapters`}
         class="inline-block rounded-sm border border-tide-500/60 px-8 py-3 font-eyebrow text-xs tracking-[0.3em] text-tide-700 transition hover:border-gilt-400 hover:text-gilt-600"
       >
         もくじにもどる

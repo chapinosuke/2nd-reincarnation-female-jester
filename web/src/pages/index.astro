@@ -81,7 +81,16 @@ const websiteSchema = {
 
     <section id="movie" class="cute-movie cute-section" aria-labelledby="movie-heading">
       <header class="cute-heading"><p>MOVIE</p><h2 id="movie-heading">動くミアたち、のぞいてみる？</h2></header>
-      <a class="cute-movie-frame" href={`${base}movie`}><img src={`${base}hero-poster.webp`} alt="ティザー映像を見る" width="1280" height="720" loading="lazy" /><span class="cute-movie-label">ティザー映像、公開中！</span><span class="cute-movie-play" aria-hidden="true">▶</span><span class="cute-movie-caption">ハイベルの日常を、ちょっとだけ。<b aria-hidden="true">↗</b></span></a>
+      <figure class="cute-movie-frame">
+        <video controls playsinline preload="none" poster={`${base}hero-poster.webp`} width="1280" height="720" aria-label="ハイベルの日常">
+          <source src={`${base}hero-bg.mp4`} type="video/mp4" />
+          <a href={`${base}hero-bg.mp4`}>動画を開く</a>
+        </video>
+        <figcaption class="cute-movie-caption">
+          <span>ハイベルの日常<small>約30秒・音声なし</small></span>
+          <a href={`${base}movie`}>ほかの映像も見る <span aria-hidden="true">↗</span></a>
+        </figcaption>
+      </figure>
     </section>
 
     <section id="novel" class="cute-novel cute-section" aria-labelledby="novel-heading">

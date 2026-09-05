@@ -49,7 +49,7 @@ const structuredData = [
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'もくじ', item: homeUrl },
+      { '@type': 'ListItem', position: 1, name: 'もくじ', item: `${homeUrl}#chapters` },
       { '@type': 'ListItem', position: 2, name: current.titleLine, item: chapterUrl },
     ],
   },
@@ -70,7 +70,7 @@ const structuredData = [
     <div class="tide-rule absolute inset-x-0 top-0 h-[2px]" aria-hidden="true"></div>
     <div class="mx-auto flex max-w-[52rem] items-center justify-between px-5 py-3.5">
       <a
-        href={base}
+        href={`${base}#chapters`}
         class="text-xs tracking-[0.06em] text-tide-700 transition hover:text-gilt-600"
       >
         ◀ もくじ
@@ -162,7 +162,7 @@ const structuredData = [
 
     <div class="mt-12 text-center">
       <a
-        href={base}
+        href={`${base}#chapters`}
         class="inline-block rounded-sm border border-tide-500/60 px-8 py-3 text-xs tracking-[0.06em] text-tide-700 transition hover:border-gilt-400 hover:text-gilt-600"
       >
         もくじにもどる
@@ -183,7 +183,7 @@ const structuredData = [
 
   <!-- スマホでの連続読書用ナビ -->
   <nav
-    class="fixed inset-x-3 bottom-3 z-40 grid grid-cols-3 overflow-hidden rounded-md border border-gilt-400/40 bg-paper-50/95 shadow-xl shadow-tide-900/20 backdrop-blur-md md:hidden"
+    class="reader-mobile-nav fixed inset-x-3 bottom-3 z-40 grid grid-cols-3 overflow-hidden rounded-md border border-gilt-400/40 bg-paper-50/95 shadow-xl shadow-tide-900/20 backdrop-blur-md md:hidden"
     aria-label="読書ナビゲーション"
   >
     {prev ? (
@@ -193,7 +193,7 @@ const structuredData = [
     ) : (
       <span class="border-r border-gilt-400/25" aria-hidden="true"></span>
     )}
-    <a href={base} class="flex min-h-12 items-center justify-center border-r border-gilt-400/25 text-sm text-tide-700">
+    <a href={`${base}#chapters`} class="flex min-h-12 items-center justify-center border-r border-gilt-400/25 text-sm text-tide-700">
       もくじ
     </a>
     {next ? (
@@ -201,7 +201,7 @@ const structuredData = [
         次話 ▶
       </a>
     ) : (
-      <a href={base} class="flex min-h-12 items-center justify-center text-sm text-tide-700">
+      <a href={`${base}#chapters`} class="flex min-h-12 items-center justify-center text-sm text-tide-700">
         読了
       </a>
     )}

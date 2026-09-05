@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageNav from '../components/PageNav.astro';
+import PageHeading from '../components/PageHeading.astro';
 import ExploreNext from '../components/ExploreNext.astro';
 import { SITE_TITLE } from '../lib/site';
 
@@ -11,24 +12,20 @@ const movies = [
 ];
 ---
 
-<Base title={`MOVIE ｜ ${SITE_TITLE}`} description="異世界お色気コメディ『2度目の転生は女遊び人でした』ティザー映像。">
+<Base title={`MOVIE ｜ ${SITE_TITLE}`} description="異世界お色気コメディ『2度目の転生は女遊び人でした』ショート映像。">
   <PageNav label="MOVIE" />
-  <main class="mx-auto max-w-4xl px-6 pb-24 pt-14 md:pt-20">
-    <header class="fade-in text-center">
-      <p class="font-eyebrow text-sm tracking-[0.5em] text-gilt-600">MOVIE</p>
-      <h1 class="mt-3 font-display text-4xl font-bold text-tide-900 md:text-5xl">映像</h1>
-      <p class="mt-4 text-sm text-ink-600">――酒場の熱と、旅の気配をひとかけら</p>
-    </header>
+  <main id="page-content" class="mx-auto max-w-4xl px-6 pb-24 pt-14 md:pt-20">
+    <PageHeading eyebrow="MOVIE" title="ムービー" description="酒場の熱と、旅の気配をひとかけら" />
 
-    <section class="mt-12 grid gap-8 sm:grid-cols-2" aria-label="ティザー映像">
+    <section class="mt-12 grid gap-8 sm:grid-cols-2" aria-label="ショート映像">
       {movies.map((movie) => (
         <article class="sheet overflow-hidden p-3 md:p-4">
-          <video controls playsinline preload="metadata" poster={movie.poster} class="aspect-square w-full rounded-sm bg-tide-900" aria-label={movie.title}>
+          <video controls playsinline preload="none" poster={movie.poster} class="aspect-square w-full rounded-sm bg-tide-900" aria-label={movie.title}>
             <source src={movie.src} type="video/mp4" />
             ご利用のブラウザは動画の再生に対応していません。
           </video>
           <div class="px-2 pb-2 pt-4">
-            <p class="font-eyebrow text-[11px] tracking-[0.3em] text-gilt-600">TEASER CUT {movie.no}</p>
+            <p class="font-eyebrow text-[11px] tracking-[0.3em] text-gilt-600">MOVIE {movie.no}</p>
             <h2 class="mt-1 font-display text-lg font-bold text-tide-900">{movie.title}</h2>
           </div>
         </article>
