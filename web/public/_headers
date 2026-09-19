@@ -1,0 +1,3 @@
+# 埋め込み元は夜桜の公開URLだけ。通常の直接閲覧は制限しない。
+/*
+  Content-Security-Policy: frame-ancestors https://yozakura.pages.dev
