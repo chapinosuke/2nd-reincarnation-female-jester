@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 const chapters = defineCollection({
-  loader: glob({ pattern: '*.md', base: '../本編' }),
+  loader: glob({ pattern: '第[0-9][0-9]話.md', base: '../本編' }),
   schema: z
     .object({
       title: z.string().optional(),

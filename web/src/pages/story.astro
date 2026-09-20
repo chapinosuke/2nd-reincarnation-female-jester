@@ -12,13 +12,13 @@ const arcs = [
     no: '一',
     episodes: '第1〜3話',
     title: '遊び人、目覚める',
-    body: '目が覚めたら、ミアという名のバニーガールになっていた。戦えず、魔法もなく、あるのは酒場で人を転がす接客術だけ。そんな彼女に、四人目を探す三人組が声をかける。',
+    body: '目が覚めたら、ミアという名のバニーガールになっていた。戦えず、魔法もなく、あるのは酒場で人を転がす接客術だけ。泥酔した客の勘定を取りに行った先で、四人目を探す三人組と出会う。',
   },
   {
     no: '二',
     episodes: '第4〜8話',
     title: '書類と、日銭と',
-    body: '臨時雇いの一日は、なし崩しに続いていく。取り立て、商談、護衛、牙鼠駆除。治療費を差し引かれれば赤字になる最底辺の依頼で、ミアは戦う以外の勝ち方を見つけていく。',
+    body: '臨時雇いの一日を終え、ミアは依頼を一件ずつ引き受けていく。取り立て、商談、護衛、牙鼠駆除。治療費を差し引かれれば赤字になる最底辺の依頼で、ミアは戦う以外の勝ち方を見つけていく。',
   },
   {
     no: '三',
@@ -30,12 +30,24 @@ const arcs = [
     no: '四',
     episodes: '第13〜20話',
     title: '峠越え',
-    body: '破格の報酬に釣られ、一行は危険な峠越えへ。順調だった旅路は、峠の主との遭遇で崩壊する。力では勝てない相手を前に、遊び人の読みと四人のズレが、最後の切り札になる。',
+    body: '破格の報酬と危険を前に、撤退の条件を確かめた一行は峠越えへ。順調だった旅路は、峠の主との遭遇で崩壊する。力では勝てない相手を前に、遊び人の読みと四人のズレが、最後の切り札になる。',
+  },
+  {
+    no: '五',
+    episodes: '第2巻・第21〜26話',
+    title: '効かせる女',
+    body: 'ゴルドの妻マルヴァが帰ってきた。遊び人の先輩との出会い、思わぬ寸法まで測るレベル診断、仲間たちが語る過去。曖昧な記憶を手がかりに、ミアは賢者という目標を口にする。',
+  },
+  {
+    no: '六',
+    episodes: '第2巻・第27〜34話',
+    title: '宵市と、その先へ',
+    body: '人形一座の仕事を引き受けたミアは、賑わう宵市で客を迎える。しかし、川上の雨が日常の景色を変えていく。今できることを持ち寄って働く四人の先に、次の一歩が待っていた。',
   },
 ];
 ---
 
-<Base title={`STORY ｜ ${SITE_TITLE}`} description="戦えない女遊び人ミアと、どこかズレた冒険者三人の旅——第1巻のあらすじと章紹介。">
+<Base title={`STORY ｜ ${SITE_TITLE}`} description="戦えない女遊び人ミアと、どこかズレた冒険者三人の旅——第1・2巻のあらすじと章紹介。">
   <PageNav label="STORY" />
   <main id="page-content" class="pb-24">
     <section class="pop-story-hero mx-auto max-w-6xl px-6 pt-12">
@@ -60,8 +72,8 @@ const arcs = [
 
     <section class="mx-auto max-w-3xl px-6 pt-16" aria-labelledby="arc-heading">
       <div class="text-center">
-        <p class="font-eyebrow text-xs tracking-[0.4em] text-gilt-600">VOLUME I</p>
-        <h2 id="arc-heading" class="mt-2 font-display text-3xl font-bold text-tide-900">第1巻　章紹介</h2>
+        <p class="font-eyebrow text-xs tracking-[0.4em] text-gilt-600">VOLUMES I–II</p>
+        <h2 id="arc-heading" class="mt-2 font-display text-3xl font-bold text-tide-900">第1・2巻　章紹介</h2>
       </div>
       <ol class="mt-10 space-y-5">
         {arcs.map((arc) => (

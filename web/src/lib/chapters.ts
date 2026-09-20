@@ -76,11 +76,13 @@ export const ARCS: Arc[] = [
   { no: '二', title: '書類と、日銭と', from: 4, to: 8 },
   { no: '三', title: '勇者だらけの街', from: 9, to: 12 },
   { no: '四', title: '峠越え', from: 13, to: 20 },
+  { no: '五', title: '第2巻　効かせる女', from: 21, to: 26 },
+  { no: '六', title: '第2巻　宵市と、その先へ', from: 27, to: 34 },
 ];
 
 /**
  * 章ごとに話をまとめる。各章は from<=number<=to の話を集める。
- * どの章にも入らない話（21話以降など、また番号解釈に失敗した話）は最後の章に寄せる。
+ * どの章にも入らない話は最後の章に寄せる。続巻を追加するときはARCSも更新する。
  * 空の章は出力しない。話の順序は入力（number昇順）を維持する。
  */
 export function groupByArc(chapters: ChapterMeta[]): { arc: Arc; items: ChapterMeta[] }[] {

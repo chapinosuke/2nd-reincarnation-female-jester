@@ -50,7 +50,7 @@ const websiteSchema = {
         <div class="cute-title-wrap"><h1 id="teaser-title" class="cute-title"><TitleLogo eager /></h1><p>最弱装備の、異世界お色気コメディ</p></div>
         <span class="cute-spark spark-left" aria-hidden="true">✦</span><span class="cute-spark spark-right" aria-hidden="true">✧</span>
       </div>
-      <div class="cute-announcement"><p>WEB小説・第1巻</p><strong>全<span>{chapters.length}話</span>、公開中っ！</strong></div>
+      <div class="cute-announcement"><p>WEB小説・第1・2巻</p><strong>全<span>{chapters.length}話</span>、公開中っ！</strong></div>
       <a class="cute-scroll" href="#news">つづきを見る<span aria-hidden="true">↓</span></a>
     </section>
 
@@ -95,7 +95,7 @@ const websiteSchema = {
 
     <section id="novel" class="cute-novel cute-section" aria-labelledby="novel-heading">
       <header class="cute-heading"><p>ORIGINAL NOVEL</p><h2 id="novel-heading">冒険の続きは、こちらから。</h2></header>
-      <div class="cute-novel-paper"><picture><source srcset={`${base}cover.avif`} type="image/avif" /><img src={coverSrc} alt="WEB小説第1巻表紙" width="600" height="600" loading="lazy" /></picture><div><p class="cute-novel-label">第1巻・全{chapters.length}話</p><h3>最弱の遊び人が、<br />「賢者」を目指すまで。</h3><p>原作・執筆：{SITE_AUTHOR}</p><div class="cute-novel-actions">{first && <a id="start-reading" class="cute-button" href={`${base}chapter/${first.slug}`}>第一話から読む <span aria-hidden="true">→</span></a>}<a id="continue-reading" class="cute-button" href={base} hidden>つづきから読む <span aria-hidden="true">→</span></a>{latest && <a class="cute-inline-link" href={`${base}chapter/${latest.slug}`}>最新話を読む →</a>}</div></div></div>
+      <div class="cute-novel-paper"><picture><source srcset={`${base}cover.avif`} type="image/avif" /><img src={coverSrc} alt="WEB小説第1巻表紙" width="600" height="600" loading="lazy" /></picture><div><p class="cute-novel-label">第1・2巻・全{chapters.length}話</p><h3>最弱の遊び人が、<br />「賢者」を目指すまで。</h3><p>原作・執筆：{SITE_AUTHOR}</p><div class="cute-novel-actions">{first && <a id="start-reading" class="cute-button" href={`${base}chapter/${first.slug}`}>第一話から読む <span aria-hidden="true">→</span></a>}<a id="continue-reading" class="cute-button" href={base} hidden>つづきから読む <span aria-hidden="true">→</span></a>{latest && <a class="cute-inline-link" href={`${base}chapter/${latest.slug}`}>最新話を読む →</a>}</div></div></div>
     </section>
 
   <!-- CHAPTERS：章（アーク）ごとに畳めるもくじ -->
