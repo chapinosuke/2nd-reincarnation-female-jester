@@ -28,7 +28,7 @@ const party = [
     name: 'アルト',
     qualifier: '（自称）',
     intro:
-      '気弱で慎重な青年。勇者は名乗れば誰でもなれる世界なので、彼も名乗ってしまった。口癖は「誰か得意な人がやれば……」。剣の柄は手垢で黒光り、刀身は鏡のまま――つまり、抜いた回数が少ない。意味もなく手拭いを畳み直す。一年前は謝りを五回連続で重ねていたが、今は二回で済むらしい。実家は食堂で、旅先でも料理は任される。剣より包丁の方が、よほど手に馴染むらしい。',
+      '気弱で慎重な青年。勇者は名乗れば誰でもなれる世界なので、彼も名乗ってしまった。口癖は「誰か得意な人がやれば……」。剣の柄は手垢で黒光り、刀身は鏡のまま――つまり、抜いた回数が少ない。毎年届く手拭いを、折に触れて畳み直す。一年前は謝りを五回連続で重ねていたが、今は二回で済むらしい。実家は食堂で、旅先でも料理は任される。剣より包丁の方が、よほど手に馴染むらしい。',
     quote: '一言：「誰か得意な人がやれば……」',
     turnaround: `${base}characters/alto.webp`,
     turnaroundAlt: 'アルトの三面図（正面・側面・背面）',
@@ -121,7 +121,7 @@ const party = [
       }
     </div>
 
-    <!-- マルヴァ：ティザーカード（このカードのみモーヴ差し色） -->
+    <!-- マルヴァ：第2巻から登場。肖像は未制作のため既存のシルエットを維持 -->
     <article
       class="sheet fade-in relative mt-8 overflow-hidden px-6 py-8 md:px-9 md:py-9"
       style="background: radial-gradient(140% 90% at 50% 0%, rgba(255,255,255,0.85), transparent 60%), linear-gradient(180deg, #fdfbfe 0%, #f3edf5 100%);"
@@ -135,22 +135,22 @@ const party = [
         >
           <span
             class="flex h-full items-center justify-center font-display text-3xl"
-            style="color: rgba(113,74,128,0.55);">？</span>
+            style="color: rgba(113,74,128,0.55);">遊</span>
         </div>
         <div class="min-w-0 flex-1">
-          <p class="font-eyebrow text-xs tracking-[0.4em]" style="color:#8d5f9e;">???</p>
+          <p class="font-eyebrow text-xs tracking-[0.4em]" style="color:#8d5f9e;">JESTER</p>
           <h2 class="mt-2 font-display text-2xl font-bold leading-tight md:text-3xl" style="color:#714a80;">
             マルヴァ
           </h2>
-          <p class="mt-1 text-xs tracking-[0.15em]" style="color:#8d5f9e;">？？？</p>
+          <p class="mt-1 text-xs tracking-[0.15em]" style="color:#8d5f9e;">遊び人・半引退</p>
           <p class="mt-5 text-[0.95rem] leading-[2.05] tracking-[0.04em] text-ink-800">
-            ゴルドの妻。セラは「姐さん」と呼ぶ。セクハラ罰金の送金先であり、現場執行者（セラ）の上にいる本家の顔。業界の古株は、その名を声を落として語る。灰皿が飛んだ、という噂だけは届く。――まだ誰も、その姿を見ていない。
+            ゴルドの妻で、遊び人のまま半引退している先輩。第21話でハイベルへ戻り、ミアに接客の手や舞台での顔の使い方を助言する。セラは「姐さん」と呼ぶ。夫の罰金の受取人でもある。賢者への転職方法を知っているわけではない。
           </p>
           <blockquote
             class="mt-5 border-l-2 pl-4 text-sm italic"
             style="border-color:#8d5f9e; color:#5c3a68;"
           >
-            言伝：「そろそろ、そっちに戻る」
+            ミアを見守る、遊び人の先輩。
           </blockquote>
         </div>
       </div>
@@ -170,6 +170,19 @@ const party = [
         <blockquote class="mt-5 border-l-2 border-gilt-400 pl-4 text-sm italic text-ink-700">
           一言：「我が縄張りに、また羽虫が迷い込んできたか」
         </blockquote>
+      </div>
+    </details>
+
+    <details class="sheet fade-in group mt-8 px-6 py-5 md:px-9">
+      <summary class="cursor-pointer font-display text-base text-tide-900">第57話までの人物・近況（ネタバレを含みます）</summary>
+      <div class="mt-5 space-y-4 text-sm leading-loose text-ink-800">
+        <p><strong>ミア：</strong>最新診断値は第44話の10。魔法はまだ使えない。治療補助の基礎を学び、自作の短い演目『王様の朝ご飯』で一座の前座を務める。</p>
+        <p><strong>アルトと家族：</strong>故郷はトルカ村。父と兄ロイが食堂を営む。帰省して家族と再会し、村の救助を経験したが、戦闘で剣は抜いていない。</p>
+        <p><strong>イナ：</strong>トルカ村の隣家の老女。アルトへ毎年、手織りの手拭いを送る。第47話で本人と再会する。</p>
+        <p><strong>セラとゴルド：</strong>セラは往診と経理を続け、ミアの契約にも助言する。ゴルドは村で負った左腕の傷を治療しながら、できる範囲で稽古に協力。罰金未払は155ピィ。</p>
+        <p><strong>ベナ：</strong>ハイベルの教会施療室で働く女性。ミアに布・水・道具を扱う基礎を教える。</p>
+        <p><strong>ベリル、ニノ、リッカ：</strong>一座の座長、王子の人形を演じる少年、歌と幕間の語りを担う女性。リッカはミアの発声や舞台での間も指導する。</p>
+        <p><strong>テオ：</strong>染布会館の初公演に来た、縫い物の仕上げ工房の男。舞台から冗談を向けられた時の本心を、ミアはまだ確かめていない。</p>
       </div>
     </details>
 

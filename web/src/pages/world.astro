@@ -36,6 +36,8 @@ const prices = [
           ['guild', '四', 'ギルド'],
           ['fines', '五', '罰金制度'],
           ['life', '六', '暮らし'],
+          ['places', '七', '旅先と舞台'],
+          ['diagnosis', '八', '診断と職業'],
         ].map(([id, no, label]) => (
           <li>
             <a href={`#${id}`} class="flex items-center gap-2 rounded-sm border border-gilt-400/25 px-3 py-2.5 text-sm text-tide-700 transition hover:border-tide-500/50 hover:bg-tide-500/5">
@@ -128,6 +130,23 @@ const prices = [
         <p class="mt-5 text-[0.95rem] leading-[2.05] tracking-[0.04em] text-ink-800">
           自治区ハイベル。ミアの職場は酒場『陽気な冒険者』、看板メニューは白ひげチーズ。パーティーの宿は街外れの『居眠り山羊亭』、看板山羊のクルルの瞼は経済指標と呼ばれるが、当てになった例しがない。
         </p>
+      </section>
+      <section id="places" class="sheet fade-in scroll-mt-24 px-6 py-8 md:px-9 md:py-9">
+        <h2 class="font-display text-xl font-bold text-tide-900 md:text-2xl">七　旅先と舞台</h2>
+        <dl class="mt-5 space-y-4 text-sm leading-loose text-ink-800">
+          <div><dt class="font-bold">コルム村</dt><dd>ハイベルから半日。四人は牙鼠駆除の後、薬と布を届ける仕事で再訪した。</dd></div>
+          <div><dt class="font-bold">ギルド都市カルダス</dt><dd>灰鷲ギルド本部のある都市。第3巻の隊商ではハイベルから六日、古竜の峠を通らない街道を利用した。公開記録の閲覧室や魔法の基礎講習がある。</dd></div>
+          <div><dt class="font-bold">トルカ村</dt><dd>ハイベルから徒歩一日の、アルトの故郷。父と兄の食堂、イナの家、麦干し市がある。</dd></div>
+          <div><dt class="font-bold">染布会館</dt><dd>ハイベルの河岸から二本入った通りにある、染め職人の寄合・品評用の建物。舞台もあり、第5巻ではベリルの一座が公演のため借りている。</dd></div>
+        </dl>
+      </section>
+      <section id="diagnosis" class="sheet fade-in scroll-mt-24 px-6 py-8 md:px-9 md:py-9">
+        <h2 class="font-display text-xl font-bold text-tide-900 md:text-2xl">八　診断と職業</h2>
+        <p class="mt-5 text-sm leading-loose text-ink-800">レベルは普段は自己申告。ギルドの診断では器具への反応と回復を同じ基準で比較し、測定日とともに紙へ記す。人格や将来、転職条件を判定するものではない。</p>
+        <details class="mt-4 text-sm leading-loose text-ink-800">
+          <summary class="cursor-pointer text-tide-700">ミアの診断記録と調査（第57話まで）</summary>
+          <p class="mt-3">第22話で6、第34話で8、第44話で10。その後は再測定していない。賢者を目指しているが、遊び人から賢者への道は誰も知らず、魔法も未成功。カルダスで読んだ賢者オルセの記録は、魔法使いから僧侶を経た登録であり、遊び人からの転職例ではなかった。</p>
+        </details>
       </section>
     </div>
 

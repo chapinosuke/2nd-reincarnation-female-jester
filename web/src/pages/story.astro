@@ -44,10 +44,28 @@ const arcs = [
     title: '宵市と、その先へ',
     body: '人形一座の仕事を引き受けたミアは、賑わう宵市で客を迎える。しかし、川上の雨が日常の景色を変えていく。今できることを持ち寄って働く四人の先に、次の一歩が待っていた。',
   },
+  {
+    no: '七',
+    episodes: '第3巻・第35〜44話',
+    title: '知らない道の歩き方',
+    body: '薬と布を届けたコルム村での再会を経て、四人はギルド都市カルダスへ向かう。音に寄る魔物、魔法使いもつまずく基礎講習、旅芸の一座にいたという賢者の記録。知らない道を歩きながら、ミアは自分の目標を確かめていく。',
+  },
+  {
+    no: '八',
+    episodes: '第4巻・第45〜54話',
+    title: '帰ってきた勇者',
+    body: '兄から届いた便りをきっかけに、アルトは故郷トルカ村へ帰る。父と兄の厨房、毎年届く手拭いの送り主、村で開かれる麦干し市。治療補助を学び始めたミアと仲間たちは、帰る場所で待っていた仕事に取り組む。',
+  },
+  {
+    no: '九',
+    episodes: '第5巻・第55〜57話（連載中）',
+    title: '拍手の値段',
+    body: 'ベリルから前座の打診を受けたミアは、ハイベルの染布会館で舞台に立つことに。歌い手リッカとの稽古、村とは違う客席、初めて受け取る劇場の拍手。笑わせる仕事には、まだ知らない難しさがあった。',
+  },
 ];
 ---
 
-<Base title={`STORY ｜ ${SITE_TITLE}`} description="戦えない女遊び人ミアと、どこかズレた冒険者三人の旅——第1・2巻のあらすじと章紹介。">
+<Base title={`STORY ｜ ${SITE_TITLE}`} description="戦えない女遊び人ミアと、どこかズレた冒険者三人の旅——第1〜5巻のあらすじと章紹介。">
   <PageNav label="STORY" />
   <main id="page-content" class="pb-24">
     <section class="pop-story-hero mx-auto max-w-6xl px-6 pt-12">
@@ -72,8 +90,8 @@ const arcs = [
 
     <section class="mx-auto max-w-3xl px-6 pt-16" aria-labelledby="arc-heading">
       <div class="text-center">
-        <p class="font-eyebrow text-xs tracking-[0.4em] text-gilt-600">VOLUMES I–II</p>
-        <h2 id="arc-heading" class="mt-2 font-display text-3xl font-bold text-tide-900">第1・2巻　章紹介</h2>
+        <p class="font-eyebrow text-xs tracking-[0.4em] text-gilt-600">VOLUMES I–V</p>
+        <h2 id="arc-heading" class="mt-2 font-display text-3xl font-bold text-tide-900">第1〜5巻　章紹介</h2>
       </div>
       <ol class="mt-10 space-y-5">
         {arcs.map((arc) => (

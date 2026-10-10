@@ -78,6 +78,9 @@ export const ARCS: Arc[] = [
   { no: '四', title: '峠越え', from: 13, to: 20 },
   { no: '五', title: '第2巻　効かせる女', from: 21, to: 26 },
   { no: '六', title: '第2巻　宵市と、その先へ', from: 27, to: 34 },
+  { no: '七', title: '第3巻　知らない道の歩き方', from: 35, to: 44 },
+  { no: '八', title: '第4巻　帰ってきた勇者', from: 45, to: 54 },
+  { no: '九', title: '第5巻　拍手の値段（連載中）', from: 55, to: 57 },
 ];
 
 /**

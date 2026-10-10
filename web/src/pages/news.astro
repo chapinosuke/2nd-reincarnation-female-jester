@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import PageNav from '../components/PageNav.astro';
 import PageHeading from '../components/PageHeading.astro';
 import ExploreNext from '../components/ExploreNext.astro';
-import { displayDate, NEWS, REPOSITORY_URL, SITE_AUTHOR, SITE_TITLE } from '../lib/site';
+import { displayDate, NEWS, SITE_TITLE } from '../lib/site';
 
 const base = import.meta.env.BASE_URL;
 ---
@@ -21,15 +21,9 @@ const base = import.meta.env.BASE_URL;
         </article>
       ))}
     </section>
-    <section class="sheet mt-12 px-6 py-8 md:px-9" aria-labelledby="author-heading">
-      <p class="font-eyebrow text-xs tracking-[0.35em] text-gilt-600">AUTHOR</p>
-      <h2 id="author-heading" class="mt-2 font-display text-2xl font-bold text-tide-900">{SITE_AUTHOR}</h2>
-      <p class="mt-4 text-sm leading-loose text-ink-700">『{SITE_TITLE}』の原作・執筆・サイト制作。</p>
-      <div class="mt-5 flex flex-wrap gap-3">
-        <a href={REPOSITORY_URL} rel="author external" class="rounded-sm border border-tide-500/50 px-5 py-2 text-xs tracking-[0.12em] text-tide-700 transition hover:border-gilt-400 hover:text-gilt-600">GitHub / お問い合わせ</a>
-        <a href={`${base}rss.xml`} class="rounded-sm border border-gilt-400/50 px-5 py-2 text-xs tracking-[0.12em] text-gilt-600 transition hover:border-tide-500 hover:text-tide-700">RSSで更新を受け取る</a>
-      </div>
-    </section>
+    <div class="mt-8">
+      <a href={`${base}rss.xml`} class="inline-block rounded-sm border border-gilt-400/50 px-5 py-2 text-xs tracking-[0.12em] text-gilt-600 transition hover:border-tide-500 hover:text-tide-700">RSSで更新を受け取る</a>
+    </div>
     <ExploreNext current="news" />
   </main>
 </Base>

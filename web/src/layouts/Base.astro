@@ -2,7 +2,6 @@
 import '../styles/global.css';
 import '../styles/pop.css';
 import SiteFooter from '../components/SiteFooter.astro';
-import { SITE_AUTHOR } from '../lib/site';
 
 interface Props {
   title: string;
@@ -44,7 +43,6 @@ const isReader = bodyClass.includes('reader-page');
     <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" href={`${base}sitemap.xml`} />
     <link rel="alternate" type="application/rss+xml" title="更新情報" href={`${base}rss.xml`} />
-    <meta name="author" content={SITE_AUTHOR} />
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />

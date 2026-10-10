@@ -1,8 +1,6 @@
 export const SITE_TITLE = '2度目の転生は女遊び人でした';
 export const SITE_DESCRIPTION =
   '戦えない。魔法も使えない。装備はバニーガール衣装のみ。灰鷲ギルドの昼の書類から、陽気な冒険者の夜の話を——異世界お色気コメディ、連載中。';
-export const SITE_AUTHOR = 'chapinosuke';
-export const REPOSITORY_URL = 'https://github.com/chapinosuke/2nd-reincarnation-female-jester';
 
 export interface NewsItem {
   id: string;
@@ -12,6 +10,24 @@ export interface NewsItem {
 }
 
 export const NEWS: NewsItem[] = [
+  {
+    id: '2026-10-10-volume-five-opening',
+    date: '2026-10-10',
+    title: '第57話まで追加し、人物・世界観・帳簿を更新しました',
+    body: '第3・4巻と、第5巻「拍手の値段」の第55〜57話をお読みいただけます。第5巻は連載中です。人物紹介、訪れた土地、診断と精算の記録も本編に合わせて更新しました。',
+  },
+  {
+    id: '2026-10-10-volume-four',
+    date: '2026-10-10',
+    title: '第4巻「帰ってきた勇者」を追加しました',
+    body: '第45〜54話を追加しました。アルトの故郷トルカ村で待つ家族と手拭いの送り主。麦干し市の仕事に訪れた四人は、村の騒動と、小さな舞台に向き合います。',
+  },
+  {
+    id: '2026-10-10-volume-three',
+    date: '2026-10-10',
+    title: '第3巻「知らない道の歩き方」を追加しました',
+    body: '第35〜44話を追加しました。コルム村への再訪から、ギルド都市カルダスへ。街道の騒動、魔法の基礎講習、賢者の記録を探す四人の旅をお読みいただけます。',
+  },
   {
     id: '2026-09-20-volume-two',
     date: '2026-09-20',
