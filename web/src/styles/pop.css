@@ -18,6 +18,10 @@
   background: radial-gradient(#eed4de 1px, transparent 1px) 0 0 / 24px 24px, var(--cute-paper);
   font: 500 1rem/1.85 var(--cute-font);
 }
+/* 背景のドット：画面に固定した層をゆっくり斜めに流す（読書ページは静止のまま） */
+.pop-page:not(.reader-page) { background: var(--cute-paper); isolation: isolate; }
+.pop-page:not(.reader-page)::before { content: ''; position: fixed; inset: -24px; z-index: -1; pointer-events: none; background: radial-gradient(#eed4de 1px, transparent 1px) 0 0 / 24px 24px; animation: pop-dot-drift 5s linear infinite; }
+@keyframes pop-dot-drift { to { transform: translate(24px, -24px); } }
 .pop-page [hidden] { display: none !important; }
 .pop-page :is(a, button, summary) { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 .pop-page :is(button, summary) { cursor: pointer; }
@@ -153,4 +157,5 @@ html[data-reader-theme='night'] .pop-page.reader-page .sheet-lift:hover { box-sh
 }
 @media (prefers-reduced-motion: reduce) {
   .pop-page *, .pop-page *::before, .pop-page *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .pop-page::before { animation: none !important; }
 }
