@@ -90,6 +90,13 @@ const websiteSchema = {
           <a href={`${base}movie`}>ほかの映像も見る <span aria-hidden="true">↗</span></a>
         </figcaption>
       </figure>
+      <ul class="cute-party3d" aria-label="なかまたちの3D（ドラッグで回せます）">
+        {[['mia','ミア'],['alto','アルト'],['gordo','ゴルド'],['sera','セラ']].map(([id, name]) => <li>
+          <iframe src={`${base}guild-friends/index.html?embed=1&scroll=1&character=${id}`} title={`${name}の3Dキャラクター`} loading="lazy"></iframe>
+          <span>{name}</span>
+        </li>)}
+      </ul>
+      <p class="cute-party3d-hint">ドラッグで、くるっと回せます</p>
     </section>
 
     <section id="novel" class="cute-novel cute-section" aria-labelledby="novel-heading">

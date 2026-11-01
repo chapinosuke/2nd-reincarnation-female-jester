@@ -21,6 +21,7 @@ const party = [
     quote: '一言：「後ろ、取られてますよ」',
     turnaround: `${base}characters/mia.webp`,
     turnaroundAlt: 'ミアの三面図（正面・側面・背面）',
+    model3d: 'mia',
   },
   {
     hanko: '勇者',
@@ -32,6 +33,7 @@ const party = [
     quote: '一言：「誰か得意な人がやれば……」',
     turnaround: `${base}characters/alto.webp`,
     turnaroundAlt: 'アルトの三面図（正面・側面・背面）',
+    model3d: 'alto',
   },
   {
     hanko: '僧侶',
@@ -43,6 +45,7 @@ const party = [
     quote: '一言：「育ちがいいからね」',
     turnaround: `${base}characters/sera.webp`,
     turnaroundAlt: 'セラの三面図（正面・側面・背面）',
+    model3d: 'sera',
   },
   {
     hanko: '魔法使い',
@@ -54,6 +57,7 @@ const party = [
     quote: '一言：「年寄り扱いせんかい！」',
     turnaround: `${base}characters/gold.webp`,
     turnaroundAlt: 'ゴルドの三面図（正面・側面・背面）',
+    model3d: 'gordo',
   },
 ];
 ---
@@ -114,6 +118,21 @@ const party = [
               />
               <figcaption class="mt-2 text-center font-eyebrow text-[11px] tracking-[0.25em] text-ink-600">
                 TURNAROUND
+              </figcaption>
+            </figure>
+
+            {/* 3Dモデル：夜桜の組み込みセット（public/guild-friends） */}
+            <figure class="mt-8">
+              <div class="model3d h-[360px] overflow-hidden rounded-sm ring-1 ring-gilt-400/50 md:h-[420px]">
+                <iframe
+                  src={`${base}guild-friends/index.html?embed=1&character=${c.model3d}`}
+                  title={`${c.name}の3Dキャラクター`}
+                  loading="lazy"
+                ></iframe>
+              </div>
+              <figcaption class="mt-2 text-center font-eyebrow text-[11px] tracking-[0.25em] text-ink-600">
+                3D MODEL
+                <span class="ml-2 font-sans tracking-[0.08em]">ドラッグで回せます</span>
               </figcaption>
             </figure>
           </article>
@@ -198,4 +217,22 @@ const party = [
       </a>
     </div>
   </main>
+
+  <style is:global>
+    .model3d {
+      background:
+        radial-gradient(ellipse 55% 60% at 50% 55%, rgba(255, 255, 255, 0.9), transparent 70%),
+        radial-gradient(ellipse at 15% 15%, #fce8ef 0, transparent 50%),
+        radial-gradient(ellipse at 90% 85%, #f3ebfa 0, transparent 45%),
+        #fffaf7;
+    }
+    .model3d iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: transparent;
+    }
+  </style>
+
 </Base>

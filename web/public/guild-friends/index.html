@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>ギルドのなかまたち</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    {"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}
+  </script>
+</head>
+<body>
+  <main>
+    <header class="chrome">
+      <p class="eyebrow">YOZAKURA FRIENDS</p>
+      <h1>ギルドのなかまたち</h1>
+      <p class="intro">今日も、あなたのそばに。</p>
+    </header>
+    <nav class="chrome" aria-label="キャラクター">
+      <button data-character="all" aria-pressed="true">みんな</button>
+      <button data-character="mia" aria-pressed="false">ミア</button>
+      <button data-character="alto" aria-pressed="false">アルト</button>
+      <button data-character="gordo" aria-pressed="false">ゴルド</button>
+      <button data-character="sera" aria-pressed="false">セラ</button>
+    </nav>
+    <section class="stage" aria-label="3Dキャラクター">
+      <div class="halo chrome" aria-hidden="true"></div>
+      <span class="star s1 chrome" aria-hidden="true">✧</span>
+      <span class="star s2 chrome" aria-hidden="true">✧</span>
+      <canvas id="view" aria-label="ドラッグしてキャラクターを回せます"></canvas>
+      <p id="status" role="status">なかまたちを呼んでいます…</p>
+      <div id="names" class="chrome"></div>
+    </section>
+    <footer class="chrome">
+      <div class="actions">
+        <button id="motion" aria-pressed="false">歩いてみる</button>
+        <button id="reset">正面にもどす</button>
+      </div>
+      <p class="hint">ドラッグでくるり。スクロールやピンチで近くへ。</p>
+    </footer>
+  </main>
+  <script type="module" src="./viewer.js"></script>
+  <script>
+    if (location.protocol === 'file:') document.getElementById('status').textContent = '「プレビューを開く.command」をダブルクリックして開いてください。';
+  </script>
+</body>
+</html>
